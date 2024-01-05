@@ -1,0 +1,145 @@
+/* Override Vue Datepicker CSS */
+.container-wrapper{
+    background-color: #fff !important;
+    border-radius: 22px;
+}
+.vdp-datepicker__calendar {
+    width: 100% !important;
+  }
+  .vdp-datepicker__calendar .cell.selected {
+    background: #00d2b2 !important;
+    color: #fff;
+    font-weight: bold;
+  }
+  .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).day:hover,
+  .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).month:hover,
+  .vdp-datepicker__calendar .cell:not(.blank):not(.disabled).year:hover {
+    border: 1px solid #00d2b2 !important;
+  }
+  .vdp-datepicker__calendar .cell.selected:hover {
+    background: #00d2b2 !important;
+  }
+  .hero-body {
+    flex-grow: 1;
+    flex-shrink: 0;
+    padding: 3rem 1.5rem;
+  }
+  .subtitle {
+    color: #4a4a4a;
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.25;
+  }
+  .subtitle,
+  .title {
+    word-break: break-word;
+  }
+
+  .title{
+    font-size: 35px;
+  }
+  
+  button.is-primary {
+    background-color: #00d1b2;
+    border-color: transparent;
+    color: #fff;
+  }
+
+  .subtitle{
+    padding:12px
+  }
+  
+  button {
+    background-color: #fff;
+    border-color: #dbdbdb;
+    border-width: 1px;
+    color: #363636;
+    cursor: pointer;
+    justify-content: center;
+    padding-bottom: calc(0.375em - 1px);
+    padding-left: 0.75em;
+    padding-right: 0.75em;
+    padding-top: calc(0.375em - 1px);
+    text-align: center;
+    white-space: nowrap;
+    height: 2.25rem;
+  }
+  
+  .notification {
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    padding: 1.25rem 2.5rem 1.25rem 1.5rem;
+    position: relative;
+  }
+  
+  .has-text-centered {
+    text-align: center;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+  .select.is-primary select {
+    border-color: #00d1b2;
+  }
+  div .select .is-primary {
+    width: 100% !important;
+    border-color: #dddddd !important;
+    border-radius: 6px !important;
+    margin: 6px !important;
+    background: #fff !important;
+  }
+  div {
+    background: #fff !important;
+  }
+  select {
+    width: 100% !important;
+    border-color: #dddddd !important;
+    background-color: #fff !important;
+  }
+  .select select:not([multiple]) {
+    padding-right: 2.5em;
+  }
+  .select select {
+    background-color: #fff;
+    border-color: #dbdbdb;
+    color: #00d1b2;
+    cursor: pointer;
+    display: block;
+    font-size: 1em;
+    max-width: 100%;
+    outline: 0;
+  }
+  .select {
+    margin-bottom: 1em;
+    width: 190px;
+  }
+  .fade-enter {
+    opacity: 0;
+  }
+  .fade-enter-active {
+    transition: opacity 1.5s;
+  }
+  .fade-leave {
+    opacity: 0;
+  }
+  .fade-leave-active {
+  }
+  .containerrr {
+    background-color: #fff !important;
+    // padding:6px
+  }
+  button.is-primary {
+    background-color: #1da1f2;
+    border-color: transparent;
+    color: #fff;
+    width: 300px;
+    height: 40px;
+    border-radius: 5px;
+  }
+  
+  
+  ::ng-deep .py-16 {
+    padding-top: 3rem;
+    padding-bottom: 2rem;
+    background-color: rgb(235, 235, 235);
+  }
