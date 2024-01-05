@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./images-grid.component.scss']
 })
 export class ImagesGridComponent {
-@Input() images:any[] = [];
+@Input() images:any[] = [""];
 @Input() addPost:boolean = false;
 @Output() previewImagesEmitter = new EventEmitter<string[]>()
 @Output() previewImagesArrayEmitter = new EventEmitter<string[]>()
