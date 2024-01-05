@@ -1,0 +1,86 @@
+ <!-- period tracker stuff here  -->
+ <div class="container-wrapper">
+     <section class="hero is-primary has-text-centered">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title is-1" style="font-weight: bold; color: #000;">
+                    Ovulation Predictor Calculator
+                </h1>
+            </div>
+        </div>
+    </section>
+    
+    <section id="app" class="section content has-text-centered" style="height: 50vh">
+        <div name="fade" mode="out-in">
+            <div class="content columns level is-centered" *ngIf="!calcReturned" key="calendar">
+                <div class="column is-one-third level has-text-centered">
+                    <p class="subtitle">
+                        Please select the first day of your last menstrual period:
+                    </p>
+                    <!-- <vuejs-datepicker :inline="true" v-model="date">{{ date }}</vuejs-datepicker> -->
+                    <div class="col-sm-12 form-group">
+                        <!-- <mat-form-field> -->
+                        <input matInput [formControl]="periodDate" #datePicker type="datetime-local"
+                            placeholder="start date" style="font-size: 18px;border-radius: 6px;
+                            border-color: #ded8d8;
+                            color: #2ca1f2;" />
+                        <!-- </mat-form-field> -->
+                    </div>
+                </div>
+    
+                <div class="column is-one-third has-text-centered level">
+                    <p class="subtitle">Usual number of days in your cycle:</p>
+                    <div class="select is-primary">
+                        <select style="font-size: 18px;border-radius: 6px;
+                        border-color: #ded8d8;
+                        color: #2ca1f2;" name="days" v-model="cycleSelected" [(ngModel)]="selectControl"
+                            (change)="selectChange($event)">
+                            <option [ngValue]="null" disabled selected>Select a day</option>
+                            <option *ngFor="let n of days" v-if="n >= 20" [value]="n">
+                                {{ n }}
+                            </option>
+                        </select>
+                    </div>
+    
+                    <div class="level-item">
+                        <button class="button is-large is-primary is-rounded" id="calculate-btn"
+                            (click)="callAllFunctions()">
+                            Calculate
+                        </button>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="content has-text-centered" v-else key="result" *ngIf="isCalculating">
+                <p class="subtitle">
+                    Here are the results based on the information you provided:
+                </p>
+                <p style="margin-top: 16px; font-size: 16px">
+                    Your next most fertile period is
+                    <strong style="color: #000; font-size: 18px">{{
+                        fertileFrom
+                        }}</strong>
+                    to
+                    <strong style="color: #000; font-size: 18px">{{
+                        fertileUntil
+                        }}</strong>.
+                </p>
+                <p style="font-size: 16px">
+                    If you conceive within this timeframe, your estimated due date will be
+                    <strong style="color: #000; font-size: 18px">{{ dueDate }}</strong>.
+                </p>
+                <div class="level-item">
+                    <button class="button is-large is-primary is-rounded" id="resetCalc" (click)="resetCalc()">
+                        Calculate Again
+                    </button>
+                </div>
+            </div>
+        </div>
+    
+        <div class="notification is-full">
+            *Average length will vary by woman. **A woman's best days to conceive can
+            start at least one day prior and last at least one day after fertile date.
+        </div>
+    </section>
+ </div>
+<!-- period tracker stuff here  -->

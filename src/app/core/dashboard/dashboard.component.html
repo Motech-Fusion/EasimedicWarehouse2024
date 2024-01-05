@@ -1,0 +1,411 @@
+<div class="main-container" >
+    <app-app-header [currentUserId]="currentUserId" [image]="currentUser!.image"></app-app-header>
+    <ng-container>
+        <ul class="c-accordion">
+            <li id="GP" class="c-accordion__item"
+                style="--cover: url(https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80);">
+                <a href="#GP" class="c-accordion__action">
+                    <div class="c-accordion__content">
+                        <h2 class="c-accordion__title c-accordion__title--hero c-accordion__title--hover-show">
+                            General Practitioner
+                        </h2>
+                        <p class="c-accordion__description">
+                            The general practitioner's duties include examining patients, diagnosing common
+                            illnesses, and administering or prescribing appropriate treatment. You should also be
+                            able to address patients' health-related
+                            queries
+                        </p>
+                    </div>
+                    <div class="c-accordion__aside">
+                        <h2 class="c-accordion__title c-accordion__title--hover-hide">
+                            GP
+                        </h2>
+                    </div>
+                </a>
+            </li>
+            <li id="Gaenochologist" class="c-accordion__item"
+                style="--cover: url(https://i0.wp.com/post.healthline.com/wp-content/uploads/2020/07/Black-midwife-feeling-and-measuring-pregnant-womans-stomach-for-exam-1296x728-header-1.jpg?w=1155&h=1528);">
+                <a href="#Gaenochologist" class="c-accordion__action">
+                    <div class="c-accordion__content">
+                        <h2 class="c-accordion__title c-accordion__title--hero c-accordion__title--hover-show">
+                            Gaenochologist
+                        </h2>
+                        <p class="c-accordion__description">
+                            A gynecologist is a doctor who specializes in female reproductive health. They diagnose
+                            and treat issues related to the female reproductive tract. This includes the uterus,
+                            fallopian tubes, and ovaries and
+                            breasts. Anyone with female organs may see a gynecologist.
+                        </p>
+                    </div>
+                    <div class="c-accordion__aside">
+                        <h2 class="c-accordion__title c-accordion__title--hover-hide">
+                            Gaenochologist
+                        </h2>
+                    </div>
+                </a>
+            </li>
+            <li id="physician" class="c-accordion__item"
+                style="--cover: url(https://images.unsplash.com/photo-1536064479547-7ee40b74b807?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80);">
+                <a href="#physician" class="c-accordion__action">
+                    <div class="c-accordion__content">
+                        <h2 class="c-accordion__title c-accordion__title--hero c-accordion__title--hover-show">
+                            Physician
+                        </h2>
+                        <p class="c-accordion__description">
+                            Physician is a medical doctor who is responsible for promoting, maintaining, or
+                            restoring health through the study, diagnosis, and treatment of disease, injury, and
+                            other physical and mental impairments.
+                        </p>
+                    </div>
+                    <div class="c-accordion__aside">
+                        <h2 class="c-accordion__title c-accordion__title--hover-hide">
+                            Physician
+                        </h2>
+                    </div>
+                </a>
+            </li>
+            <li id="dentist" class="c-accordion__item"
+                style="--cover: url(https://images.unsplash.com/photo-1565090568947-7293970ba471?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80);">
+                <a href="#dentist" class="c-accordion__action">
+                    <div class="c-accordion__content">
+                        <h2 class="c-accordion__title c-accordion__title--hero c-accordion__title--hover-show">
+                            Dentist
+                        </h2>
+                        <p class="c-accordion__description">
+                            A Dentist, or Dental Surgeon, is responsible for performing oral surgery and routine
+                            cleanings on patients. Their duties include repairing and removing teeth, diagnosing
+                            conditions and communicating with
+                            patients about how to best care for their teeth and gums.
+                        </p>
+                    </div>
+                    <div class="c-accordion__aside">
+                        <h2 class="c-accordion__title c-accordion__title--hover-hide">
+                            Dentist
+                        </h2>
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </ng-container>
+    <div style="height:120px;width:100%;margin-top:10px" class="search-container-center">
+        <!-- put phone image here -->
+        <img src="../../../assets/EasiMedicPhone.png" width="100" style="height: 100%;
+    width: 100%;
+    object-fit: cover;" />
+    </div>
+    <!-- <app-post-item></app-post-item>
+    <app-recommendations></app-recommendations> -->
+    <!-- <app-modal></app-modal> -->
+    <div class="search-container-center" style="margin-top:40px">
+        <div class="get-started">
+            <h1 *ngIf="!hideAds"
+                class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
+                style="color:black">
+                Welcome to <span class="text-blue-600 dark:text-blue-500">Easi</span> Medic</h1>
+            <p *ngIf="!hideAds"
+                class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">Browse medical professionals
+                and posts below to
+                get started
+            </p>
+            <h1 *ngIf="hideAds"
+                class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
+                style="color:white">
+                Weather and  <span class="text-blue-600 dark:text-blue-500">News</span> </h1>
+            <p *ngIf="hideAds" class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">
+                EasiMedicWarehouse is the best place to find all medical related news and weather forecasts at the tip of your fingers. <span
+                    class="text-blue-600 dark:text-blue-500" style="text-decoration: underline;"
+                    (click)="navigateToPromoteItem()">click here</span>
+            </p>
+
+            <div style="display: flex;flex-direction: row;">
+                <h5 class="text-xl font-bold dark:text-white" style="padding-bottom:12px;color:black">View News and Weather forecast
+                </h5>
+                <svg *ngIf="hideAds" (click)="toggleAdsVisibility('hide')" style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
+                class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="black">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                </svg>
+
+                <svg *ngIf="!hideAds" (click)="toggleAdsVisibility('show')" style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
+                    class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" stroke="#1da1f2" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
+            </div>
+            <app-promoted-tabs [ads]="news" [tabsHeader]="adsHeaders" *ngIf="showAds"></app-promoted-tabs>
+            <!-- <span *ngIf="currentUser?.easiMedicFor" (click)="browseFriends()"
+                class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
+                My Patients</span> -->
+            <!-- <span *ngIf="!currentUser?.easiMedicFor" (click)="browseFriends()"
+                class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
+                My messages</span> -->
+            <span (click)="browseFriends()"
+                class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
+                Browse Medical products</span>
+            <span (click)="navigateTotrending()"
+                class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">Trending Medical Posts
+                <span
+                    class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-white-800 bg-red-200 rounded-full melachat-text-color"
+                    style="background-color: white;">
+                    {{hashtags?.length}}
+                </span></span>
+            <span (click)="navigateToFriendRequests()"
+                class="bg-red-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-red-400">Blood
+                donations
+                <span
+                    class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-white-800 bg-red-200 rounded-full melachat-text-color"
+                    style="background-color: white;">
+                    {{currentUserFriendRequests.length}}
+                </span></span>
+
+        </div>
+        <div class="get-started">
+            <div style="display: flex;flex-direction: row;">
+                <h5 class="text-xl font-bold dark:text-white" style="padding-bottom:12px;color:black">Nearby Doctors and Sangomas
+                </h5>
+                <svg *ngIf="hide" (click)="toggleVisibility('hide')" style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
+                    class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="black">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
+                </svg>
+
+                <svg *ngIf="!hide" (click)="toggleVisibility('show')" style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
+                    class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" stroke="#1da1f2" stroke-width="2"
+                    stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                    <circle cx="12" cy="12" r="3" />
+                </svg>
+            </div>
+
+            <div class="recommendations-row" *ngIf="doctors && showRecommendations">
+                <ng-container *ngFor="let item of doctors">
+                    <app-new-friend-card (viewUserEmitter)="userProfileNavigation($event)"
+                        (MessageUserEmitter)="MessageUser($event)"
+                        (moreDetailsEmitter)="MoreUserDetails($event);addNewFriendRequest($event.docId,$event.phone)"
+                        class="app-new-friend-card" [users]="item"
+                        (moreDetailsEmitter)="openModal($event)">{{item.name}}</app-new-friend-card>
+                </ng-container>
+            </div>
+            <div class="get-started" *ngIf="!recommedations">
+                <div class="recommendations-row" *ngIf="!recommedations">
+                    <div role="status" class="space-y-2.5 animate-pulse max-w-lg" style="width:100%">
+                        <div class="flex items-center w-full">
+                            <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        </div>
+                        <div class="flex items-center w-full max-w-[480px]">
+                            <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                        </div>
+                        <div class="flex items-center w-full max-w-[400px]">
+                            <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        </div>
+                        <div class="flex items-center w-full max-w-[480px]">
+                            <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                        </div>
+                        <div class="flex items-center w-full max-w-[440px]">
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-32"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                            <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                        </div>
+                        <div class="flex items-center w-full max-w-[360px]">
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        </div>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <app-search [placeholder]="searchPlaceholder" (searchEmitter)="search($event)"></app-search>
+    </div>
+    <div class="container-center justify-center items-center">
+        <div>
+            <app-tabs (tabSelected)="onTabSelected($event)"></app-tabs>
+        </div>
+    </div>
+    <div class="tab-content">
+        <!-- if chats selected -->
+        <div *ngIf="selectedTabTitle == MESSAGES">
+            <app-chat-list (chatEmitter)="messagingNavigation($event)" [friends]="messagesUserList"></app-chat-list>
+        </div>
+        <div *ngIf="selectedTabTitle == DOCTORS">
+            <ng-container *ngIf="doctors.length">
+                <!-- <app-chat-list (chatEmitter)="messagingNavigation($event)"
+                    [friends]="doctors.length ? doctors : fetchCurrentUserFriendsDefault()"></app-chat-list> -->
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid doctor-user">
+                        <ng-container *ngFor="let doctor of doctors">
+                            <app-doctor-user-item [senderUserId]="currentUserId" (chatEmitter)="navigateToChat($event)" [doctorsList]="doctors" [userItem]="doctor"></app-doctor-user-item>
+                            <!-- Card -->
+     
+                        </ng-container>
+                    </div>
+            </ng-container>
+            <div *ngIf="!doctors.length"
+                class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white no-friends-section">
+                <h1 class="no-friends">No Doctors found</h1>
+                <p class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">Click Browse
+                    friends
+                    above to add a friend
+                </p>
+                <div role="status" class="space-y-2.5 animate-pulse max-w-lg" style="width:100%">
+                    <div class="flex items-center w-full">
+                        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[480px]">
+                        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[400px]">
+                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[480px]">
+                        <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[440px]">
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-32"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                        <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[360px]">
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    </div>
+                    <span class="sr-only">You currently have no friends...</span>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="selectedTabTitle == SANGOMA">
+            <ng-container *ngIf="sangomas.length">
+            </ng-container>
+            <div *ngIf="!sangomas.length"
+                class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white no-friends-section">
+                <h1 class="no-friends">No Sangomas found</h1>
+    
+                <div role="status" class="space-y-2.5 animate-pulse max-w-lg" style="width:100%">
+                    <div class="flex items-center w-full">
+                        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[480px]">
+                        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[400px]">
+                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[480px]">
+                        <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[440px]">
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-32"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                        <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[360px]">
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    </div>
+                    <span class="sr-only">You currently have no friends...</span>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="selectedTabTitle == TOWTRUCK">
+            <!-- <ng-container *ngIf="towTrucks.length"> -->
+                <!-- <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid doctor-user"> -->
+                    <ng-container >
+                        <app-tow-truck-user-item  [TruckList]="towTrucks"></app-tow-truck-user-item>
+                    </ng-container>
+                <!-- </div> -->
+                
+            <!-- </ng-container> -->
+            <div *ngIf="!towTrucks.length"
+                class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white no-friends-section">
+                <h1 class="no-friends">No Sangomas found</h1>
+    
+                <div role="status" class="space-y-2.5 animate-pulse max-w-lg" style="width:100%">
+                    <div class="flex items-center w-full">
+                        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[480px]">
+                        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[400px]">
+                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[480px]">
+                        <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[440px]">
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-32"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                        <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[360px]">
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    </div>
+                    <span class="sr-only">You currently have no friends...</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- if posts selected -->
+        <div *ngIf="selectedTabTitle == POSTS">
+            <!-- <app-post-list [showPrmotedPostsContainer]="true" [AllPosts]="AllPosts"></app-post-list> -->
+            <ng-container *ngIf="AllPosts.length">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid">
+                <ng-container *ngFor="let item of AllPosts">
+            <app-post-item-v2 (ViewHustle)="ViewPosts($event)" [postItem]="item"></app-post-item-v2>
+                </ng-container>
+            </div>
+            </ng-container>
+        </div>
+        <!-- if news selected -->
+        <div *ngIf="selectedTabTitle == PERIODTRACKER">
+            <div>
+                <ng-container>
+                   <app-period-tracker></app-period-tracker>
+        
+                </ng-container>
+            </div>
+        </div>
+    </div>
+    <app-floating-button (AddPostEmitter)="AddPost()"></app-floating-button>
+    <app-dialog #dialog *ngIf="openModalFlag" (onCancel)="closeModal($event)"
+        (onConfirm)="confirmFriendRequest()"></app-dialog>
+</div>

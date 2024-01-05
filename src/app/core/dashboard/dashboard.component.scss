@@ -1,0 +1,285 @@
+.main-container {
+    background-color: #efefef !important;
+    height: 100% !important;
+    min-height: 100vh;
+    width: 100% !important;
+    // background-image: url("../../../assets//easimedicbackground.png");
+    overflow: hidden;
+}
+.news-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+.container-center {
+    width: 100% !important;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+}
+
+.search-container-center {
+    width: 100% !important;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    margin-top:100px
+    // display: flex;
+}
+
+.tab-content {
+    padding: 12px;
+    width: 100%
+}
+
+.get-started {
+    padding: 22px
+}
+
+@media screen and (min-width: 768px) {
+
+    /* Apply these styles on screens larger than or equal to 768px wide (tablets and desktops) */
+    .get-started {
+        padding-left: 170px;
+        padding-right: 170px;
+    }
+}
+
+.text-blue-600 {
+    color: #1da1f2 !important;
+}
+
+.recommendations-row {
+    display: flex;
+    //   flex-wrap: no-wrap;   
+    overflow-x: auto;
+
+}
+
+.app-new-friend-card {
+    /* Add any styling you want for each child component here */
+    margin-right: 10px;
+    /* Optional margin between child components */
+}
+
+::ng-deep .max-w-sm {
+    max-width: 16rem;
+    width: 16rem !important;
+    height: 100% !important //   min-width: 16rem!important;
+}
+
+span{
+    cursor:pointer
+}
+
+.browse-friends-p{
+    margin-bottom:18px!important
+}
+
+@media (min-width: 768px) {
+    .md\:grid-cols-4 {
+        background-color: white;
+        padding: 54px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        margin-right: 148px;
+        margin-left: 148px;
+        border-radius: 12px
+    }
+}
+
+.no-friends-section{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.no-friends{
+    color:rgb(32, 32, 32);
+    font-size: 48px;
+    padding:22px
+}
+
+.paragraph {
+    margin-bottom: 10px; /* Adjust the margin-bottom as needed for spacing */
+  }
+
+  .hashtag {
+    color: #1da1f2;
+  }
+
+    @media (min-width: 200px) and (max-width:450px) {
+        .news-grid {
+            grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        .get-started{
+            padding: 6px;
+        }
+       
+      }
+
+      :host ::ng-deep .toast-container {
+        pointer-events: none;
+        position: fixed;
+        z-index: 99999999999999999999
+    }
+    
+    :host ::ng-deep  .toast-top-right {
+        top: 120px;
+        right: 12px;
+    }
+
+
+    // services we offer
+
+$component: ".c-accordion";
+
+:root {
+  font-family: "Poppins", sans-serif;
+  --color-primary: #3e66a0;
+
+  --cover-placeholder: var(--color-primary);
+}
+
+.custome-contain {
+  background-color: #fff !important;
+}
+
+#{$component} {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  height: 300px;
+  display: flex;
+  flex: 1 1 auto;
+  overflow: hidden;
+
+  &__item {
+    --cover: var(--cover-placeholder);
+    background: var(--cover);
+    background-position: center center;
+    background-size: cover;
+    background-color: var(--cover-placeholder);
+    background-blend-mode: luminosity;
+
+    position: relative;
+    flex-grow: 1;
+    height: 100%;
+    width: 100px;
+    min-width: 2.05rem;
+    transition: all 0.3s ease-in-out;
+
+    &:hover,
+    &:focus-within,
+    &:target {
+      _flex-grow: 2;
+      width: 100%;
+      background-color: transparent;
+
+      #{$component} {
+        &__title {
+          &--hover-hide {
+            max-height: 0;
+            opacity: 0;
+          }
+
+          &--hover-show {
+            opacity: 1;
+          }
+        }
+
+        &__description {
+          opacity: 1;
+        }
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
+
+  &__action {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    text-decoration: none;
+  }
+
+  &__title {
+    color: white;
+    margin: 0;
+    max-height: 100%;
+    transition: all 0.3s ease-in-out;
+    overflow: hidden;
+
+    &--hover-show {
+      opacity: 0;
+      width: 100%;
+    }
+
+    &--hero {
+      font-size: 3rem;
+      line-height: 150%;
+    }
+  }
+
+  &__aside {
+    padding: 1rem;
+    position: absolute;
+    height: 100%;
+    right: 1rem;
+    bottom: 0;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+
+    &:before {
+      content: "+";
+      color: #1da1f2;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+      display: inline-block;
+    }
+
+    &:after {
+      content: "";
+      flex-grow: 1;
+      width: 1px;
+      display: block;
+      margin-top: 1rem;
+      background-color: rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  &__content {
+    padding: 2rem 2.5rem 0 2rem;
+    width: 50%;
+  }
+
+  &__description {
+    color: white;
+    font-weight: 400;
+    line-height: 120%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 100%;
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+  }
+}
+
+// services we offer
+
+
+// period tracker here
+
+// period tracker here

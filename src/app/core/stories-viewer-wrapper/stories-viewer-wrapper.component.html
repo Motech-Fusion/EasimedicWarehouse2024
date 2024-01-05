@@ -1,0 +1,82 @@
+<div class="container-wrap">
+<div class="header-section">
+
+    <div class="back" style="cursor: pointer;" (click)="navigateBack()">
+        <svg class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+        </svg>
+    </div>
+    <div class="flex-shrink-0 user-details">
+        <h1 class="text-sm font-medium text-gray-900 truncate dark:text-white user-name">{{userStory.username}}</h1>
+        <img class="w-16 h-16 rounded-full" src="{{userStory.profile}}" alt="Neil image">
+    </div>
+</div>
+<!-- @for (item of userStories; track $index) { -->
+
+@if (userStories[currentStoryIndex].type == 'text') {
+<div [style.background-color]="userStories[currentStoryIndex].background" class="text-container">
+     <!-- progress bar -->
+     <div style="top: 0;margin-top: 52px;display: flex;position: absolute;">
+
+        @for (item of userStories; track $index) {
+            @if (userStories[currentStoryIndex]) {
+                <!-- <div class="progress-container">    
+                    <div class="progress2 progress-moved">
+                      <div class="progress-bar2" >
+                      </div>                       
+                    </div> 
+                </div> -->
+            }
+                }
+     </div>
+    <!-- progress bar -->
+    <p class="centered-text">{{userStories[currentStoryIndex].storytext}}</p>
+</div>
+}@else{
+<div class="stories-container">
+    <img [src]="userStories[currentStoryIndex].storyImage" alt="Story" class="story-image" />
+</div>
+}
+
+<div class="controls" >
+    <button class="button-container" (click)="showPrevious()">
+        <svg width="60px" height="60px" viewBox="-3.36 -3.36 30.72 30.72" fill="none"
+        xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">
+        <g id="SVGRepo_bgCarrier" stroke-width="0"
+          transform="translate(3.6000000000000014,3.6000000000000014), scale(0.7)">
+          <rect x="-3.36" y="-3.36" width="30.72" height="30.72" rx="15.36" fill="transparent" strokewidth="0"></rect>
+        </g>
+        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+          stroke-width="0.048"></g>
+        <g id="SVGRepo_iconCarrier">
+          <path d="M15 6L9 12L15 18" stroke="#" stroke-width="0.72" stroke-linecap="round" stroke-linejoin="round">
+          </path>
+        </g>
+      </svg></button>
+    <button class="button-container" (click)="showNextImage()"><svg width="60px" height="60px" viewBox="-3.36 -3.36 30.72 30.72" fill="none"
+        xmlns="http://www.w3.org/2000/svg" stroke="#ffffff">  
+        <g id="SVGRepo_bgCarrier" stroke-width="0"
+          transform="translate(3.6000000000000014,3.6000000000000014), scale(0.7)">
+          <rect x="-3.36" y="-3.36" width="30.72" height="30.72" rx="15.36" fill="transparent" strokewidth="0"></rect>
+        </g>
+        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC"
+          stroke-width="0.048"></g>
+        <g id="SVGRepo_iconCarrier">
+          <path d="M9 6L15 12L9 18" stroke="#ffffff" stroke-width="0.72" stroke-linecap="round" stroke-linejoin="round">
+          </path>
+        </g>
+      </svg>
+    </button>
+  </div>
+
+</div>
+<div class="footer-section">
+  <form>   
+      <label for="default-search" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Search</label>
+      <div class="relative">
+          <input [formControl]="MessageTextFormControl"  type="search" id="default-search" class="placeholder-white-500 border block w-full p-4 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-white-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" style="background-color: transparent;color:white;border-radius: 50px;border-color: white;border-width: 0.3px;" required>
+          <button (click)="userStories[currentStoryIndex].type == 'text' ? sendTextReplyMessageToUser(userStories[currentStoryIndex].storytext):sendImaggeMessageTouser(userStories[currentStoryIndex].storyImage)" style="border-radius: 50px;" type="submit" class="text-white absolute end-2.5 bottom-2.5 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm px-4 py-2 melachat-background-color">Send</button>
+      </div>
+  </form>    
+</div>
+<!-- } -->
