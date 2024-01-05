@@ -1,0 +1,59 @@
+<div class="navbar">
+  <nav class="bg-white py-2 md:py-4">
+    <div class="container px-4 mx-auto md:flex md:items-center">
+
+      <div class="flex justify-between items-center">
+        <a href="#" class="font-bold text-xl text-indigo-600"><img src="https://firebasestorage.googleapis.com/v0/b/e-health-3eda1.appspot.com/o/logo.png?alt=media&token=8e2a71d7-679c-4072-a073-6316e00e9e97" class="brand-img"
+            alt=""></a>
+            <p style="margin-left:12px;color:#f5f5f5">  &#64;{{ truncateText(currentUserDetails?.username, 7) }}</p>
+        <!-- <button class="border border-solid border-gray-600 px-3 py-1 rounded text-gray-600 opacity-50 hover:opacity-75 md:hidden" (click)="toggleNavbar()">
+          <i class="fas fa-bars"></i>
+        </button> -->
+      </div>
+      
+      <div (click)="navigate('home')" [ngClass]="{'hidden': isNavbarCollapsed, 'flex': !isNavbarCollapsed}"
+      class="md:flex flex-col md:flex-row md:ml-auto mt-3 md:mt-0" style=" flex-direction: row;">
+      <h1 *ngIf="currentUserDetails?.easiMedicFor" style="margin-top: 12px;margin-right:20px;color:white;font-weight:800" class="for-business;">EasiMedic for Service provider</h1>
+      <h1 *ngIf="!currentUserDetails?.easiMedicFor" style="margin-top: 12px;margin-right:20px;color:white;font-weight:800" class="for-business">EasiMedic for customers</h1>
+        <div style="margin-top: 12px;width:50px">
+          <svg class="h-7 w-7 text-black-500" width="24" height="24" viewBox="0 0 24 24" stroke-width="2"
+            stroke="#fff" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <path stroke="none" d="M0 0h24v24H0z" />
+            <polyline points="5 12 3 12 12 3 21 12 19 12" />
+            <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" />
+            <rect x="10" y="12" width="4" height="4" />
+          </svg>
+        </div>
+        <!-- <a href="#" class="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"><i class="icon fa fa-plus" style="color: grey;font-size:22px"></i></a> -->
+        <!-- <a href="#" class="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"> <i class="icon fa fa-comment" style="color: grey;font-size:22px"></i></a> -->
+        <div (click)="navigate('notifications')" style="margin-top: 12px;margin-right:20px">
+          <svg class="h-7 w-7 text-black" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+          </svg>
+        </div>
+        <div>
+          <img (click)="navigate('user-profile')" class="icon user-profile"
+          src="{{currentUserDetails?.image}}" />
+          <span
+            class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-white-800 bg-white-200 rounded-full"
+            style="
+          margin-right: -36px;
+          color: white;
+        background-color: white;
+          position: absolute;
+          top: 0;
+          margin-right: -38px;
+          margin-top: 13px;
+          margin-left: 34px;">
+            <svg class="h-8 w-8 text-blue-500"  fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
+            </svg>
+            
+          </span>
+        </div>
+      </div>
+    </div>
+  </nav>
+</div>

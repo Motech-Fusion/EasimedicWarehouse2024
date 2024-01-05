@@ -1,0 +1,79 @@
+
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 99999999999;
+}
+
+.brand-img {
+    height: 100%;
+    margin-top: 5px;
+    border-radius: 16px;
+}
+
+.user-profile {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    /* background-image: url(img/profile-pic.png); */
+    background-size: cover;
+    border-color: #dfdfdf;
+    border-width: 2px;
+}
+
+.brand-img{
+    border-radius: 12px;
+    height:50px;
+}
+
+@media (min-width: 1024px) {
+    .lg-px-4 {
+      padding-left: 1rem;
+      padding-right: 1rem;
+      align-items: center;
+      display: flex;
+    }
+  }
+
+  ::ng-deep .lg-px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    align-items: center;
+    display: flex;
+  }
+
+
+  .px-4 {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+@media (min-width: 200px) and (max-width:450px){
+  .user-profile {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    /* background-image: url(img/profile-pic.png); */
+    background-size: cover;
+    border-color: #dfdfdf;
+    border-width: 2px;
+}
+
+.for-business{
+  display:none
+}
+}
+
+
+.md\:py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  // background: rgb(2,2,74);
+  background: #1da1f2
+}
