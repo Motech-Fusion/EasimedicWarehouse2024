@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+
+.melachat-button-color{
+    background-color: #1da1f2;
+}
+
+.melachat-text-color{
+    color: #1da1f2;
+}
+
+
+.custom-toast {
+    top: 120px;
+    right: 12px;
+    pointer-events: none;
+    position: fixed;
+    z-index: 99999999999999999999;
+    padding: 16px; /* Adjust the padding value according to your preference */
+    color:white;
+  }

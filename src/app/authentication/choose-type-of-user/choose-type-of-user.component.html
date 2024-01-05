@@ -1,0 +1,44 @@
+
+
+<!-- new login here -->
+<section class="bg-gray-50 min-h-screen flex items-center justify-center">
+    <!-- login container -->
+    <div class="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
+      <!-- form -->
+      <div class="md:w-1/2 px-8 md:px-16">
+        <h2 class="font-bold text-2xl text-[#002D74]">Please select below to continue with registration</h2>
+        <p class="text-xs mt-4 text-[#002D74]">Choose whether you're a service provider(e.g,Doctor,Sangoma etc) or General user</p>
+  
+        <form action="" class="flex flex-col gap-4">
+          <!-- <input [formControl]="PhoneContentFormControl" #phoneNumber class="p-2 mt-8 rounded-xl border" type="email" name="phone" placeholder="Phone"> -->
+          <div class="relative">
+            <div class="dropdown-container">
+
+                <h1 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text" style="margin-top:16px;margin-bottom:16px">
+                    Please select below</h1>
+                <div *ngFor="let option of options"
+                    class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+                    <input [formControl]="selectUserFormControl" [id]="option.id" type="radio" value="{{ option.id }}"
+                        name="melachat-option"
+                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        [checked]="selectedOption === option.id" (change)="onOptionChange(option.id)">
+                    <label  [for]="option.id"
+                        class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                        {{ option.label }}
+                    </label>
+                </div>
+
+
+            </div>
+          </div>
+          <button [ngClass]="selectedOption == '' || selectedOption == null ? 'disabled':''" [disabled]="selectedOption == '' || selectedOption == null" (click)="navigateTo('register')"  class="bg-[#002D74] rounded-xl text-white py-2 hover:scale-105 duration-300 button-color">Continue</button>
+        </form>
+
+      </div>
+  
+      <!-- image -->
+      <div class="md:block hidden w-1/2">
+        <img class="rounded-2xl img-right" src="https://images.unsplash.com/photo-1504813184591-01572f98c85f?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1771&q=80">
+      </div>
+    </div>
+  </section>
