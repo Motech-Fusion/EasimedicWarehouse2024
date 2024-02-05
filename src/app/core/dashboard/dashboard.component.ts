@@ -85,7 +85,8 @@ export class DashboardComponent implements OnInit {
   sangomas: IDoctorsInterface[] = [];
   news:any[] = []
   towTrucks: ITowTrucks[] = [];
-  messagesUserList: IUsersInterface[]|undefined;
+  messagesUserList: IUsersInterface[]|undefined =[];
+  doctorsList!: IDoctorsInterface[];
 
   
   constructor(
@@ -101,25 +102,33 @@ export class DashboardComponent implements OnInit {
       // console.log('users here', users);
       return (this.recommedations = users);
     });
+    this.fireStoreCollectionsService.getAllUsers().subscribe((users) => {
+      // console.log('users here', users);
+      this.currentUser = users.filter(x=> x.docId == this.currentUserId)[0];
+      // this.messagesUserList = this.fetchCurrentUserFriends('');
+      // console.info('jeyt', this.messagesUserList);
+      this.getFriendLastMessage()
+      this.currentUserFriendRequests = this.currentUser.requests.filter(x => x !== this.currentUser?.docId)
+      return (users.filter(x=> x.docId == this.currentUserId));
+    });
     this.fireStoreCollectionsService.getAllDoctors().subscribe((users) => {
-      // console.log('doctors here', users);
-      this.OriginalDoctors = users.filter(u => u.fullname !== undefined)
-      return (this.doctors = users.filter(u => u.fullname !== undefined));
+      console.log('doctors here 1', users);
+      
+      this.OriginalDoctors = users.filter(u => u.fullname !== undefined);
+      this.doctors =  users.filter(u => u.fullname !== undefined);
+      const validDoctors =  users.filter(u => u.fullname !== undefined);
+      if(this.currentUser?.easiMedicFor == "Service Provider"){
+        this.fetcUsersMessageUserList(this.recommedations as IDoctorsInterface[])
+      }else{
+        this.fetcUsersMessageUserList(this.doctors)
+      }
+      return validDoctors;
     });
     this.fireStoreCollectionsService.getAllSangomas().subscribe((users) => {
       // console.log('users here', users);
       return (this.sangomas = users);
     });
 
-    this.fireStoreCollectionsService.getAllUsers().subscribe((users) => {
-      // console.log('users here', users);
-      this.currentUser = users.filter(x=> x.docId == this.currentUserId)[0];
-      this.messagesUserList = this.fetchCurrentUserFriends('');
-      console.log('jeyt', this.messagesUserList);
-      this.getFriendLastMessage()
-      this.currentUserFriendRequests = this.currentUser.requests.filter(x => x !== this.currentUser?.docId)
-      return (users.filter(x=> x.docId == this.currentUserId));
-    });
 
     this.store.select(selectDocId).subscribe((id) => {
       this.currentUserId = id;
@@ -176,6 +185,19 @@ export class DashboardComponent implements OnInit {
     // this.fetchCurrentUserFriends();
     this.UserFriends = this.fetchCurrentUserFriends('');
  
+  }
+  fetcUsersMessageUserList(users: IDoctorsInterface[]) {
+
+    const friendDocIds = this.currentUser?.friends;
+    console.log(
+      "in my list of friends",friendDocIds,users
+    )
+    let filteredUsers = users!.filter(x=> friendDocIds?.includes(x.docId)
+    );
+    console.log(
+      "in  list of friends found",filteredUsers
+    )
+      this.messagesUserList = filteredUsers
   }
 
 
@@ -301,15 +323,18 @@ export class DashboardComponent implements OnInit {
   fetchCurrentUserFriends(searchTerm: string = ''): IUsersInterface[] {
     const friendDocIds = this.currentUser!.friends;
     console.log(
-      "in my list of friends",friendDocIds
+      "in my list of friends",friendDocIds,this.doctorsList
     )
-    let filteredUsers = this.recommedations!.filter((user) =>{
+    let filteredUsers = this.doctorsList!.filter((user) =>{
       console.log(
         "in  list of friends",user.docId
       )
       friendDocIds.includes(user.docId)
     }
     );
+    console.log(
+      "in  list of friends found",filteredUsers
+    )
 
     // Apply additional filtering based on the search term
     if (searchTerm.trim() !== '') {
@@ -320,11 +345,12 @@ export class DashboardComponent implements OnInit {
           user.name.toLowerCase().includes(lowerCaseSearchTerm)
       );
     } else {
-      filteredUsers = this.recommedations!.filter((user) =>
+      filteredUsers = this.doctorsList!.filter((user) =>
         friendDocIds.includes(user.docId)
       );
     }
 
+console.log("doctors here ",this.doctorsList)
     return filteredUsers;
   }
 

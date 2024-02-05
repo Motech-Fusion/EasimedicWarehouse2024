@@ -2,7 +2,7 @@
     <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab"
         data-tabs-toggle="#default-tab-content" role="tablist" *ngFor="let item of tabsHeader">
         <li (click)="selectedTab(item.name)" class="me-2" role="presentation">
-            <button (click)="selectedTab(item.name)" class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab"
+            <button (click)="selectedTab(item.name)" class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab" [class]="selectedTabTitle == item.name ? 'active':null"
                 data-tabs-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">
                 <div style="display: flex;
                 justify-content: center;
@@ -141,7 +141,7 @@
             </div>
 
         </div>
-        <div *ngIf="selectedTabTitle == 'Global Weather News'">
+        <div *ngIf="selectedTabTitle == 'Global Weather News'" [class]="selectedTabTitle == 'Global Weather News' ? 'active':null">
             <ng-container>
                 <iframe
                     src="https://www.meteoblue.com/en/weather/widget/three/south-africa_south-africa_8335359?geoloc=fixed&nocurrent=0&noforecast=0&days=4&tempunit=CELSIUS&windunit=KILOMETER_PER_HOUR&layout=image"

@@ -1,37 +1,41 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { Store } from '@ngrx/store';
-import { CustomFile } from 'src/app/authentication/choose-image/choose-image.component';
-import { IMedicalPosts, IPosts } from 'src/app/shared/Interfaces/IPosts';
-import { IUsersInterface } from 'src/app/shared/Interfaces/IUsersInterface';
-import { FireStoreCollectionsServiceService } from 'src/app/shared/Services/fire-store-collections-service.service';
-import { UserState } from 'src/app/shared/State/user.reducer';
-import { selectCurrentUser, selectDocId } from 'src/app/shared/State/user.selectors';
+import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
+import { FormControl } from "@angular/forms";
+import { Store } from "@ngrx/store";
+import { CustomFile } from "src/app/authentication/choose-image/choose-image.component";
+import { IMedicalPosts, IPosts } from "src/app/shared/Interfaces/IPosts";
+import { IUsersInterface } from "src/app/shared/Interfaces/IUsersInterface";
+import { FireStoreCollectionsServiceService } from "src/app/shared/Services/fire-store-collections-service.service";
+import { UserState } from "src/app/shared/State/user.reducer";
+import {
+  selectCurrentUser,
+  selectDocId,
+} from "src/app/shared/State/user.selectors";
 
 @Component({
-  selector: 'app-user-profile',
-  templateUrl: './user-profile.component.html',
-  styleUrls: ['./user-profile.component.scss']
+  selector: "app-user-profile",
+  templateUrl: "./user-profile.component.html",
+  styleUrls: ["./user-profile.component.scss"],
 })
-export class UserProfileComponent implements OnInit{
-  @ViewChild('imageInput') imageInput!: ElementRef;
+export class UserProfileComponent implements OnInit {
+  @ViewChild("imageInput") imageInput!: ElementRef;
   currentUser!: IUsersInterface | null;
   currentUserId!: string | null;
-  editUser:boolean = false;
+  editUser: boolean = false;
   selectedImages: any[] = [];
   selectedImage!: string;
   User!: IUsersInterface;
-  selectedImageString: string = '';
+  selectedImageString: string = "";
   UserNameFormControl = new FormControl();
   UserBioFormControl = new FormControl();
-  userName: string = '';
-  userBio: string = '';
-  myPosts:IMedicalPosts[] = []
+  userName: string = "";
+  userBio: string = "";
+  myPosts: IMedicalPosts[] = [];
   selectedTabIndex: number = 0;
-  constructor( private fireStoreCollectionsService: FireStoreCollectionsServiceService,
-    private store: Store<UserState>){
-
-  }
+  showPaymentContainer = false;
+  constructor(
+    private fireStoreCollectionsService: FireStoreCollectionsServiceService,
+    private store: Store<UserState>
+  ) {}
   ngOnInit(): void {
     // this.store.select(selectCurrentUser).subscribe((user) => {
     //   this.currentUser = user;
@@ -40,27 +44,32 @@ export class UserProfileComponent implements OnInit{
 
     this.fireStoreCollectionsService.getAllUsers().subscribe((users) => {
       // console.log('users here', users);
-      this.currentUser = users.filter(x=> x.docId == this.currentUserId)[0];
-      return (users.filter(x=> x.docId == this.currentUserId));
+      this.currentUser = users.filter((x) => x.docId == this.currentUserId)[0];
+      this.UserNameFormControl.setValue(this.currentUser?.name)
+      return users.filter((x) => x.docId == this.currentUserId);
     });
 
     this.store.select(selectDocId).subscribe((id) => {
       this.currentUserId = id;
-      console.log('Current user id:', this.currentUserId);
+      console.log("Current user id:", this.currentUserId);
     });
 
-    this.UserNameFormControl.valueChanges.subscribe((val:string)=>{
-      this.userName = val
-    })
-    this.UserBioFormControl.valueChanges.subscribe((val:string)=>{
-      this.userBio = val
-    })
+    this.UserNameFormControl.valueChanges.subscribe((val: string) => {
+      this.userName = val;
+    });
+
+    this.UserBioFormControl.valueChanges.subscribe((val: string) => {
+      this.userBio = val;
+    });
 
     this.fireStoreCollectionsService.getAllPoststags().subscribe((posts) => {
       // Sort the posts by dateAdded in descending order (most recent first)
-      console.warn("All my posts here",posts,this.currentUserId)
+      console.warn("All my posts here", posts, this.currentUserId);
       this.myPosts = posts
-        .filter((v) => v.user == this.currentUserId && v.username !== this.currentUser?.username )
+        .filter(
+          (v) =>
+            v.user == this.currentUserId 
+        )
         .sort((a, b) => {
           const dateA = new Date(a.datePosted).getTime();
           const dateB = new Date(b.datePosted).getTime();
@@ -69,10 +78,10 @@ export class UserProfileComponent implements OnInit{
     });
   }
 
-  EditUser(){
+  EditUser() {
     this.editUser = true;
   }
-  close(){
+  close() {
     this.editUser = false;
   }
 
@@ -93,7 +102,7 @@ export class UserProfileComponent implements OnInit{
         const reader = new FileReader();
         reader.onload = (e) => {
           // Add the data URL to the CustomFile object
-          const base64String = (e.target?.result as string).split(',')[1];
+          const base64String = (e.target?.result as string).split(",")[1];
 
           // Add the base64 string to the CustomFile object
           file.url = base64String;
@@ -103,8 +112,8 @@ export class UserProfileComponent implements OnInit{
           var firebaseUrl = this.fireStoreCollectionsService
             .uploadPicture(base64String)
             .then((firebaseUrl) => {
-              console.warn('download url here : ', firebaseUrl);
-              this.selectedImageString  = firebaseUrl
+              console.warn("download url here : ", firebaseUrl);
+              this.selectedImageString = firebaseUrl;
               // this.uploadUserImage(firebaseUrl);
             })
             .catch((error) => {
@@ -121,17 +130,24 @@ export class UserProfileComponent implements OnInit{
   }
   uploadUserImage(firebaseUrl: string) {
     this.fireStoreCollectionsService
-      .updateduserprofile(this.currentUser?.phone as string, firebaseUrl)
+      .updateduserprofile(this.currentUser?.phone as string, firebaseUrl,this.userName,this.userBio)
       .subscribe((x) => {});
   }
 
-  saveUserDetails(){
-    console.warn("this is it"+this.selectedImageString,this.currentUser?.phone)
+  saveUserDetails() {
+    console.warn(
+      "this is it" + this.selectedImageString,
+      this.currentUser?.phone
+    );
     this.uploadUserImage(this.selectedImageString);
     this.editUser = false;
   }
 
   selectTab(index: number): void {
     this.selectedTabIndex = index;
+  }
+
+  SubscriptionSettings() {
+   this.showPaymentContainer = !this.showPaymentContainer;
   }
 }

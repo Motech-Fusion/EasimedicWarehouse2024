@@ -4,7 +4,7 @@
         <ul class="c-accordion">
             <li id="GP" class="c-accordion__item"
                 style="--cover: url(https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80);">
-                <a href="#GP" class="c-accordion__action">
+                <a class="c-accordion__action">
                     <div class="c-accordion__content">
                         <h2 class="c-accordion__title c-accordion__title--hero c-accordion__title--hover-show">
                             General Practitioner
@@ -25,7 +25,7 @@
             </li>
             <li id="Gaenochologist" class="c-accordion__item"
                 style="--cover: url(https://i0.wp.com/post.healthline.com/wp-content/uploads/2020/07/Black-midwife-feeling-and-measuring-pregnant-womans-stomach-for-exam-1296x728-header-1.jpg?w=1155&h=1528);">
-                <a href="#Gaenochologist" class="c-accordion__action">
+                <a  class="c-accordion__action">
                     <div class="c-accordion__content">
                         <h2 class="c-accordion__title c-accordion__title--hero c-accordion__title--hover-show">
                             Gaenochologist
@@ -46,7 +46,7 @@
             </li>
             <li id="physician" class="c-accordion__item"
                 style="--cover: url(https://images.unsplash.com/photo-1536064479547-7ee40b74b807?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1470&q=80);">
-                <a href="#physician" class="c-accordion__action">
+                <a class="c-accordion__action">
                     <div class="c-accordion__content">
                         <h2 class="c-accordion__title c-accordion__title--hero c-accordion__title--hover-show">
                             Physician
@@ -66,7 +66,7 @@
             </li>
             <li id="dentist" class="c-accordion__item"
                 style="--cover: url(https://images.unsplash.com/photo-1565090568947-7293970ba471?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80);">
-                <a href="#dentist" class="c-accordion__action">
+                <a class="c-accordion__action">
                     <div class="c-accordion__content">
                         <h2 class="c-accordion__title c-accordion__title--hero c-accordion__title--hover-show">
                             Dentist
@@ -93,6 +93,25 @@
     width: 100%;
     object-fit: cover;" />
     </div>
+    <div class="play-buttons">
+        <div>
+            <img class="scan-me" src="../../../assets/easiMedicQRCode.png"/>
+        </div>
+        <div class="stores-container">
+            <h1 class="h3 py-4">We are available on the stores</h1>
+               <!-- App Store button -->
+        <a href="https://www.kobinet.com.tr/" target="_blank" class="market-btn apple-btn" role="button">
+            <span class="market-button-subtitle">Download on the</span>
+            <span class="market-button-title">App Store</span>
+        </a>
+        <!-- Google Play button -->
+        <a href="https://www.kobinet.com.tr/" target="_blank" class="market-btn google-btn" role="button">
+            <span class="market-button-subtitle">Download on the</span>
+            <span class="market-button-title">Google Play</span>
+        </a>     
+        </div>
+
+    </div>
     <!-- <app-post-item></app-post-item>
     <app-recommendations></app-recommendations> -->
     <!-- <app-modal></app-modal> -->
@@ -100,7 +119,7 @@
         <div class="get-started">
             <h1 *ngIf="!hideAds"
                 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
-                style="color:black">
+                style="color:#333d43">
                 Welcome to <span class="text-blue-600 dark:text-blue-500">Easi</span> Medic</h1>
             <p *ngIf="!hideAds"
                 class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">Browse medical professionals
@@ -109,16 +128,17 @@
             </p>
             <h1 *ngIf="hideAds"
                 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
-                style="color:white">
+                style="color:#333d43">
                 Weather and  <span class="text-blue-600 dark:text-blue-500">News</span> </h1>
             <p *ngIf="hideAds" class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">
-                EasiMedicWarehouse is the best place to find all medical related news and weather forecasts at the tip of your fingers. <span
+                EasiMedicWarehouse is the best place to find all medical related news and weather forecasts at the tip of your fingers.
+                <!-- <span
                     class="text-blue-600 dark:text-blue-500" style="text-decoration: underline;"
-                    (click)="navigateToPromoteItem()">click here</span>
+                    (click)="navigateToPromoteItem()">click here</span> -->
             </p>
 
             <div style="display: flex;flex-direction: row;">
-                <h5 class="text-xl font-bold dark:text-white" style="padding-bottom:12px;color:black">View News and Weather forecast
+                <h5 class="text-xl font-bold dark:text-white" style="padding-bottom:12px;color:#333d43">View News and Weather forecast
                 </h5>
                 <svg *ngIf="hideAds" (click)="toggleAdsVisibility('hide')" style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
                 class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="black">
@@ -237,6 +257,45 @@
         <!-- if chats selected -->
         <div *ngIf="selectedTabTitle == MESSAGES">
             <app-chat-list (chatEmitter)="messagingNavigation($event)" [friends]="messagesUserList"></app-chat-list>
+            <div *ngIf="!messagesUserList?.length"
+            class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white no-friends-section">
+            <h1 class="no-friends">No Messages found</h1>
+            <p class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">Message any user to enquire about any services
+            </p>
+            <div role="status" class="space-y-2.5 animate-pulse max-w-lg" style="width:100%">
+                <div class="flex items-center w-full">
+                    <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                </div>
+                <div class="flex items-center w-full max-w-[480px]">
+                    <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                </div>
+                <div class="flex items-center w-full max-w-[400px]">
+                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                </div>
+                <div class="flex items-center w-full max-w-[480px]">
+                    <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                </div>
+                <div class="flex items-center w-full max-w-[440px]">
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-32"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                    <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                </div>
+                <div class="flex items-center w-full max-w-[360px]">
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                </div>
+                <span class="sr-only">You currently have no messages...</span>
+            </div>
+        </div>
         </div>
         <div *ngIf="selectedTabTitle == DOCTORS">
             <ng-container *ngIf="doctors.length">

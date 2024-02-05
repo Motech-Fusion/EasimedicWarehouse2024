@@ -160,3 +160,14 @@ overflow: hidden;
 .w-72{
   margin-right:5px
 }
+
+.active {
+  background-color: #ffffff;
+  border-radius: 6px;
+  color: white;
+}
+button#profile-tab:hover {
+  background-color: #ffffff;
+  border-radius: 6px;
+  color: white;
+}

@@ -12,7 +12,7 @@
         <img class="h-auto w-full object-fit-contain rounded-lg"src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcQ0CEr4I-GsXfHWXW880eSpiq9Q2ovkXKBvSSRocbQa4s8EogSz" alt="" style="height:200px;object-fit: contain;"/>
      </div> -->
     <div *ngIf="images.length == 1">
-        <img (click)="previewImages(images)" *ngIf="images" class="h-auto w-full object-fit-contain rounded-lg"src="{{images}}" alt="" style="height:200px;object-fit: cover;"/>
+        <img (click)="previewImages(images)" *ngIf="images" class="h-auto w-full object-fit-contain rounded-lg"src="{{images}}" alt="" style="height:200px;object-fit: cover;width:100vw"/>
     </div>
 </ng-container>
 <ng-container *ngIf="addPost">

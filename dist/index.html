@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="en" data-critters-container>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <link rel="manifest" href="/manifest.json">
+  <title>EasiMedicWarehouse</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.css" rel="stylesheet">
+
+   <!-- =========================Language Translator Styles starts here =================================== -->
+
+    <!--  code below : this hides the google translate bar-->
+    <style>
+      .goog-te-banner-frame.skiptranslate {
+        display: none !important;
+      }
+      body {
+        top: 0px !important;
+      }
+    </style>
+    <!--  <link href="css/languageTranslate.css" rel="stylesheet" type="text/css">-->
+    <style>
+      .translate_wrapper {
+        position: fixed;
+        z-index: 1;
+        bottom: 130px;
+        /*bottom:100px;*/
+        color: #fff;
+        left: 6px;
+        /*right:6px;*/
+        font-size: 16px;
+        background: #1da1f2;
+        border-radius: 4px;
+      }
+
+      .current_lang {
+        cursor: pointer;
+        text-transform: uppercase;
+        overflow: hidden;
+      }
+
+      .lang {
+        padding: 10px 15px;
+      }
+
+      .lang.selected {
+        display: none;
+      }
+
+      .lang img,
+      .lang span.lang-txt {
+        display: inline-block;
+        margin-left: 5px;
+        vertical-align: middle;
+      }
+
+      .lang span.lang-txt {
+        position: relative;
+        top: -1px;
+        font-weight: 700;
+      }
+
+      .lang img {
+        width: 20px;
+        margin-left: 0;
+      }
+
+      .lang span span {
+        color: #999;
+        font-weight: 400;
+      }
+
+      .lang span.fa {
+        font-size: 12px;
+        position: relative;
+        top: -1px;
+        margin-left: 3px;
+      }
+
+      /*more lang*/
+      .more_lang {
+        transform: translateY(-20px);
+        opacity: 0;
+        cursor: pointer;
+        display: none;
+        -webkit-transition: all 0.3s cubic-bezier(0.25, 1.15, 0.35, 1.15);
+        -moz-transition: all 0.3s cubic-bezier(0.25, 1.15, 0.35, 1.15);
+        -o-transition: all 0.3s cubic-bezier(0.25, 1.15, 0.35, 1.15);
+        -ms-transition: all 0.3s cubic-bezier(0.25, 1.15, 0.35, 1.15);
+        transition: all 0.3s cubic-bezier(0.25, 1.15, 0.35, 1.15);
+      }
+
+      .translate_wrapper.active .more_lang {
+        display: block;
+      }
+
+      .more_lang.active {
+        opacity: 1;
+        transform: translateY(-0px);
+      }
+
+      .more_lang .lang:hover {
+        background: #5766b2;
+        color: #fff;
+      }
+
+      .more_lang .lang:hover span {
+        color: #fff;
+      }
+
+      .translate_wrapper:hover,
+      .translate_wrapper.active,
+      .content a:hover {
+        box-shadow: rgba(0, 0, 0, 0.2) 0 5px 15px;
+        -webkit-transition: all 0.3s cubic-bezier(0, 0.99, 0.44, 0.99);
+        -moz-transition: all 0.3s cubic-bezier(0, 0.99, 0.44, 0.99);
+        -o-transition: all 0.3s cubic-bezier(0, 0.99, 0.44, 0.99);
+        -ms-transition: all 0.3s cubic-bezier(0, 0.99, 0.44, 0.99);
+        transition: all 0.3s cubic-bezier(0, 0.99, 0.44, 0.99);
+      }
+
+      .translate_wrapper.active .lang {
+        border-bottom: 1px solid #eaeaea;
+      }
+
+      .float {
+        position: fixed;
+        width: 60px;
+        height: 60px;
+        bottom: 40px;
+        left: 40px;
+        background-color: #25d366;
+        color: #fff;
+        border-radius: 50px;
+        text-align: center;
+        font-size: 30px;
+        box-shadow: 2px 2px 3px #999;
+        z-index: 100;
+      }
+
+      .my-float {
+        margin-top: 16px;
+      }
+    </style>
+
+    <!-- =========================Language Translator Styles end here =================================== -->
+
+<style>@font-face{font-family:FontAwesome;src:url(fontawesome-webfont.2b13baa7dd4f54c9.eot?v=4.7.0);src:url(fontawesome-webfont.2b13baa7dd4f54c9.eot?#iefix&v=4.7.0) format("embedded-opentype"),url(fontawesome-webfont.e9955780856cf8aa.woff2?v=4.7.0) format("woff2"),url(fontawesome-webfont.cf011583fb81df9f.woff?v=4.7.0) format("woff"),url(fontawesome-webfont.8a7cb27d142e3e19.ttf?v=4.7.0) format("truetype"),url(fontawesome-webfont.da909aa098b0ee2d.svg?v=4.7.0#fontawesomeregular) format("svg");font-weight:400;font-style:normal}.fa{display:inline-block;font:14px/1 FontAwesome;font-size:inherit;text-rendering:auto;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.fa-chevron-down:before{content:"\f078"}*,:before,:after{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}:before,:after{--tw-content:""}html{line-height:1.5;-webkit-text-size-adjust:100%;tab-size:4;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,"Apple Color Emoji","Segoe UI Emoji",Segoe UI Symbol,"Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal}body{margin:0;line-height:inherit}img,svg{display:block;vertical-align:middle}img{max-width:100%;height:auto}*,:before,:after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(63 131 248 / .5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: }.h-8{height:2rem}.w-8{width:2rem}</style><link rel="stylesheet" href="styles.e18970ac09af4bca.css" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="styles.e18970ac09af4bca.css"></noscript></head>
+<body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/flowbite.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.2.0/datepicker.min.js"></script>
+  <script src="../path/to/flowbite/dist/datepicker.js"></script>
+  <!--language translator-->
+  <div class="translate_wrapper">
+    <div class="current_lang">
+      <div class="lang" href="#en">
+        <svg class="h-8 w-8 text-white-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"/>
+        </svg>
+
+        <span class="lang-txt">EN</span>
+        <span class="fa fa-chevron-down chevron"></span>
+      </div>
+    </div>
+
+    <div class="more_lang">
+      <div href="#googtrans(en|en)" class="lang lang-select" data-value="en" data-reload>
+        <img href="#en" src="./assets/za.svg">
+        <span class="lang-txt">English<span> (ZA)</span></span>
+      </div>
+
+      <div href="#googtrans(zh|en)" class="lang selected lang-select" data-value="zh" data-reload>
+        <img href="#zh" src="./assets/za.svg">
+        <span class="lang-txt">Chinese<span> (ZH)</span></span>
+      </div>
+
+      <div href="#googtrans(en|zu)" class="lang lang-select" data-value="zu" data-reload>
+        <img src="./assets/za.svg">
+        <span href="#zu" class="lang-txt">Zulu</span>
+      </div>
+
+      <div href="#googtrans(en|st)" class="lang lang-select" data-value="st" data-reload>
+        <img src="./assets/za.svg">
+        <span href="#st" class="lang-txt">Sesotho</span>
+      </div>
+
+      <div href="#googtrans(en|xh)" class="lang lang-select" data-value="xh" data-reload>
+        <img src="./assets/za.svg">
+        <span href="#xh" class="lang-txt">Xhosa</span>
+      </div>
+      <div href="#googtrans(en|zh-CN)" class="lang lang-select" data-value="xh" data-reload>
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABcCAMAAADUMSJqAAAAZlBMVEXuHCX//wDtACbuDSbych/uFSXwTSL1kBv6yBLxZCD/+gP+9Abzdx7sACj6zxHxVyH0iRzybB/3pxjvLiT3rxf2oxjvOyP1lxr2nBn84A3xXCD4tBb86Ar5wBT4uhXzgR3wRiP72Q6/vEaBAAACAUlEQVRoge2WXXeCMAyGSWKrLZQPEXWoQ///n1wL0zkpzBY4Zxd97iyet+nbpEkUBf47uJAukdY+LqPOklypj91CoWMsU8hnEGe2NQ4AaaYma9eWRRRgSKeK4ymn3oaZkV7hZF9UvOlp4JHjGqZbzvZgUUEWKZjseIQVQNLzxexad6u2b++izgAXqwFdFlGB7UF8YKW5uhEDlOSI29JLHA9GvBg+O6awlv0rH4PuqA8j/on336/nRy0OYC20Qe0mWXUUbbFI8f0zebnbctd+L11ulQkJVs7XlxjFemPWX5fHQ8eNTXvXSwuGEVRRcXAynWHek5aFTUIBMnItVryef2vf7K0HG59ngPD0rH0YqhS/Aoow+dHmc7cdehJ3yod3aAvkkShziz9ZHg++L04V9ICaVnbbpfx+wBesuI9jbSHJBHXTMXvY312Gtx2Se/DGlVtpnmuuU/5s86WsMw6xaHJXbVoBVF1yE33q18lyetp2N2LtVaOBb6R4WIGN3sj2pzrWl106pxKmz/WOe3tHUFrcZw5gv3ywp4Rug3kt+5PNLFAu9Gi0nn8k/Rkt5g28daxZxgwm9qhSt/bzvjiXlwqSpYZ/M86cuOek9QfdIAYXv0nrD8iUzpH7trhRsDplldso5ABDwngRTzpILCg+c1kGAoFAIBAIBAKBQCAQCAzyBfbiDwUqziriAAAAAElFTkSuQmCC">
+        <span href="#xh" class="lang-txt">Mandarin</span>
+      </div>
+      <div href="#googtrans(en|ru)" class="lang lang-select" data-value="xh" data-reload>
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABcCAMAAADUMSJqAAAAGFBMVEX////VKx4AOabLzuUAI6AAOquoMFTYKxfSgZr/AAAAQklEQVRoge3MsRGAIAAEsBcU9t+YCSy/0EsGSAIAAL8zi3IXZRTJ5XK5XC6Xy7+dP0VZRdlFuYrkcrlcLpfL5fI3B4yeJ4n0mroXAAAAAElFTkSuQmCC">
+        <span href="#xh" class="lang-txt">Russian</span>
+      </div>
+      <div href="#googtrans(en|ar)" class="lang lang-select" data-value="xh" data-reload>
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABcCAMAAADUMSJqAAAAYFBMVEUAAAD///8Aej3OESbL29ANQSUGf0AAcSkAfz7XACTKAADYEihvXTV5ChZxWzVqXzbqsLOFCxh+Cxd0GxwASCd2YDgAhUJ1WjTPAAtmUB8Adivir6/E4dPrtbfpq63moqUKwWWVAAABD0lEQVRoge3WVw7CMBREUYehJfTeYf+7pENIYv94JijSuws4smzZz85ZlmVZuWZKfDAX4lDqUOpQ6lDqeOgjIa7SodSh1KHUodSh1KHUodSh1FHQF8sOrSKOwWrdZVXCkW76LVJlHOmYpVfgvLVX4bS1V+IsvRon6R6co/twpMN43YszdD9O0AN4vB7CkU7i9CAeq4fxm95tJq7cFuWBxtrBSxRr/+n6Kx8uhu0dFgzbN+Yodv0DmvZxqflTxLPL+Ha377Eq4tnh2KZVwLNTQswJ7V+cbP/g2ZRr53G6ncP59hcX2B9cYb9xif3CNfYTF9kPXGXf8ewssm+4zk6c0E7cRWcnTmgbbrjhhjcPvwLugjGuT9h7HgAAAABJRU5ErkJggg==">
+        <span href="#xh" class="lang-txt">Arabic</span>
+      </div>
+      <div href="#googtrans(en|sw)" class="lang lang-select" data-value="xh" data-reload>
+        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAABcCAMAAADUMSJqAAAA5FBMVEUAAAAAZgC7AAD///+6AADGR0cAYACAgICApIDUgIC/AAC3AADXjIz89vY0AADEAADjr68AagD15eXYh4fw1dWnp6fivb3IT0+sSEhmAAAQAABIAACiAAB5AACNAADJX1+/IiKAAACWAADZk5PRdXU/AAAZAABRAADObW0ATwDt7++0urpaAAAmAACxsrItLS0hISHc3Nx1dXXLyspIRkdgYGA4ODjsyspTY2OlHBzFpaVUh2KlMxsYSxtkdmQzXAB7PgAuVC6oHQAAQgBfTQB0f3SDOwBGYUZ/SiCAIB+NkYtrPgDetGv4AAADFUlEQVRoge2YaVviMBCAS9J2l5SCsaBWPEBBsWi11vsAPPD8//9nc1Qo7ANTifmw+3Q+aDLNvB0myUxSw8gll1xyySWbhMfwmONwQXjNPYGGnLi1BeHHOICGBDjDr5tlGs0fEMGvnyk1jLvpfvn9vZzudzFeNCosohjj03HXt1ota3PcP2WPwVmZLXHavEm8UskjzfSr48XZxlnKfpM4Vc+rOuTLd/7mMwW4AJyLlk9Qw/U8t4GILxTnio4bxgUjiBVTRsjcxsUi3jYRErMasUcXSnAjTFzfIMgscnjRRGQjcXzR3TmSQCy3TYKQs8ThSw5CPOxsmbqqbOMiYPAyYyPnksMvGRyRMoMHcFB+gRJHV9cCvszhywJ+fRXFsKWBQYmDG4Qm4QjdBDFsmQGOu5bJeaaEy7bVzWCYBb4inUUSLtvOyg/BV4WzE54jczUL3AJlLXF8IubIWYMtDRMS4jfJ33DS9AloaiBIKuv1BF7l8GoCr69XQFMYzva65I13KO+wjKAO51t9S7g+yi1cuyVTgiK8wlLgoYSPsiKDH7JECcYFDgtLEUeiYTbcYtFtyKV4xNSwKTSAp9evoItKJJtcCwYdgsuSuSPi4uyWSrsCTna4tgkFHYJXRE2Tc2eutlpyt8o66kNBB+FtgZE+mp4nIy7LaFsZvscx+zIsSzhZ5mSfa/eU4aKi1IXflstKm0y/daH+GXhbwDs803UEvP2vwHWFReuEal2KOjeR1u2vNXHpTbm8WPi6ioXWMqe1QCsdLbQeirQe57QeRDOM0XqE1nn4V7i2/AYljG7vpi9cd7dRCFsaNiT3uGf3p6+KfbuH70FTowDIQRwfFOhg8pI7oFIPCAjv4Qf2lz6mr+ePlKkecE8V/hTUbP6/b46zotnnGrsWPKnB7Q8sCfR5/Enkmcr3uh+2EvwJD5MWC3vyMWdAE9UQA67Phx+E0WjW6Iv8DPVCR0+jcP6czoe/4tdxh35anY71SWc8/jZ8GKajSvtvb/0Uu2CHw2mLb8ALUz+b0rmPvwlXkxyew3N4Ds/h/wf8DzlUblXkhBUAAAAAAElFTkSuQmCC">
+        <span href="#xh" class="lang-txt">Swahili</span>
+      </div>
+      <div href="#googtrans(en|pt)" class="lang lang-select" data-value="xh" data-reload>
+        <img src="data:image/png;base64,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">
+        <span href="#xh" class="lang-txt">Portuguese</span>
+      </div>
+      <div href="#googtrans(en|af)" class="lang lang-select" data-value="af" data-reload>
+        <img src="./assets/za.svg">
+        <span href="#af" class="lang-txt">Afrikaans</span>
+      </div>
+
+      <div href="#googtrans(en|en)" class="lang selected lang-select" data-value="en" data-reload>
+        <img href="#fr" src="./assets/za.svg">
+        <span class="lang-txt">English<span> (US)</span></span>
+      </div>
+      <div href="#googtrans(ar|en)" class="lang selected lang-select" data-value="ar" data-reload>
+        <img href="#ar" src="./assets/za.svg">
+        <span class="lang-txt">Arabic<span> (AR)</span></span>
+      </div>
+      <div href="#googtrans(zh|en)" class="lang selected lang-select" data-value="zh" data-reload>
+        <img href="#zh" src="./assets/za.svg">
+        <span class="lang-txt">Chinese<span> (ZH)</span></span>
+      </div>
+      <div href="#googtrans(nl|en)" class="lang selected lang-select" data-value="nl" data-reload>
+        <img href="#nl" src="./assets/za.svg">
+        <span class="lang-txt">Dutch<span> (NL)</span></span>
+      </div>
+      <div href="#googtrans(el|en)" class="lang selected lang-select" data-value="el" data-reload>
+        <img href="#el" src="./assets/za.svg">
+        <span class="lang-txt">Greek<span> (EL)</span></span>
+      </div>
+      <div href="#googtrans(he|en)" class="lang selected lang-select" data-value="he" data-reload>
+        <img href="#he" src="./assets/za.svg">
+        <span class="lang-txt">Hebrew<span> (HE)</span></span>
+      </div>
+      <div href="#googtrans(ig|en)" class="lang selected lang-select" data-value="ig" data-reload>
+        <img href="#ig" src="./assets/za.svg">
+        <span class="lang-txt">Igbo<span> (IG)</span></span>
+      </div>
+      <div href="#googtrans(sw|en)" class="lang selected lang-select" data-value="en" data-reload>
+        <img href="#sw" src="./assets/za.svg">
+        <span class="lang-txt">Swahili<span> (SW)</span></span>
+      </div>
+      <div href="#googtrans(th|en)" class="lang selected lang-select" data-value="th" data-reload>
+        <img href="#th" src="./assets/za.svg">
+        <span class="lang-txt">Thai<span> (TH)</span></span>
+      </div>
+      <div href="#googtrans(yo|en)" class="lang selected lang-select" data-value="yo" data-reload>
+        <img href="#yo" src="./assets/za.svg">
+        <span class="lang-txt">Yoruba<span> (YO)</span></span>
+      </div>
+      <div href="#googtrans(so|en)" class="lang selected lang-select" data-value="so" data-reload>
+        <img href="#so" src="./assets/za.svg">
+        <span class="lang-txt">Somali<span> (SO)</span></span>
+      </div>
+      <div href="#googtrans(sq|en)" class="lang selected lang-select" data-value="sq" data-reload>
+        <img href="#sq" src="./assets/za.svg">
+        <span class="lang-txt">Albanian<span> SQ</span></span>
+      </div>
+    </div>
+  </div>
+  <!--language translator-->
+  <app-root></app-root>
+  <!--translation scripts-->
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement(
+        {
+          pageLanguage: "en",
+          layout: google.translate.TranslateElement.FloatPosition.TOP_LEFT,
+        },
+        "google_translate_element"
+      );
+    }
+  
+    function triggerHtmlEvent(element, eventName) {
+      var event;
+      if (document.createEvent) {
+        event = document.createEvent("HTMLEvents");
+        event.initEvent(eventName, true, true);
+        element.dispatchEvent(event);
+      } else {
+        event = document.createEventObject();
+        event.eventType = eventName;
+        element.fireEvent("on" + event.eventType, event);
+      }
+    }
+  
+    jQuery(".lang-select").click(function () {
+      var theLang = jQuery(this).attr("data-lang");
+      jQuery(".goog-te-combo").val(theLang);
+  
+      // alert(jQuery(this).attr('href'));
+  
+      window.location = jQuery(this).attr("href");
+      location.reload();
+    });
+  </script>
+  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+  
+  <script>
+    var tnum = "en";
+  
+    $(document).ready(function () {
+      $(document).click(function (e) {
+        $(".translate_wrapper, .more_lang").removeClass("active");
+      });
+  
+      $(".translate_wrapper .current_lang").click(function (e) {
+        e.stopPropagation();
+        $(this).parent().toggleClass("active");
+  
+        setTimeout(function () {
+          $(".more_lang").toggleClass("active");
+        }, 5);
+      });
+  
+      /*TRANSLATE*/
+      // translate(tnum);
+  
+      $(".more_lang .lang").click(function () {
+        $(this).addClass("selected").siblings().removeClass("selected");
+        $(".more_lang").removeClass("active");
+  
+        var img = $(this).find("img").attr("src");
+        var lang = $(this).attr("data-value");
+        var tnum = lang;
+        translate(tnum);
+  
+        $(".current_lang .lang-txt").text(lang);
+        $(".current_lang img").attr("src", img);
+  
+        if (lang == "ar") {
+          $("body").attr("dir", "rtl");
+        } else {
+          $("body").attr("dir", "ltr");
+        }
+      });
+    });
+  
+    function translate(tnum) {
+      // $('h1').text(trans[0][tnum]);
+      // // $('#RetailNetwork').text(trans[1][tnum]);
+      // $('p').text(trans[1][tnum]);
+      $(".content a span").text(trans[2][tnum]);
+    }
+  
+    var trans = [
+      {
+        en: "Our Values",
+        fr: "Nos valeurs",
+      },
+      {
+        en:
+          "To become the leader within the Eastern DRC and the rest of Africa in the supply and distribution of high-quality energy products. The foundation of our growth is based on the adaptation to the latest technology, health and safety practices and leading marketing trends in the industry while maintaining strong social, environmental and corporate responsibilities.\n" +
+          "We pride ourselves in not only being able to source and supply quality energy products to the market, but also ensuring that we maintain the highest level of:",
+        fr:
+          "Devenir le leader de l'Est de la RDC et du reste de l'Afrique dans la fourniture et la distribution de produits énergétiques de haute qualité. Le fondement de notre croissance est basé sur l'adaptation aux dernières technologies, pratiques de santé et sécurité et aux principales tendances marketing de l'industrie tout en maintenant de fortes responsabilités sociales, environnementales et d'entreprise.\n" +
+          "Nous sommes fiers non seulement de pouvoir s'approvisionner et de fournir des produits énergétiques de qualité sur le marché, mais également de veiller à maintenir le plus haut niveau de:",
+      },
+      {
+        en: "See More",
+        fr: "En savoir plus dfgdh",
+      },
+      {
+        en: "aims to become the leader within the Eastern DRC and the rest of Africa in the supply and distribution of premium quality fuel and lubricant products at an affordable price. With our ever-expanding presence in the Democratic Republic of Congo and East Africa our mission is to be the catalyst that leads to a connected Africa. We do that by providing premium quality diesel and petroleum to the doorsteps of our consumers, by providing efficient fuel distribution solutions for our clients all this while making a positive impact in the communities where we live and work.",
+        fr: "En savoir plus vgdfd",
+      },
+      {
+        en: "aims to become the leader within the Eastern DRC and the rest of Africa in the supply and distribution of premium quality fuel and lubricant products at an affordable price. With our ever-expanding presence in the Democratic Republic of Congo and East Africa our mission is to be the catalyst that leads to a connected Africa. We do that by providing premium quality diesel and petroleum to the doorsteps of our consumers, by providing efficient fuel distribution solutions for our clients all this while making a positive impact in the communities where we live and work.",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Respect",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Health & Safety Awareness",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Equal Opportunities",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Efficiency & Reliability",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Opening Hours",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Office Hours",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Contact Details",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Our Address",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Kazingo Depot (Bukavu)",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Our Values",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Contact Us",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Send Email",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Message",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Email Address",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Name",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Have An Enquiry ? Get In Touch With Us",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Learn More",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Our Sectors",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Storage",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Mining",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Retail Network",
+        fr: "You Win",
+      },
+      {
+        en: "Lubricants",
+        fr: "En savoir plus cvdg",
+      },
+      {
+        en: "Fuels",
+        fr: "En savoir plus cvdg",
+      },
+    ];
+  </script>
+  <!--translation scripts-->
+  <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.4.1.min.220afd743d.js?site=5e70a9f92d9c3fb5aa6fed41" type="text/javascript" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+  <!-- <script src="../path/to/flowbite/dist/flowbite.min.js"></script> -->
+  
+<script src="runtime.f1392c77a41bf253.js" type="module"></script><script src="polyfills.2f765dbe5eb5eb51.js" type="module"></script><script src="main.6b3c16fe5179f296.js" type="module"></script></body>
+</html>

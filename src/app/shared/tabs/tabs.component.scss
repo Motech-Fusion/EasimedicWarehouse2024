@@ -48,3 +48,16 @@
 color: grey !important;
 border-color: transparent;
 }
+
+a.inline-flex.items-center.justify-center.p-4.border-b-2.border-transparent.rounded-t-lg.hover\:text-gray-600.hover\:border-gray-300.dark\:hover\:text-gray-300.group:hover {
+  background-color: #333d4312;
+  border-radius: 32px;
+  /* color: white; */
+  border-color: transparent;
+}
+a.inline-flex.items-center.justify-center.p-4.border-b-2.border-transparent.rounded-t-lg.hover\:text-gray-600.hover\:border-gray-300.dark\:hover\:text-gray-300.group.active {
+  background-color: #333d4312;
+  border-radius: 32px;
+  /* color: white; */
+  border-color: transparent;
+}

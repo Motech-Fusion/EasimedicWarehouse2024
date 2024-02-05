@@ -121,6 +121,11 @@
     margin-left: 8px;
     border-radius: 12px;
 }
+
+.grid-pricelist{
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
   }
 }
 
@@ -150,4 +155,13 @@
   .get-started{
       padding: 6px;
   }
+  .grid-pricelist{
+    display: contents;
+    
+  }
+}
+
+header.flex.flex-wrap.items-center.p-4.md\:py-8 {
+  background-color: #333d43;
+  border-radius: 12px;
 }

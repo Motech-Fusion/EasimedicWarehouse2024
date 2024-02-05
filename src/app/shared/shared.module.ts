@@ -36,6 +36,7 @@ import { AppointmentDialogComponent } from './appointment-dialog/appointment-dia
 import { DoctorUserItemComponent } from './doctor-user-item/doctor-user-item.component';
 import { TowTruckUserItemComponent } from './tow-truck-user-item/tow-truck-user-item.component';
 import { PeriodTrackerComponent } from './period-tracker/period-tracker.component';
+import { PriceListItemComponent } from './price-list-item/price-list-item.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { PeriodTrackerComponent } from './period-tracker/period-tracker.componen
     AppointmentDialogComponent,
     DoctorUserItemComponent,
     TowTruckUserItemComponent,
-    PeriodTrackerComponent
+    PeriodTrackerComponent,
+    PriceListItemComponent
   ],
   imports: [
     CommonModule,
@@ -109,7 +111,8 @@ import { PeriodTrackerComponent } from './period-tracker/period-tracker.componen
     AppointmentDialogComponent,
     DoctorUserItemComponent,
     TowTruckUserItemComponent,
-    PeriodTrackerComponent
+    PeriodTrackerComponent,
+    PriceListItemComponent
   ],
   providers: [AlertService],
 })

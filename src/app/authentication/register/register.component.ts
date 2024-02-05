@@ -132,6 +132,9 @@ export class RegisterComponent implements OnInit {
   ): Promise<void> {
     try {
       const userCollection = collection(this.firestore, "Users");
+      const doctorsCollection = collection(this.firestore, "Doctors");
+      const sangomaCollection = collection(this.firestore, "Sangomas");
+      const towTrucksCollection = collection(this.firestore, "TowTruckServices");
 
       // Generate a random key for encryption
       let key = "";
@@ -166,7 +169,82 @@ export class RegisterComponent implements OnInit {
         InterestedIn: "",
         suspended: false,
         easiMedicFor: this.selectedUserType,
+      }).then(async(x)=>{
+        x.id;
+        if(this.providerType == "Doctors"){
+          await setDoc(doc(doctorsCollection, x.id), {
+            username: username,
+        name: name,
+        phone: phone,
+        fullname:name,
+        password: { ciphertext, key },
+        notificationToken: token,
+        image:
+          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+        bio: "",
+        friends: [],
+        blocked: [],
+        location: {},
+        requests: [],
+        language: "English",
+        dob: dob,
+        created: moment().format("DD-MM-YYYY"),
+        availability: "online",
+        InterestedIn: "",
+        suspended: false,
+        easiMedicFor: this.selectedUserType,
+          })
+         }
+         else if(this.providerType == "Sangoma"){
+          await setDoc(doc(sangomaCollection, x.id), {
+            username: username,
+        name: name,
+        fullname:name,
+        phone: phone,
+        password: { ciphertext, key },
+        notificationToken: token,
+        image:
+          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+        bio: "",
+        friends: [],
+        blocked: [],
+        location: {},
+        requests: [],
+        language: "English",
+        dob: dob,
+        created: moment().format("DD-MM-YYYY"),
+        availability: "online",
+        InterestedIn: "",
+        suspended: false,
+        easiMedicFor: this.selectedUserType,
+          })
+         }
+         else if(this.providerType == "TowTrucks"){
+          await setDoc(doc(towTrucksCollection, x.id), {
+            username: username,
+        name: name,
+        fullname:name,
+        phone: phone,
+        password: { ciphertext, key },
+        notificationToken: token,
+        image:
+          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+        bio: "",
+        friends: [],
+        blocked: [],
+        location: {},
+        requests: [],
+        language: "English",
+        dob: dob,
+        created: moment().format("DD-MM-YYYY"),
+        availability: "online",
+        InterestedIn: "",
+        suspended: false,
+        easiMedicFor: this.selectedUserType,
+          })
+         }
       });
+      
 
       // Additional logic if needed
     } catch (error: any) {

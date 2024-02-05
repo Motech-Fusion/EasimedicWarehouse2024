@@ -168,10 +168,18 @@ export class ChatScreenComponent implements OnInit {
       this.MessageTextFormControl.setValue('');
       this.selectedImages = [];
       this.scrollToBottom();
+      this.addDoctorToMyChatsList(this.currentUserId,this.friendData?.docId)
     })
     .catch((error) => {
       console.error('Error sending message:', error);
     });
+  }
+
+
+  addDoctorToMyChatsList(currentUserId: string | null, docId: string | undefined) {
+    this.firebaseService.addCurrentUserIdToFriendsArray(docId as string,currentUserId as string).subscribe(x=>{
+console.info("added here",x)
+    })
   }
 
   triggerImageInput(): void {

@@ -242,6 +242,7 @@ export class FireStoreCollectionsServiceService {
       const unsubscribe = onSnapshot(usersQuery, (querySnapshot) => {
         const users: IDoctorsInterface[] = [];
         querySnapshot.forEach((doc) => {
+          
           const userData = doc.data() as IDoctorsInterface;
           const userDataWithId: IDoctorsInterface = {
             ...userData,
@@ -725,12 +726,13 @@ console.log('friend found',userDoc)
   }
 
   addCurrentUserIdToFriendsArray(recieverUserId: string, currentUserId: string | null): Observable<void> {
+    debugger
     if (currentUserId === null) {
       return throwError("Current user ID is null.");
     }
-  console.log("sender id ",currentUserId);
-  console.log("reciever id ",recieverUserId);
-    const postDoc = doc(this.firestore, 'Users', currentUserId);
+    console.log("sender id ", currentUserId);
+    console.log("reciever id ", recieverUserId);
+    const postDoc = doc(this.firestore, 'Users', recieverUserId);
   
     return new Observable<void>((observer) => {
       const unsubscribe = onSnapshot(postDoc, (postSnapshot) => {
@@ -741,15 +743,15 @@ console.log('friend found',userDoc)
             // Ensure that the "friends" property exists or initialize an empty array
             const currentFriends = post.friends || [];
   
-            if (currentFriends.includes(recieverUserId)) {
+            if (currentFriends.includes(currentUserId)) {
               // Remove the userId from the "friends" array
               // transaction.update(postDoc, {
-              //   friends: arrayRemove(currentUserId),
+              //   friends: arrayRemove(recieverUserId), // Use recieverUserId to remove
               // });
             } else {
               // Add the userId to the "friends" array
               transaction.update(postDoc, {
-                friends: arrayUnion(recieverUserId),
+                friends: arrayUnion(currentUserId),
               });
             }
   
@@ -773,6 +775,7 @@ console.log('friend found',userDoc)
       return () => unsubscribe();
     });
   }
+  
   
   
 
@@ -1198,7 +1201,7 @@ console.log('friend found',userDoc)
     return downloadUrl;
   }
 
-  updateduserprofile(currentUserNumber:string,image:string) {
+  updateduserprofile(currentUserNumber:string,image:string,name?:string,bio?:string) {
     const usersCollection = 'Users';
     const queryRef = query(collection(this.firestore, usersCollection), where('phone', '==', currentUserNumber));
     
@@ -1219,6 +1222,8 @@ console.log('friend found',userDoc)
             // Update the friend's requests array
             return from(updateDoc(userDoc, {
               image: image,
+              name:name,
+              bio:bio
             }));
           }
         }),
@@ -1369,7 +1374,6 @@ console.log('friend found',userDoc)
 
   // Method to send push notification
   sendPushNotification(user: IUsersInterface, title: string, body: string): void {
-    debugger
     if (!user || !user.notificationToken) {
       console.error('Invalid user or user has no notification token');
       return;

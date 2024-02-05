@@ -21,7 +21,7 @@
                     <!-- profile meta -->
                     <div class="w-8/12 md:w-7/12 ml-4">
                         <div class="md:flex md:flex-wrap md:items-center mb-4">
-                            <h2 *ngIf="!editUser"
+                            <h2 *ngIf="!editUser" style="color:black"
                                 class="text-3xl inline-block font-light md:mr-2 mb-2 sm:mb-0 text-white">
                                 {{currentUser?.name}}
                             </h2>
@@ -34,7 +34,7 @@
                           <button  class="bg-blue-500 px-2 py-1 
                           text-white font-semibold text-sm rounded block text-center 
                           sm:inline-block block text-white melachat-background-color" (click)="messagingNavigation(currentUser)" style="background-color:#1da1f2" type="button" class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                          Message Doctor
+                          Send message
                             <svg width="24px" height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#ffffff"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M8 12H8.01M12 12H12.01M16 12H16.01M21.0039 12C21.0039 16.9706 16.9745 21 12.0039 21C9.9675 21 3.00463 21 3.00463 21C3.00463 21 4.56382 17.2561 3.93982 16.0008C3.34076 14.7956 3.00391 13.4372 3.00391 12C3.00391 7.02944 7.03334 3 12.0039 3C16.9745 3 21.0039 7.02944 21.0039 12Z" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>                              
                             </button>
                             
