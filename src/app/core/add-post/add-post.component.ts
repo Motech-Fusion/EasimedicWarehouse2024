@@ -108,6 +108,19 @@ export class AddPostComponent implements OnInit {
         // Handle error accordingly
       }
     );
+    // this.fireStoreCollectionsService.analyzeAndUploadTrendingHashtags(postData).subscribe(
+    //   () => {
+    //     console.log('Post uploaded successfully',postData);
+    //     this.alertService.success('Post uploaded successfully!');
+    //     this.router.navigate(['home'])
+    //     // Additional logic or redirection after successful upload
+    //   },
+    //   (error) => {
+    //     console.error('Error uploading post:', error);
+    //     this.alertService.error('Post upload failed!',error);
+    //     // Handle error accordingly
+    //   }
+    // );
   }
 
   private extractAndReturnTitle(): string {

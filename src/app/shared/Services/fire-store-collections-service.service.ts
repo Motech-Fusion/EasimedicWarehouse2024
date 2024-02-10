@@ -73,6 +73,7 @@ export interface IMedicalProduct {
   image: string;
   name: string;
   price: number;
+  doctorName?:string
 }
 
 export interface Story {
@@ -336,7 +337,7 @@ export class FireStoreCollectionsServiceService {
           post.docId = doc.id; // Add the docId property
           posts.push(post);
         });
-        this.analyzeAndUploadTrendingHashtags(posts);
+        // this.analyzeAndUploadTrendingHashtags(posts as IMedicalPosts[]);
         observer.next(posts);
       }, (error) => {
         observer.error(error);
@@ -347,16 +348,15 @@ export class FireStoreCollectionsServiceService {
     });
   }
 
-  private async analyzeAndUploadTrendingHashtags(posts: IPosts[]): Promise<void> {
+  public async analyzeAndUploadTrendingHashtags(posts: IMedicalPosts[]): Promise<void> {
     const hashtagCountMap: Map<string, number> = new Map();
-  
+    debugger;
     // Analyze hashtags in posts
     posts.forEach((post) => {
-      const hashtags = this.extractHashtags(post.post); // Replace with your own logic to extract hashtags
+      const hashtags = this.extractHashtags(post.post);
   
       // Count hashtags
-      const uniqueHashtags = new Set(hashtags); // Use a Set to ensure uniqueness
-      uniqueHashtags.forEach((hashtag) => {
+      hashtags.forEach((hashtag) => {
         const count = hashtagCountMap.get(hashtag) || 0;
         hashtagCountMap.set(hashtag, count + 1);
       });
@@ -365,6 +365,14 @@ export class FireStoreCollectionsServiceService {
     // Upload trending hashtags to "Trending" collection
     const trendingCollectionRef = collection(this.firestore, 'Trending');
   
+    // Check if "Trending" collection exists
+    const trendingCollectionSnapshot = await getDocs(trendingCollectionRef);
+    if (trendingCollectionSnapshot.empty) {
+      // "Trending" collection doesn't exist, create it
+      await setDoc(doc(trendingCollectionRef), { dummy: true }); // Add a dummy document
+    }
+  
+    // Iterate through the hashtags and update/add them in the collection
     for (const [hashtag, count] of hashtagCountMap.entries()) {
       // Check if the hashtag already exists in Trending
       const existingDocQuery = query(
@@ -374,24 +382,43 @@ export class FireStoreCollectionsServiceService {
   
       const existingDocs = await getDocs(existingDocQuery);
   
-      if (existingDocs.size > 0) {
+      if (!existingDocs.empty) {
         // Hashtag exists, update the count
         const existingDoc = existingDocs.docs[0];
         const existingDocRef = doc(trendingCollectionRef, existingDoc.id);
         await updateDoc(existingDocRef, { count });
       } else if (count > 2) {
-        // Hashtag doesn't exist, add a new document
+        // Hashtag doesn't exist or count is above threshold, add a new document
         await addDoc(trendingCollectionRef, { hashtag, count });
       }
     }
   }
   
-
   private extractHashtags(content: string): string[] {
-    // Replace this with your own logic to extract hashtags from post content
-    // Here's a simple example using a regular expression
+    // Use a regular expression to extract hashtags from post content
     const regex = /#(\w+)/g;
     return (content.match(regex) || []).map((match) => match.toLowerCase());
+  }
+  
+  getAllTrendingHashtags(): Observable<IHashTags[]> {
+    const hashtagsCollection = collection(this.firestore, 'Trending');
+    return new Observable<IHashTags[]>((observer) => {
+      getDocs(hashtagsCollection)
+        .then((querySnapshot) => {
+          const hashtags: IHashTags[] = [];
+          querySnapshot.forEach((doc) => {
+            // Assuming each document in 'Hashtags' matches the IHashTags interface
+            const hashtag = doc.data() as IHashTags;
+            hashtags.push(hashtag);
+          });
+          observer.next(hashtags);
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+          observer.complete();
+        });
+    });
   }
 
   // getTrendingHashtags(): Observable<{ hashtag: string; count: number }[]> {
@@ -462,6 +489,25 @@ export class FireStoreCollectionsServiceService {
         });
     });
   }
+
+  uploadMedicalProduct(medicalData: IMedicalProduct): Observable<void> {
+    const medicalProductCollection = collection(this.firestore, 'MedicalProducts');
+    return new Observable<void>((observer) => {
+      addDoc(medicalProductCollection, {
+        ...medicalData,
+        datePosted: new Date().toLocaleString('en-GB', { timeZone: 'UTC' }), // You might want to use serverTimestamp for accurate date
+      })
+        .then(() => {
+          observer.next();
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+          observer.complete();
+        });
+    });
+  }
+
   promoteItem(postData: IPosts): Observable<void> {
     const postsCollection = collection(this.firestore, 'Promoted');
     return new Observable<void>((observer) => {

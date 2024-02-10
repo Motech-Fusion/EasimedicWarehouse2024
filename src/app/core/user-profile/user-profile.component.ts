@@ -64,7 +64,7 @@ export class UserProfileComponent implements OnInit {
 
     this.fireStoreCollectionsService.getAllPoststags().subscribe((posts) => {
       // Sort the posts by dateAdded in descending order (most recent first)
-      console.warn("All my posts here", posts, this.currentUserId);
+      console.log("All my posts here", posts, this.currentUserId);
       this.myPosts = posts
         .filter(
           (v) =>

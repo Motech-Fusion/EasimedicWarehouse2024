@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-tabs',
@@ -8,6 +8,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class TabsComponent {
   @Output() tabSelected: EventEmitter<string> = new EventEmitter<string>();
   selectedTab: string = 'Chats';
+  @Input() backgroundColor:string = "#f9f9f9"
 
   onTabSelected(title: string) {
     this.tabSelected.emit(title);

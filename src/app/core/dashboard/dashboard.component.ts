@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
+import { FormControl } from '@angular/forms';
 import { NavigationExtras, Route, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, catchError, filter, map, switchMap, tap } from 'rxjs';
@@ -10,6 +11,7 @@ import { AlertService } from 'src/app/shared/Services/alert.service';
 import {
   ChatMessage,
   FireStoreCollectionsServiceService,
+  IMedicalProduct,
   ITowTrucks,
   UserStories,
 } from 'src/app/shared/Services/fire-store-collections-service.service';
@@ -22,21 +24,20 @@ import { DialogComponent } from 'src/app/shared/dialog/dialog.component';
 import { headerAds } from 'src/app/shared/promoted-tabs/promoted-tabs.component';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss'],
+  selector: "app-dashboard",
+  templateUrl: "./dashboard.component.html",
+  styleUrls: ["./dashboard.component.scss"],
 })
 export class DashboardComponent implements OnInit {
-
   recommedations: IUsersInterface[] = [];
   hashtags: IHashTags[] | undefined;
-  readonly DOCTORS = 'Doctors';
-  readonly SANGOMA = 'Sangoma';
-  readonly POSTS = 'Medical Posts';
-  readonly TOWTRUCK = 'Tow Trucks';
-  readonly NEWS = 'News';
-  readonly PERIODTRACKER = 'Period tracker';
-  readonly MESSAGES = 'Messages';
+  readonly DOCTORS = "Doctors";
+  readonly SANGOMA = "Sangoma";
+  readonly POSTS = "Medical Posts";
+  readonly TOWTRUCK = "Tow Trucks";
+  readonly NEWS = "News";
+  readonly PERIODTRACKER = "Period tracker";
+  readonly MESSAGES = "Messages";
   selectedTabTitle: string = this.MESSAGES;
   ModalData!: IUsersInterface;
   openModalFlag!: boolean;
@@ -69,7 +70,7 @@ export class DashboardComponent implements OnInit {
   currentUserObject!: IUsersInterface;
   currentUser!: IUsersInterface | null;
   currentUserId!: string | null;
-  searchPlaceholder: string = 'Search users...';
+  searchPlaceholder: string = "Search users...";
   OriginalUserFriends: IUsersInterface[] = [];
   UserFriends: IUsersInterface[] = [];
   currentUserProfileDetails$: any;
@@ -78,49 +79,62 @@ export class DashboardComponent implements OnInit {
   currentUserFriendRequests: string[] = [];
   CurrentUserStories: UserStories[] = [];
   hideAds: boolean = false;
-  showAds: boolean = false
-  adsHeaders:headerAds[] = [{name:"Global Health News",svg:""},{name:"Global Weather News",svg:""}]
+  showAds: boolean = false;
+  showProductModal: boolean = false;
+  adsHeaders: headerAds[] = [
+    { name: "Global Health News", svg: "" },
+    { name: "Global Weather News", svg: "" },
+  ];
   doctors: IDoctorsInterface[] = [];
   OriginalDoctors: IDoctorsInterface[] = [];
   sangomas: IDoctorsInterface[] = [];
-  news:any[] = []
+  news: any[] = [];
   towTrucks: ITowTrucks[] = [];
-  messagesUserList: IUsersInterface[]|undefined =[];
+  messagesUserList: IUsersInterface[] | undefined = [];
   doctorsList!: IDoctorsInterface[];
+  MedicalProductNameFormControl: FormControl = new FormControl();
+  MedicalProductPriceFormControl: FormControl = new FormControl();
+  MedicalProductDescriptionFormControl: FormControl = new FormControl();
+  medicalProductName!: string;
+  medicalProductDescription!: string;
+  medicalProductPrice!: number;
 
-  
   constructor(
     private fireStoreCollectionsService: FireStoreCollectionsServiceService,
     private router: Router,
     private store: Store<UserState>,
     private alertService: AlertService,
-    private afMessaging:AngularFireMessaging,
+    private afMessaging: AngularFireMessaging
   ) {}
   ngOnInit(): void {
-    this.getNews()
+    this.getNews();
     this.fireStoreCollectionsService.getAllUsers().subscribe((users) => {
       // console.log('users here', users);
       return (this.recommedations = users);
     });
     this.fireStoreCollectionsService.getAllUsers().subscribe((users) => {
       // console.log('users here', users);
-      this.currentUser = users.filter(x=> x.docId == this.currentUserId)[0];
+      this.currentUser = users.filter((x) => x.docId == this.currentUserId)[0];
       // this.messagesUserList = this.fetchCurrentUserFriends('');
       // console.info('jeyt', this.messagesUserList);
-      this.getFriendLastMessage()
-      this.currentUserFriendRequests = this.currentUser.requests.filter(x => x !== this.currentUser?.docId)
-      return (users.filter(x=> x.docId == this.currentUserId));
+      this.getFriendLastMessage();
+      this.currentUserFriendRequests = this.currentUser.requests.filter(
+        (x) => x !== this.currentUser?.docId
+      );
+      return users.filter((x) => x.docId == this.currentUserId);
     });
     this.fireStoreCollectionsService.getAllDoctors().subscribe((users) => {
-      console.log('doctors here 1', users);
-      
-      this.OriginalDoctors = users.filter(u => u.fullname !== undefined);
-      this.doctors =  users.filter(u => u.fullname !== undefined);
-      const validDoctors =  users.filter(u => u.fullname !== undefined);
-      if(this.currentUser?.easiMedicFor == "Service Provider"){
-        this.fetcUsersMessageUserList(this.recommedations as IDoctorsInterface[])
-      }else{
-        this.fetcUsersMessageUserList(this.doctors)
+      console.log("doctors here 1", users);
+
+      this.OriginalDoctors = users.filter((u) => u.fullname !== undefined);
+      this.doctors = users.filter((u) => u.fullname !== undefined);
+      const validDoctors = users.filter((u) => u.fullname !== undefined);
+      if (this.currentUser?.easiMedicFor == "Service Provider") {
+        this.fetcUsersMessageUserList(
+          this.recommedations as IDoctorsInterface[]
+        );
+      } else {
+        this.fetcUsersMessageUserList(this.doctors);
       }
       return validDoctors;
     });
@@ -129,35 +143,41 @@ export class DashboardComponent implements OnInit {
       return (this.sangomas = users);
     });
 
-
     this.store.select(selectDocId).subscribe((id) => {
       this.currentUserId = id;
-      this.requestPermissionAndToken()
-      console.log('Current user id:', this.currentUserId);
+      this.requestPermissionAndToken();
+      console.log("Current user id:", this.currentUserId);
     });
-
 
     // this.currentUserProfileDetails$ = this.fireStoreCollectionsService.getAllUsers().subscribe((users) => {
     //   // console.log('users here', users);
     //   return (users.filter(x=> x.docId == this.currentUserId));
     // });
-    this.fireStoreCollectionsService.getAllHashtags().subscribe((hashtags) => {
-      console.warn('hastags right heereee', hashtags);
+    this.fireStoreCollectionsService.getAllTrendingHashtags().subscribe((hashtags) => {
+      console.warn("hastags right heereee", hashtags);
       this.hashtags = hashtags;
     });
 
     this.getAllPosts();
 
-    this.fireStoreCollectionsService.getTowTrucks().subscribe((x:ITowTrucks[])=>{
-      const towTrucks = x.filter(truck => truck.name !==undefined || truck.name !== '' || truck.type !== undefined || truck.type !== "")
-      this.towTrucks = towTrucks
-    })
+    this.fireStoreCollectionsService
+      .getTowTrucks()
+      .subscribe((x: ITowTrucks[]) => {
+        const towTrucks = x.filter(
+          (truck) =>
+            truck.name !== undefined ||
+            truck.name !== "" ||
+            truck.type !== undefined ||
+            truck.type !== ""
+        );
+        this.towTrucks = towTrucks;
+      });
 
     this.fireStoreCollectionsService.getAllPromostags().subscribe((posts) => {
       // Sort the posts by dateAdded in descending order (most recent first)
-      console.warn('All posts here', posts);
+      console.warn("All posts here", posts);
       this.originalAllPromos = posts
-        .filter((v) => v.post !== '' && v.username !== '' && v.title != '')
+        .filter((v) => v.post !== "" && v.username !== "" && v.title != "")
         .sort((a, b) => {
           const dateA = new Date(a.datePosted).getTime();
           const dateB = new Date(b.datePosted).getTime();
@@ -167,7 +187,7 @@ export class DashboardComponent implements OnInit {
     });
 
     fetch(
-      'https://newsapi.org/v2/top-headlines?country=za&apiKey=32054b2282e440a2bf45da9fcacb2040'
+      "https://newsapi.org/v2/top-headlines?country=za&apiKey=32054b2282e440a2bf45da9fcacb2040"
     )
       .then((response) => response.json())
       .then((json) => {
@@ -183,30 +203,22 @@ export class DashboardComponent implements OnInit {
       return (this.friends = users);
     });
     // this.fetchCurrentUserFriends();
-    this.UserFriends = this.fetchCurrentUserFriends('');
- 
+    this.UserFriends = this.fetchCurrentUserFriends("");
   }
   fetcUsersMessageUserList(users: IDoctorsInterface[]) {
-
     const friendDocIds = this.currentUser?.friends;
-    console.log(
-      "in my list of friends",friendDocIds,users
-    )
-    let filteredUsers = users!.filter(x=> friendDocIds?.includes(x.docId)
-    );
-    console.log(
-      "in  list of friends found",filteredUsers
-    )
-      this.messagesUserList = filteredUsers
+    console.log("in my list of friends", friendDocIds, users);
+    let filteredUsers = users!.filter((x) => friendDocIds?.includes(x.docId));
+    console.log("in  list of friends found", filteredUsers);
+    this.messagesUserList = filteredUsers;
   }
-
 
   private getAllPosts() {
     this.fireStoreCollectionsService.getAllPoststags().subscribe((posts) => {
       // Sort the posts by dateAdded in descending order (most recent first)
-      console.warn('All posts here', posts);
+      console.warn("All posts here", posts);
       this.originalAllPosts = posts
-        .filter((v) => v.post !== '' && v.username !== '' && v.title != '')
+        .filter((v) => v.post !== "" && v.username !== "" && v.title != "")
         .sort((a, b) => {
           const dateA = new Date(a.datePosted).getTime();
           const dateB = new Date(b.datePosted).getTime();
@@ -220,13 +232,13 @@ export class DashboardComponent implements OnInit {
     // this.spinnerNews = true;
     this.fireStoreCollectionsService
       .get(
-        'https://newsapi.org/v2/top-headlines?country=za&category=health&apiKey=32054b2282e440a2bf45da9fcacb2040',
+        "https://newsapi.org/v2/top-headlines?country=za&category=health&apiKey=32054b2282e440a2bf45da9fcacb2040",
         {}
       )
       .subscribe((res: any) => {
-        console.warn(res['articles']);
+        console.warn(res["articles"]);
         if (res) {
-          this.news = res['articles'];
+          this.news = res["articles"];
           setTimeout(() => {
             // this.spinnerNews = false;
           }, 200);
@@ -238,13 +250,17 @@ export class DashboardComponent implements OnInit {
     this.fireStoreCollectionsService.getAllStories().subscribe(
       (stories: UserStories[]) => {
         // Update your component property with the fetched stories
-        console.warn('this is all the stories', stories);
-        this.ListOfStories = stories.filter(x=>x.user != this.currentUserId);
-        this.CurrentUserStories = stories.filter(x => x.user == this.currentUserId)
+        console.warn("this is all the stories", stories);
+        this.ListOfStories = stories.filter(
+          (x) => x.user != this.currentUserId
+        );
+        this.CurrentUserStories = stories.filter(
+          (x) => x.user == this.currentUserId
+        );
       },
       (error) => {
         // Handle errors here, e.g., display an error message to the user or log the error
-        console.error('Error fetching stories:', error);
+        console.error("Error fetching stories:", error);
       }
     );
 
@@ -254,59 +270,82 @@ export class DashboardComponent implements OnInit {
     // })
   }
 
-  getFriendLastMessage(){
+  getFriendLastMessage() {
     // debugger
     const friendDocIds = this.currentUser!.friends;
     let filteredUsers = this.recommedations!.filter((user) =>
-    friendDocIds.includes(user.docId)
+      friendDocIds.includes(user.docId)
     );
     this.UserFriends = filteredUsers;
     // debugger
-    if(this.UserFriends!.length){
-      
-      this.UserFriends?.forEach(currentUserFriend => {
-        console.log("hey there")
-      this.getMessages(currentUserFriend);
-
-      })
+    if (this.UserFriends!.length) {
+      this.UserFriends?.forEach((currentUserFriend) => {
+        console.log("hey there");
+        this.getMessages(currentUserFriend);
+      });
     }
-  
-    
-     
   }
 
   getMessages(currentUserFriend: IUsersInterface) {
-    this.fireStoreCollectionsService.getAllMessages().pipe(
-      map((data: ChatMessage[]) => {
-        console.log(currentUserFriend);
-        // Update your local variable or state
-        // this.AllMessages = data;
-        // Filter and return the messages
-        return this.filterMessages(data, this.currentUserId as string, currentUserFriend.docId as string);
-      })
-    ).subscribe(messages => {
-      console.log("hey there", messages);
-  
-      // Update UserFriends based on messages
-      this.UserFriends = this.UserFriends!.map(friend => {
+    this.fireStoreCollectionsService
+      .getAllMessages()
+      .pipe(
+        map((data: ChatMessage[]) => {
+          console.log(currentUserFriend);
+          // Update your local variable or state
+          // this.AllMessages = data;
+          // Filter and return the messages
+          return this.filterMessages(
+            data,
+            this.currentUserId as string,
+            currentUserFriend.docId as string
+          );
+        })
+      )
+      .subscribe((messages) => {
+        console.log("hey there", messages);
 
-        const friendMessages = messages.filter(msg => {
-          console.log("friend and msg ids : ",friend.docId + " msg id : "+ msg.replyTo)
-          return  msg.user._id=== friend.docId});
-        const lastMessage = friendMessages.length > 0 ? friendMessages[friendMessages.length - 1].text : '';
-        return {
-          ...friend,
-          messages: lastMessage
-        };
+        // Update UserFriends based on messages
+        this.UserFriends = this.UserFriends!.map((friend) => {
+          const friendMessages = messages.filter((msg) => {
+            console.log(
+              "friend and msg ids : ",
+              friend.docId + " msg id : " + msg.replyTo
+            );
+            return msg.user._id === friend.docId;
+          });
+          const lastMessage =
+            friendMessages.length > 0
+              ? friendMessages[friendMessages.length - 1].text
+              : "";
+          return {
+            ...friend,
+            messages: lastMessage,
+          };
+        });
+
+        console.log("friend data here", this.UserFriends);
       });
-  
-      console.log("friend data here", this.UserFriends);
-    });
   }
-  
-  filterMessages(messagesList: ChatMessage[], userId: string, sentToId: string): ChatMessage[] {
-    console.warn("messages here ",messagesList.filter(message => message.user._id === this.currentUserId && message.sentTo === sentToId))
-    return messagesList.filter(message => message.user._id === this.currentUserId && message.sentTo === sentToId || message.user._id === sentToId && message.sentTo === this.currentUserId);
+
+  filterMessages(
+    messagesList: ChatMessage[],
+    userId: string,
+    sentToId: string
+  ): ChatMessage[] {
+    console.warn(
+      "messages here ",
+      messagesList.filter(
+        (message) =>
+          message.user._id === this.currentUserId && message.sentTo === sentToId
+      )
+    );
+    return messagesList.filter(
+      (message) =>
+        (message.user._id === this.currentUserId &&
+          message.sentTo === sentToId) ||
+        (message.user._id === sentToId && message.sentTo === this.currentUserId)
+    );
   }
 
   fetchCurrentUserFriendsDefault(): IUsersInterface[] {
@@ -319,25 +358,18 @@ export class DashboardComponent implements OnInit {
     // console.log("friends",filteredUsers);
     return filteredUsers;
   }
-  
-  fetchCurrentUserFriends(searchTerm: string = ''): IUsersInterface[] {
+
+  fetchCurrentUserFriends(searchTerm: string = ""): IUsersInterface[] {
     const friendDocIds = this.currentUser!.friends;
-    console.log(
-      "in my list of friends",friendDocIds,this.doctorsList
-    )
-    let filteredUsers = this.doctorsList!.filter((user) =>{
-      console.log(
-        "in  list of friends",user.docId
-      )
-      friendDocIds.includes(user.docId)
-    }
-    );
-    console.log(
-      "in  list of friends found",filteredUsers
-    )
+    console.log("in my list of friends", friendDocIds, this.doctorsList);
+    let filteredUsers = this.doctorsList!.filter((user) => {
+      console.log("in  list of friends", user.docId);
+      friendDocIds.includes(user.docId);
+    });
+    console.log("in  list of friends found", filteredUsers);
 
     // Apply additional filtering based on the search term
-    if (searchTerm.trim() !== '') {
+    if (searchTerm.trim() !== "") {
       const lowerCaseSearchTerm = searchTerm.toLowerCase().trim();
       filteredUsers = filteredUsers.filter(
         (user) =>
@@ -350,38 +382,38 @@ export class DashboardComponent implements OnInit {
       );
     }
 
-console.log("doctors here ",this.doctorsList)
+    console.log("doctors here ", this.doctorsList);
     return filteredUsers;
   }
 
-  fetchUsersByTextSearch(searchTerm: string = ''): IUsersInterface[] | undefined {
+  fetchUsersByTextSearch(
+    searchTerm: string = ""
+  ): IUsersInterface[] | undefined {
     const friendDocIds = this.currentUser!.friends;
     let filteredUsers = this.messagesUserList;
     // Apply additional filtering based on the search term
-    if (searchTerm.trim() !== '') {
+    if (searchTerm.trim() !== "") {
       const lowerCaseSearchTerm = searchTerm.toLowerCase().trim();
-      filteredUsers = filteredUsers?.filter(
-        (user) =>
-          user.fullname.toLowerCase().includes(lowerCaseSearchTerm) 
+      filteredUsers = filteredUsers?.filter((user) =>
+        user.fullname.toLowerCase().includes(lowerCaseSearchTerm)
       );
     } else {
-      filteredUsers = this.OriginalDoctors
+      filteredUsers = this.OriginalDoctors;
     }
 
     return filteredUsers;
   }
-  fetchDoctorsByTextSearch(searchTerm: string = ''): IDoctorsInterface[] {
+  fetchDoctorsByTextSearch(searchTerm: string = ""): IDoctorsInterface[] {
     const friendDocIds = this.currentUser!.friends;
     let filteredUsers = this.doctors;
     // Apply additional filtering based on the search term
-    if (searchTerm.trim() !== '') {
+    if (searchTerm.trim() !== "") {
       const lowerCaseSearchTerm = searchTerm.toLowerCase().trim();
-      filteredUsers = filteredUsers.filter(
-        (user) =>
-          user.fullname.toLowerCase().includes(lowerCaseSearchTerm) 
+      filteredUsers = filteredUsers.filter((user) =>
+        user.fullname.toLowerCase().includes(lowerCaseSearchTerm)
       );
     } else {
-      filteredUsers = this.OriginalDoctors
+      filteredUsers = this.OriginalDoctors;
     }
 
     return filteredUsers;
@@ -389,23 +421,23 @@ console.log("doctors here ",this.doctorsList)
 
   onTabSelected(selectedTabTitle: string) {
     // Handle the selected tab's title in the parent component
-    console.log('Selected Tab:', selectedTabTitle);
+    console.log("Selected Tab:", selectedTabTitle);
     this.selectedTabTitle = selectedTabTitle;
     switch (selectedTabTitle) {
       case this.MESSAGES:
-        this.searchPlaceholder = 'Search messages...';
+        this.searchPlaceholder = "Search messages...";
         break;
       case this.DOCTORS:
-        this.searchPlaceholder = 'Search doctors...';
+        this.searchPlaceholder = "Search doctors...";
         break;
       case this.SANGOMA:
-        this.searchPlaceholder = 'Search sangomas...';
+        this.searchPlaceholder = "Search sangomas...";
         break;
       case this.POSTS:
-        this.searchPlaceholder = 'Search posts...';
+        this.searchPlaceholder = "Search posts...";
         break;
       case this.NEWS:
-        this.searchPlaceholder = 'Search news...';
+        this.searchPlaceholder = "Search news...";
         break;
 
       default:
@@ -426,24 +458,24 @@ console.log("doctors here ",this.doctorsList)
   }
 
   browseFriends() {
-    this.router.navigate(['/', 'browse-friends']);
+    this.router.navigate(["/", "browse-friends"]);
   }
   navigateTotrending() {
-    this.router.navigate(['/', 'trending']);
+    this.router.navigate(["/", "trending"]);
   }
 
   navigateToFriendRequests() {
-    this.router.navigate(['/', 'friend-requests']);
+    this.router.navigate(["/", "friend-requests"]);
   }
 
   AddPost() {
-    this.router.navigate(['/', 'add-post']);
+    this.router.navigate(["/", "add-post"]);
   }
   addStoryNavigation() {
-    this.router.navigate(['/', 'add-story']);
+    this.router.navigate(["/", "add-story"]);
   }
   messagingNavigation(friend: IUsersInterface) {
-    this.router.navigate(['/', 'messaging'], {
+    this.router.navigate(["/", "messaging"], {
       queryParams: {
         friendData: JSON.stringify(friend),
       },
@@ -451,7 +483,7 @@ console.log("doctors here ",this.doctorsList)
   }
 
   toggleVisibility(visibility: string) {
-    if (visibility == 'show') {
+    if (visibility == "show") {
       this.showRecommendations = true;
       this.hide = true;
     } else {
@@ -461,7 +493,7 @@ console.log("doctors here ",this.doctorsList)
   }
 
   toggleAdsVisibility(visibility: string) {
-    if (visibility == 'show') {
+    if (visibility == "show") {
       this.showAds = true;
       this.hideAds = true;
     } else {
@@ -548,7 +580,7 @@ console.log("doctors here ",this.doctorsList)
   }
 
   MessageUser(friend: IUsersInterface) {
-    this.router.navigate(['/', 'messaging'], {
+    this.router.navigate(["/", "messaging"], {
       queryParams: {
         friendData: JSON.stringify(friend),
       },
@@ -571,17 +603,20 @@ console.log("doctors here ",this.doctorsList)
         // alert(val);
       });
   }
-  
-  confirmFriendRequest(){
-    this.addNewFriendRequest(this.friendRequestUserId,this.friendRequestUserNumber);
+
+  confirmFriendRequest() {
+    this.addNewFriendRequest(
+      this.friendRequestUserId,
+      this.friendRequestUserNumber
+    );
     this.alertService.success(
-      'Friend requested successully sent to ' + this.friendRequestUserNumber
+      "Friend requested successully sent to " + this.friendRequestUserNumber
     );
   }
 
-  ViewStories(data:UserStories){
-    console.log(data)
-    this.router.navigate(['/', 'view-stories'], {
+  ViewStories(data: UserStories) {
+    console.log(data);
+    this.router.navigate(["/", "view-stories"], {
       queryParams: {
         storiesData: JSON.stringify(data),
       },
@@ -589,16 +624,16 @@ console.log("doctors here ",this.doctorsList)
   }
 
   userProfileNavigation(friend: IUsersInterface) {
-    this.router.navigate(['friend-profile'], {
+    this.router.navigate(["friend-profile"], {
       queryParams: {
         friendData: JSON.stringify(friend),
-        usersList:JSON.stringify(this.recommedations)
+        usersList: JSON.stringify(this.recommedations),
       },
     });
   }
 
-  navigateToPromoteItem(){
-    this.router.navigate(['promote-item']); 
+  navigateToPromoteItem() {
+    this.router.navigate(["promote-item"]);
   }
 
   requestPermissionAndToken(): void {
@@ -607,11 +642,11 @@ console.log("doctors here ",this.doctorsList)
         switchMap(() => this.afMessaging.getToken),
         tap((token) => {
           // Handle the obtained token (e.g., send it to your server)
-          console.log('FCM Token:', token);
-          this.userNotificationTokenUpdate(token)
+          console.log("FCM Token:", token);
+          this.userNotificationTokenUpdate(token);
         }),
         catchError((error) => {
-          console.error('Error requesting permission or token:', error);
+          console.error("Error requesting permission or token:", error);
           return [];
         })
       )
@@ -619,54 +654,102 @@ console.log("doctors here ",this.doctorsList)
   }
 
   userNotificationTokenUpdate(token: string | null) {
-    this.fireStoreCollectionsService.updateCurrentUserNotificationToken(token,this.currentUserId as string)
+    this.fireStoreCollectionsService.updateCurrentUserNotificationToken(
+      token,
+      this.currentUserId as string
+    );
   }
 
-  sendPushNotifications(user:IUsersInterface,title:string,body:string){
-    this.fireStoreCollectionsService.sendPushNotification(user,title,body)
+  sendPushNotifications(user: IUsersInterface, title: string, body: string) {
+    this.fireStoreCollectionsService.sendPushNotification(user, title, body);
   }
 
   ViewPosts(post: IMedicalPosts) {
     const navigationExtras: NavigationExtras = {
       state: {
-        data: post
-      }
+        data: post,
+      },
     };
 
-    console.log(post)
-    this.fireStoreCollectionsService.addUserIdToViewedByRealTime(post.docId,this.currentUserId as string).subscribe({
-      next: () => {
-        console.log('Transaction successful');
-      },
-      error: (err) => {
-        console.error('Error during transaction:', err);
+    console.log(post);
+    this.fireStoreCollectionsService
+      .addUserIdToViewedByRealTime(post.docId, this.currentUserId as string)
+      .subscribe({
+        next: () => {
+          console.log("Transaction successful");
+        },
+        error: (err) => {
+          console.error("Error during transaction:", err);
+        },
+      });
+
+    this.router.navigate(["post-details"], {
+      queryParams: {
+        title: post.title,
+        comments: post.comments,
+        datePosted: post.datePosted,
+        likedBy: post.likedBy,
+        likes: post.likes,
+        originalPost: post.originalPost,
+        post: post.post,
+        postImage: post.postImage,
+        image: post.image,
+        postVideo: post.postVideo,
+        user: post.user,
+        userImage: post.userImage,
+        username: post.username,
+        viewedBy: post.viewedBy,
+        docId: post.docId,
       },
     });
-    
-    this.router.navigate(['post-details'],{queryParams:{
-      title:post.title,
-      comments:post.comments,
-      datePosted:post.datePosted,
-      likedBy:post.likedBy,
-      likes:post.likes,
-      originalPost:post.originalPost,
-      post:post.post,
-      postImage:post.postImage,
-      image:post.image,
-      postVideo:post.postVideo,
-      user:post.user,
-      userImage:post.userImage,
-      username:post.username,
-      viewedBy:post.viewedBy,
-      docId:post.docId,
-    }})
   }
 
   navigateToChat(doctor: IDoctorsInterface) {
-    this.router.navigate(['/', 'messaging'], {
+    this.router.navigate(["/", "messaging"], {
       queryParams: {
         friendData: JSON.stringify(doctor),
       },
     });
-    }
+  }
+
+  AddMedicalProduct() {
+    //here we will open a popup directly
+    this.showProductModal = true;
+    this.fetchMedicalProductDetails()
+  }
+
+  fetchMedicalProductDetails() {
+  this.MedicalProductNameFormControl.valueChanges.subscribe(x=>{
+    this.medicalProductName = x
+  })
+  this.MedicalProductPriceFormControl.valueChanges.subscribe(x=>{
+    this.medicalProductPrice = x
+  })
+  this.MedicalProductDescriptionFormControl.valueChanges.subscribe(x=>{
+    this.medicalProductDescription = x
+  })
+
+  }
+
+  hideModal() {
+    this.showProductModal = false;
+  }
+
+  uploadMedicalProduct(){
+    const medicalProductDetails: IMedicalProduct = {
+      name: this.medicalProductName,
+      category: "this.medicalProductCategory",
+      description: this.medicalProductDescription,
+      doctor: this.currentUser?.docId as string,
+      image: "this.medicalProductImage",
+      price: this.medicalProductPrice,
+      doctorName:this.currentUser?.name ? this.currentUser?.name : this.currentUser?.fullname
+    };
+    this.fireStoreCollectionsService
+      .uploadMedicalProduct(medicalProductDetails)
+      .subscribe((x) => {
+        console.log(x);
+        this.hideModal();
+      });
+  }
 }

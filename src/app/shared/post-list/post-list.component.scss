@@ -6,9 +6,9 @@
       display: flex;
 }
 .md\:grid-cols-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  margin-right: 140px;
-  margin-left: 140px;
+  // grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-right: 0px;
+  margin-left: 0px;
 }
 
 @media (min-width: 668px) and (max-width:1000px) {

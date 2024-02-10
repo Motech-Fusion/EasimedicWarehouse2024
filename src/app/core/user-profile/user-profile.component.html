@@ -82,16 +82,18 @@
                                 placeholder="Enter your bio here" />
                             <p class="text-white" style="color: #d9d9d9;">Joined on {{currentUser?.created}}</p>
                         </div>
-                        <div class="hidden md:block" *ngIf="!editUser" [style.marginTop]="'22px'">
-                            <a style="cursor:pointer" *ngIf="!showPaymentContainer" (click)="SubscriptionSettings()"
-                                class="bg-blue-500 px-2 py-1 
-                            text-white font-semibold text-sm rounded block text-center 
-                            sm:inline-block block text-white melachat-background-color">Subscriptions settings</a>
-                            <a style="cursor:pointer" *ngIf="showPaymentContainer" (click)="SubscriptionSettings()"
-                                class="bg-blue-500 px-2 py-1 
-                            text-white font-semibold text-sm rounded block text-center 
-                            sm:inline-block block text-white melachat-background-color">Show my posts</a>
-                        </div>
+                        <ng-container *ngIf="currentUser?.easiMedicFor == 'Service Provider'">
+                            <div class="hidden md:block" *ngIf="!editUser" [style.marginTop]="'22px'">
+                                <a style="cursor:pointer" *ngIf="!showPaymentContainer" (click)="SubscriptionSettings()"
+                                    class="bg-blue-500 px-2 py-1 
+                                text-white font-semibold text-sm rounded block text-center 
+                                sm:inline-block block text-white melachat-background-color">Subscriptions settings</a>
+                                <a style="cursor:pointer" *ngIf="showPaymentContainer" (click)="SubscriptionSettings()"
+                                    class="bg-blue-500 px-2 py-1 
+                                text-white font-semibold text-sm rounded block text-center 
+                                sm:inline-block block text-white melachat-background-color">Show my posts</a>
+                            </div>
+                        </ng-container>
 
                     </div>
 
@@ -116,7 +118,7 @@
                     <ul class="flex md:hidden justify-around space-x-8 border-t 
                   text-center p-2 text-gray-600 leading-snug text-sm">
                         <li style="color:grey">
-                            <span class="font-semibold text-white">0</span>
+                            <span class="font-semibold text-white">{{myPosts.length}}</span>
                             posts
                         </li>
 
@@ -166,16 +168,168 @@
                     </ul>
                     <!-- flexbox grid -->
                     <div class="get-started-wrapper">
-                        <h1 class="text-white padding-top-text" *ngIf="!myPosts"> You have no Posts currently</h1>
+                        <h1 class="text-white padding-top-text" *ngIf="!myPosts.length"> You have no Posts currently
+                        </h1>
                         <!-- <app-no-posts-found></app-no-posts-found> -->
                         <div class="grid md:grid-cols-4 gap-4">
                             <div *ngIf="selectedTabIndex == 0">
-                                <app-post-list [PromotePost]="true" [AllPosts]="myPosts"
-                                    *ngIf="myPosts"></app-post-list>
+                                <ng-container *ngIf="myPosts.length">
+                                    <app-post-list [PromotePost]="true" [AllPosts]="myPosts"
+                                        *ngIf="myPosts"></app-post-list>
+                                </ng-container>
+                                <ng-container *ngIf="!myPosts.length">
+                                    <div
+                                        class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white no-friends-section">
+                                        <h1 class="no-friends">No Posts found</h1>
+                                        <p
+                                            class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">
+                                            There are no medical posts found under your profile currently
+                                        </p>
+                                        <div role="status" class="space-y-2.5 animate-pulse max-w-lg"
+                                            style="width:100%">
+                                            <div class="flex items-center w-full">
+                                                <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
+                                                <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center w-full max-w-[480px]">
+                                                <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                </div>
+                                                <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24">
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center w-full max-w-[400px]">
+                                                <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                </div>
+                                                <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center w-full max-w-[480px]">
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                </div>
+                                                <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24">
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center w-full max-w-[440px]">
+                                                <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-32">
+                                                </div>
+                                                <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full">
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center w-full max-w-[360px]">
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                </div>
+                                                <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                </div>
+                                            </div>
+                                            <span class="sr-only">You currently have no Posts...</span>
+                                        </div>
+                                    </div>
+                                </ng-container>
                             </div>
                             <div *ngIf="selectedTabIndex == 1">
-                                <ng-container *ngFor="let post of myPosts">
-                                    <app-gallery-item [images]="post?.postImage"></app-gallery-item>
+                                <div *ngIf="myPosts.length">
+                                    <ng-container *ngFor="let post of myPosts">
+                                        <app-gallery-item [images]="post?.postImage"></app-gallery-item>
+                                    </ng-container>
+                                </div>
+
+                                <ng-container *ngIf="!myPosts.length">
+                                    <div
+                                        class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white no-friends-section">
+                                        <h1 class="no-friends">No Images found</h1>
+                                        <p
+                                            class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">
+                                            There are no medical posts uploaded images found under your profile currently
+                                        </p>
+                                        <div role="status" class="space-y-2.5 animate-pulse max-w-lg"
+                                            style="width:100%">
+                                            <div class="flex items-center w-full">
+                                                <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center w-full max-w-[480px]">
+                                                <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24">
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center w-full max-w-[400px]">
+                                                <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center w-full max-w-[480px]">
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24">
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center w-full max-w-[440px]">
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-32">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full">
+                                                </div>
+                                            </div>
+                                            <div class="flex items-center w-full max-w-[360px]">
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80">
+                                                </div>
+                                                <div
+                                                    class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                </div>
+                                            </div>
+                                            <span class="sr-only">You currently have nothing in your gallery...</span>
+                                        </div>
+                                    </div>
                                 </ng-container>
                             </div>
                         </div>
@@ -285,12 +439,171 @@
                             <!-- <app-no-posts-found></app-no-posts-found> -->
                             <div class="grid md:grid-cols-4 gap-4">
                                 <div *ngIf="selectedTabIndex == 0">
-                                    <app-post-list [PromotePost]="true" [AllPosts]="myPosts"
-                                        *ngIf="myPosts"></app-post-list>
+                                    <ng-container *ngIf="myPosts.length">
+                                        <app-post-list [PromotePost]="true" [AllPosts]="myPosts"
+                                            *ngIf="myPosts"></app-post-list>
+                                    </ng-container>
+                                    <ng-container *ngIf="!myPosts.length">
+                                        <div
+                                            class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white no-friends-section">
+                                            <h1 class="no-friends">No Posts found</h1>
+                                            <p
+                                                class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">
+                                                There are no medical posts found under your profile currently
+                                            </p>
+                                            <div role="status" class="space-y-2.5 animate-pulse max-w-lg"
+                                                style="width:100%">
+                                                <div class="flex items-center w-full">
+                                                    <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center w-full max-w-[480px]">
+                                                    <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24">
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center w-full max-w-[400px]">
+                                                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center w-full max-w-[480px]">
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24">
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center w-full max-w-[440px]">
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-32">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full">
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center w-full max-w-[360px]">
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                    </div>
+                                                </div>
+                                                <span class="sr-only">You currently have no Posts...</span>
+                                            </div>
+                                        </div>
+                                    </ng-container>
                                 </div>
                                 <div *ngIf="selectedTabIndex == 1">
-                                    <ng-container *ngFor="let post of myPosts">
-                                        <app-gallery-item [images]="post?.postImage"></app-gallery-item>
+                                    <div *ngIf="myPosts.length">
+                                        <ng-container *ngFor="let post of myPosts">
+                                            <app-gallery-item [images]="post?.postImage"></app-gallery-item>
+                                        </ng-container>
+                                    </div>
+
+                                    <ng-container *ngIf="!myPosts.length">
+                                        <div
+                                            class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white no-friends-section">
+                                            <h1 class="no-friends">No Images found</h1>
+                                            <p
+                                                class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">
+                                                There are no medical posts uploaded images found under your profile currently
+                                            </p>
+                                            <div role="status" class="space-y-2.5 animate-pulse max-w-lg"
+                                                style="width:100%">
+                                                <div class="flex items-center w-full">
+                                                    <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center w-full max-w-[480px]">
+                                                    <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24">
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center w-full max-w-[400px]">
+                                                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center w-full max-w-[480px]">
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24">
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center w-full max-w-[440px]">
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-32">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full">
+                                                    </div>
+                                                </div>
+                                                <div class="flex items-center w-full max-w-[360px]">
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80">
+                                                    </div>
+                                                    <div
+                                                        class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full">
+                                                    </div>
+                                                </div>
+                                                <span class="sr-only">You currently have nothing in your gallery...</span>
+                                            </div>
+                                        </div>
                                     </ng-container>
                                 </div>
                             </div>

@@ -35,7 +35,7 @@ export class TrendingComponent {
     // })
 
     this.fireStoreCollectionsService
-      .getAllHashtags()
+      .getAllTrendingHashtags()
       .subscribe((hashtags) => {
         console.warn("hastags right heereee",hashtags)
         this.hashtags = hashtags.sort((a, b) => b.count - a.count);

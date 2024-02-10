@@ -1,4 +1,4 @@
-<div class="main-container" >
+<div class="main-container">
     <app-app-header [currentUserId]="currentUserId" [image]="currentUser!.image"></app-app-header>
     <ng-container>
         <ul class="c-accordion">
@@ -25,7 +25,7 @@
             </li>
             <li id="Gaenochologist" class="c-accordion__item"
                 style="--cover: url(https://i0.wp.com/post.healthline.com/wp-content/uploads/2020/07/Black-midwife-feeling-and-measuring-pregnant-womans-stomach-for-exam-1296x728-header-1.jpg?w=1155&h=1528);">
-                <a  class="c-accordion__action">
+                <a class="c-accordion__action">
                     <div class="c-accordion__content">
                         <h2 class="c-accordion__title c-accordion__title--hero c-accordion__title--hover-show">
                             Gaenochologist
@@ -95,20 +95,20 @@
     </div>
     <div class="play-buttons">
         <div>
-            <img class="scan-me" src="../../../assets/easiMedicQRCode.png"/>
+            <img class="scan-me" src="../../../assets/easiMedicQRCode.png" />
         </div>
         <div class="stores-container">
             <h1 class="h3 py-4">We are available on the stores</h1>
-               <!-- App Store button -->
-        <a href="https://www.kobinet.com.tr/" target="_blank" class="market-btn apple-btn" role="button">
-            <span class="market-button-subtitle">Download on the</span>
-            <span class="market-button-title">App Store</span>
-        </a>
-        <!-- Google Play button -->
-        <a href="https://www.kobinet.com.tr/" target="_blank" class="market-btn google-btn" role="button">
-            <span class="market-button-subtitle">Download on the</span>
-            <span class="market-button-title">Google Play</span>
-        </a>     
+            <!-- App Store button -->
+            <a href="https://www.kobinet.com.tr/" target="_blank" class="market-btn apple-btn" role="button">
+                <span class="market-button-subtitle">Download on the</span>
+                <span class="market-button-title">App Store</span>
+            </a>
+            <!-- Google Play button -->
+            <a href="https://www.kobinet.com.tr/" target="_blank" class="market-btn google-btn" role="button">
+                <span class="market-button-subtitle">Download on the</span>
+                <span class="market-button-title">Google Play</span>
+            </a>
         </div>
 
     </div>
@@ -122,31 +122,36 @@
                 style="color:#333d43">
                 Welcome to <span class="text-blue-600 dark:text-blue-500">Easi</span> Medic</h1>
             <p *ngIf="!hideAds"
-                class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">Browse medical professionals
+                class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">Browse medical
+                professionals
                 and posts below to
                 get started
             </p>
             <h1 *ngIf="hideAds"
                 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
                 style="color:#333d43">
-                Weather and  <span class="text-blue-600 dark:text-blue-500">News</span> </h1>
+                Weather and <span class="text-blue-600 dark:text-blue-500">News</span> </h1>
             <p *ngIf="hideAds" class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">
-                EasiMedicWarehouse is the best place to find all medical related news and weather forecasts at the tip of your fingers.
+                EasiMedicWarehouse is the best place to find all medical related news and weather forecasts at the tip
+                of your fingers.
                 <!-- <span
                     class="text-blue-600 dark:text-blue-500" style="text-decoration: underline;"
                     (click)="navigateToPromoteItem()">click here</span> -->
             </p>
 
             <div style="display: flex;flex-direction: row;">
-                <h5 class="text-xl font-bold dark:text-white" style="padding-bottom:12px;color:#333d43">View News and Weather forecast
+                <h5 class="text-xl font-bold dark:text-white" style="padding-bottom:12px;color:#333d43">View News and
+                    Weather forecast
                 </h5>
-                <svg *ngIf="hideAds" (click)="toggleAdsVisibility('hide')" style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
-                class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="black">
+                <svg *ngIf="hideAds" (click)="toggleAdsVisibility('hide')"
+                    style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
+                    class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="black">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
                 </svg>
 
-                <svg *ngIf="!hideAds" (click)="toggleAdsVisibility('show')" style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
+                <svg *ngIf="!hideAds" (click)="toggleAdsVisibility('show')"
+                    style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
                     class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" stroke="#1da1f2" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
@@ -164,7 +169,8 @@
                 class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
                 Browse Medical products</span>
             <span (click)="navigateTotrending()"
-                class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">Trending Medical Posts
+                class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">Trending
+                Medical Posts
                 <span
                     class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-white-800 bg-red-200 rounded-full melachat-text-color"
                     style="background-color: white;">
@@ -182,15 +188,18 @@
         </div>
         <div class="get-started">
             <div style="display: flex;flex-direction: row;">
-                <h5 class="text-xl font-bold dark:text-white" style="padding-bottom:12px;color:black">Nearby Doctors and Sangomas
+                <h5 class="text-xl font-bold dark:text-white" style="padding-bottom:12px;color:black">Nearby Doctors and
+                    Sangomas
                 </h5>
-                <svg *ngIf="hide" (click)="toggleVisibility('hide')" style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
+                <svg *ngIf="hide" (click)="toggleVisibility('hide')"
+                    style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
                     class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="black">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                         d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
                 </svg>
 
-                <svg *ngIf="!hide" (click)="toggleVisibility('show')" style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
+                <svg *ngIf="!hide" (click)="toggleVisibility('show')"
+                    style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
                     class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" stroke="#1da1f2" stroke-width="2"
                     stroke-linecap="round" stroke-linejoin="round">
                     <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
@@ -250,7 +259,7 @@
     </div>
     <div class="container-center justify-center items-center">
         <div>
-            <app-tabs (tabSelected)="onTabSelected($event)"></app-tabs>
+            <app-tabs [backgroundColor]="currentUser?.easiMedicFor == 'Service Provider' ? '#333d43':'#f9f9f9'" (tabSelected)="onTabSelected($event)"></app-tabs>
         </div>
     </div>
     <div class="tab-content">
@@ -258,56 +267,58 @@
         <div *ngIf="selectedTabTitle == MESSAGES">
             <app-chat-list (chatEmitter)="messagingNavigation($event)" [friends]="messagesUserList"></app-chat-list>
             <div *ngIf="!messagesUserList?.length"
-            class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white no-friends-section">
-            <h1 class="no-friends">No Messages found</h1>
-            <p class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">Message any user to enquire about any services
-            </p>
-            <div role="status" class="space-y-2.5 animate-pulse max-w-lg" style="width:100%">
-                <div class="flex items-center w-full">
-                    <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
-                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
-                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white no-friends-section">
+                <h1 class="no-friends">No Messages found</h1>
+                <p class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">Message any
+                    user to enquire about any services
+                </p>
+                <div role="status" class="space-y-2.5 animate-pulse max-w-lg" style="width:100%">
+                    <div class="flex items-center w-full">
+                        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[480px]">
+                        <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[400px]">
+                        <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[480px]">
+                        <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[440px]">
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-32"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                        <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                    </div>
+                    <div class="flex items-center w-full max-w-[360px]">
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                        <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    </div>
+                    <span class="sr-only">You currently have no messages...</span>
                 </div>
-                <div class="flex items-center w-full max-w-[480px]">
-                    <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
-                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
-                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
-                </div>
-                <div class="flex items-center w-full max-w-[400px]">
-                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
-                    <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
-                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
-                </div>
-                <div class="flex items-center w-full max-w-[480px]">
-                    <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
-                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
-                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
-                </div>
-                <div class="flex items-center w-full max-w-[440px]">
-                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-32"></div>
-                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
-                    <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
-                </div>
-                <div class="flex items-center w-full max-w-[360px]">
-                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
-                    <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
-                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
-                </div>
-                <span class="sr-only">You currently have no messages...</span>
             </div>
-        </div>
         </div>
         <div *ngIf="selectedTabTitle == DOCTORS">
             <ng-container *ngIf="doctors.length">
                 <!-- <app-chat-list (chatEmitter)="messagingNavigation($event)"
                     [friends]="doctors.length ? doctors : fetchCurrentUserFriendsDefault()"></app-chat-list> -->
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid doctor-user">
-                        <ng-container *ngFor="let doctor of doctors">
-                            <app-doctor-user-item [senderUserId]="currentUserId" (chatEmitter)="navigateToChat($event)" [doctorsList]="doctors" [userItem]="doctor"></app-doctor-user-item>
-                            <!-- Card -->
-     
-                        </ng-container>
-                    </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid doctor-user">
+                    <ng-container *ngFor="let doctor of doctors">
+                        <app-doctor-user-item [senderUserId]="currentUserId" (chatEmitter)="navigateToChat($event)"
+                            [doctorsList]="doctors" [userItem]="doctor"></app-doctor-user-item>
+                        <!-- Card -->
+
+                    </ng-container>
+                </div>
             </ng-container>
             <div *ngIf="!doctors.length"
                 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white no-friends-section">
@@ -357,7 +368,7 @@
             <div *ngIf="!sangomas.length"
                 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white no-friends-section">
                 <h1 class="no-friends">No Sangomas found</h1>
-    
+
                 <div role="status" class="space-y-2.5 animate-pulse max-w-lg" style="width:100%">
                     <div class="flex items-center w-full">
                         <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
@@ -396,17 +407,17 @@
 
         <div *ngIf="selectedTabTitle == TOWTRUCK">
             <!-- <ng-container *ngIf="towTrucks.length"> -->
-                <!-- <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid doctor-user"> -->
-                    <ng-container >
-                        <app-tow-truck-user-item  [TruckList]="towTrucks"></app-tow-truck-user-item>
-                    </ng-container>
-                <!-- </div> -->
-                
+            <!-- <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid doctor-user"> -->
+            <ng-container>
+                <app-tow-truck-user-item [TruckList]="towTrucks"></app-tow-truck-user-item>
+            </ng-container>
+            <!-- </div> -->
+
             <!-- </ng-container> -->
             <div *ngIf="!towTrucks.length"
                 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white no-friends-section">
                 <h1 class="no-friends">No Sangomas found</h1>
-    
+
                 <div role="status" class="space-y-2.5 animate-pulse max-w-lg" style="width:100%">
                     <div class="flex items-center w-full">
                         <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
@@ -447,24 +458,109 @@
         <div *ngIf="selectedTabTitle == POSTS">
             <!-- <app-post-list [showPrmotedPostsContainer]="true" [AllPosts]="AllPosts"></app-post-list> -->
             <ng-container *ngIf="AllPosts.length">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid">
-                <ng-container *ngFor="let item of AllPosts">
-            <app-post-item-v2 (ViewHustle)="ViewPosts($event)" [postItem]="item"></app-post-item-v2>
-                </ng-container>
-            </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid">
+                    <ng-container *ngFor="let item of AllPosts">
+                        <app-post-item-v2 (ViewHustle)="ViewPosts($event)" [postItem]="item"></app-post-item-v2>
+                    </ng-container>
+                </div>
             </ng-container>
         </div>
         <!-- if news selected -->
         <div *ngIf="selectedTabTitle == PERIODTRACKER">
             <div>
                 <ng-container>
-                   <app-period-tracker></app-period-tracker>
-        
+                    <app-period-tracker></app-period-tracker>
+
                 </ng-container>
             </div>
         </div>
     </div>
-    <app-floating-button (AddPostEmitter)="AddPost()"></app-floating-button>
+    <app-floating-button (AddMedicalProductEmitter)="AddMedicalProduct()"
+        (AddPostEmitter)="AddPost()"></app-floating-button>
     <app-dialog #dialog *ngIf="openModalFlag" (onCancel)="closeModal($event)"
         (onConfirm)="confirmFriendRequest()"></app-dialog>
+
+    <!-- modal below -->
+    <div *ngIf="showProductModal" id="crud-modal" tabindex="-1" aria-hidden="true"
+        class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white" style="color:white">
+                        Add Medical product
+                    </h3>
+                    <button (click)="hideModal()" type="button"
+                        class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                        data-modal-toggle="crud-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                            viewBox="0 0 14 14">
+                            <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <form class="p-4 md:p-5">
+                    <div class="grid gap-4 mb-4 grid-cols-2">
+
+                        <div class="flex items-center gap-4">
+                            <img class="rounded-full medical-product-image" src="https://cdn.dribbble.com/users/513398/screenshots/3330065/media/18bcce556d2699d32236bfc9a63b9d60.jpg?resize=800x600&vertical=center" alt="">
+                            <div class="font-medium dark:text-white">
+                                <div *ngIf="this.medicalProductName">{{this.medicalProductName}}</div>
+                                <div *ngIf="this.medicalProductPrice" class="text-sm text-gray-500 dark:text-gray-400">R {{this.medicalProductPrice}}</div>
+                                <div class="text-sm text-gray-500 dark:text-gray-400 add-image-link">Add picture</div>
+                            </div>
+                        </div>
+
+                        <div class="col-span-2">
+                            <label for="name"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
+                            <input [formControl]="MedicalProductNameFormControl" type="text" name="name" id="name"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="Type product name" required="">
+                        </div>
+                        <div class="col-span-2 sm:col-span-1">
+                            <label for="price"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
+                            <input [formControl]="MedicalProductPriceFormControl" type="number" name="price" id="price"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                placeholder="R" required="">
+                        </div>
+                        <!-- <div class="col-span-2 sm:col-span-1">
+                                        <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+                                        <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                            <option selected="">Select category</option>
+                                            <option value="TV">TV/Monitors</option>
+                                            <option value="PC">PC</option>
+                                            <option value="GA">Gaming/Console</option>
+                                            <option value="PH">Phones</option>
+                                        </select>
+                                    </div> -->
+                        <div class="col-span-2">
+                            <label for="description"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Product
+                                Description</label>
+                            <textarea [formControl]="MedicalProductDescriptionFormControl" id="description" rows="4"
+                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="Write product description here"></textarea>
+                        </div>
+                    </div>
+                    <button (click)="uploadMedicalProduct()" type="submit"
+                        class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                        <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd"
+                                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                                clip-rule="evenodd"></path>
+                        </svg>
+                        Add now
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- modal below -->
 </div>

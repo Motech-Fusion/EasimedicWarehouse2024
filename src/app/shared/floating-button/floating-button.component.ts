@@ -8,6 +8,8 @@ import { Component, EventEmitter, Output } from '@angular/core';
 export class FloatingButtonComponent {
   isMenuOpen = false;
   @Output() AddPostEmitter = new EventEmitter<unknown>();
+  @Output() AddMedicalProductEmitter = new EventEmitter<unknown>();
+
   openMenu() {
     this.isMenuOpen = true;
   }
@@ -22,5 +24,9 @@ export class FloatingButtonComponent {
 
   AddPost(){
     this.AddPostEmitter.emit()
+  }
+
+  addMedicalProduct(){
+    this.AddMedicalProductEmitter.emit()
   }
 }
