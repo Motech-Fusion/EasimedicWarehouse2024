@@ -8,7 +8,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 export class TabsComponent {
   @Output() tabSelected: EventEmitter<string> = new EventEmitter<string>();
   selectedTab: string = 'Chats';
-  @Input() backgroundColor:string = "#f9f9f9"
+  @Input() backgroundColor:string = "#f9f9f9";
+  @Input() showAppointment = false;
 
   onTabSelected(title: string) {
     this.tabSelected.emit(title);

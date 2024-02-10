@@ -11,6 +11,7 @@ import { AlertService } from 'src/app/shared/Services/alert.service';
 import {
   ChatMessage,
   FireStoreCollectionsServiceService,
+  IAppointment,
   IMedicalProduct,
   ITowTrucks,
   UserStories,
@@ -98,7 +99,8 @@ export class DashboardComponent implements OnInit {
   medicalProductName!: string;
   medicalProductDescription!: string;
   medicalProductPrice!: number;
-
+  userAppointments: IAppointment[] = [];
+  
   constructor(
     private fireStoreCollectionsService: FireStoreCollectionsServiceService,
     private router: Router,
@@ -145,6 +147,7 @@ export class DashboardComponent implements OnInit {
 
     this.store.select(selectDocId).subscribe((id) => {
       this.currentUserId = id;
+      this.fetchAppointments()
       this.requestPermissionAndToken();
       console.log("Current user id:", this.currentUserId);
     });
@@ -205,6 +208,18 @@ export class DashboardComponent implements OnInit {
     // this.fetchCurrentUserFriends();
     this.UserFriends = this.fetchCurrentUserFriends("");
   }
+  fetchAppointments() {
+    this.fireStoreCollectionsService.getAllAppointments().subscribe(appointments=>{
+      let filteredAppointment = [];
+      if(this.currentUser?.easiMedicFor == 'Service Provider'){
+        filteredAppointment = appointments.filter(app => app.doctor == this.currentUserId);
+      }else{
+        filteredAppointment = appointments.filter(app => app.patient == this.currentUserId);
+      }
+      this.userAppointments = filteredAppointment;
+    })
+  }
+
   fetcUsersMessageUserList(users: IDoctorsInterface[]) {
     const friendDocIds = this.currentUser?.friends;
     console.log("in my list of friends", friendDocIds, users);

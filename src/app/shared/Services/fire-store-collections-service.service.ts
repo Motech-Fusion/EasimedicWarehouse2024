@@ -76,6 +76,25 @@ export interface IMedicalProduct {
   doctorName?:string
 }
 
+export interface IAppointment {
+  category: string;
+  description: string;
+  bookingMade: string;
+  doctor: string;
+  patient: string;
+  patientName: string;
+  patientImage: string;
+  status:string;
+  time:string;
+  date:string;
+  doctorImage: string;
+  name: string;
+  price: number;
+  doctorName?:string;
+  location?:string;
+  docId?:string;
+}
+
 export interface Story {
   id: number;
   url: string;
@@ -326,6 +345,27 @@ export class FireStoreCollectionsServiceService {
     });
   }
 
+  getAllAppointments(): Observable<IAppointment[]> {
+    const appointmentCollection = collection(this.firestore, 'DoctorAppointment');
+  
+    return new Observable<IAppointment[]>((observer) => {
+      const unsubscribe = onSnapshot(appointmentCollection, (querySnapshot) => {
+        const appointments: IAppointment[] = [];
+        querySnapshot.forEach((doc) => {
+          const appointment = doc.data() as IAppointment;
+          appointment.docId = doc.id; // Add the docId property
+          appointments.push(appointment);
+        });
+        observer.next(appointments);
+      }, (error) => {
+        observer.error(error);
+      });
+  
+      // Return an unsubscribe function to clean up the subscription when it's no longer needed
+      return () => unsubscribe();
+    });
+  }
+
   getAllPromostags(): Observable<IPosts[]> {
     const postsCollection = collection(this.firestore, 'Promoted');
   
@@ -477,6 +517,24 @@ export class FireStoreCollectionsServiceService {
     return new Observable<void>((observer) => {
       addDoc(postsCollection, {
         ...postData,
+        datePosted: new Date().toLocaleString('en-GB', { timeZone: 'UTC' }), // You might want to use serverTimestamp for accurate date
+      })
+        .then(() => {
+          observer.next();
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+          observer.complete();
+        });
+    });
+  }
+
+  uploadAppointment(appointmentData: IAppointment): Observable<void> {
+    const appointmentCollection = collection(this.firestore, 'DoctorAppointment');
+    return new Observable<void>((observer) => {
+      addDoc(appointmentCollection, {
+        ...appointmentData,
         datePosted: new Date().toLocaleString('en-GB', { timeZone: 'UTC' }), // You might want to use serverTimestamp for accurate date
       })
         .then(() => {

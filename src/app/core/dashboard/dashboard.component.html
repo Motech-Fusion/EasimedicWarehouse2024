@@ -259,7 +259,7 @@
     </div>
     <div class="container-center justify-center items-center">
         <div>
-            <app-tabs [backgroundColor]="currentUser?.easiMedicFor == 'Service Provider' ? '#333d43':'#f9f9f9'" (tabSelected)="onTabSelected($event)"></app-tabs>
+            <app-tabs [showAppointment]="currentUser?.easiMedicFor == 'Service Provider' ? true:false" [backgroundColor]="currentUser?.easiMedicFor == 'Service Provider' ? '#333d43':'#f9f9f9'" (tabSelected)="onTabSelected($event)"></app-tabs>
         </div>
     </div>
     <div class="tab-content">
@@ -468,9 +468,17 @@
         <!-- if news selected -->
         <div *ngIf="selectedTabTitle == PERIODTRACKER">
             <div>
-                <ng-container>
+                <ng-container *ngIf="currentUser?.easiMedicFor !== 'Service Provider'">
                     <app-period-tracker></app-period-tracker>
-
+                </ng-container>
+                <ng-container *ngIf="currentUser?.easiMedicFor == 'Service Provider'">
+                <!-- appointment list below -->
+                <div class="appointment-container">
+                    <app-appointment-list [appointments]="userAppointments">
+    
+                    </app-appointment-list>
+                </div>
+                <!-- appointment list below -->
                 </ng-container>
             </div>
         </div>

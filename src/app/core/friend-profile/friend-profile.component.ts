@@ -6,7 +6,7 @@ import { CustomFile } from 'src/app/authentication/choose-image/choose-image.com
 import { IMedicalPosts, IPosts } from 'src/app/shared/Interfaces/IPosts';
 import { IDoctorsInterface, IUsersInterface } from 'src/app/shared/Interfaces/IUsersInterface';
 import { AlertService } from 'src/app/shared/Services/alert.service';
-import { FireStoreCollectionsServiceService } from 'src/app/shared/Services/fire-store-collections-service.service';
+import { FireStoreCollectionsServiceService, IAppointment } from 'src/app/shared/Services/fire-store-collections-service.service';
 import { UserState } from 'src/app/shared/State/user.reducer';
 import {
   selectCurrentUser,
@@ -63,6 +63,11 @@ showAppointmentDialog: boolean = false;
     //   this.currentUser = user;
     //   console.log('Current user:', this.currentUser);
     // });
+
+    this.store.select(selectDocId).subscribe((id) => {
+      this.currentUserId = id;
+      console.log("Current user id:", this.currentUserId);
+    });
 
     // this.fireStoreCollectionsService.getAllUsers().subscribe((users) => {
     //   // console.log('users here', users);
@@ -249,7 +254,20 @@ showAppointmentDialog: boolean = false;
       this.showAppointmentDialog = false
       }
 
-      bookAppointment($event: any) {
-       this.showAppointmentDialog = false;
+      bookAppointment(data: any) {
+       const appointmentData = <IAppointment>{
+        category: data.category,
+        description: data.decscription,
+        bookingMade: "",
+        doctor: this.currentUser.docId,
+        patient: this.currentUserId,
+        patientName: this.currentUser?.name ? this.currentUser?.name : this.currentUser?.fullname,
+        patientImage: this.currentUser?.image ? this.currentUser?.image : null,
+        status:"pending",
+        location:"Pretoria"
+       }
+       this.fireStoreCollectionsService.uploadAppointment(appointmentData).subscribe(x=>{
+        this.showAppointmentDialog = false;
+       })
         }
 }

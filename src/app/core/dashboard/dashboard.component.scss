@@ -365,3 +365,13 @@ div#crud-modal {
 .flex.items-center.justify-between.p-4.md\:p-5.border-b.rounded-t.dark\:border-gray-600 {
   background-color: #333d43;
 }
+
+.appointment-container{
+    background-color: white;
+    padding: 54px;
+    // display: grid;
+    // grid-template-columns: repeat(3, minmax(0, 1fr));
+    margin-right: 148px;
+    margin-left: 148px;
+    border-radius: 12px
+}
