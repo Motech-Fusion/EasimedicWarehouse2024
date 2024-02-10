@@ -12,7 +12,7 @@ export class PriceListItemComponent {
     {
       planType: "Standard",
       price: "120",
-      color:"#c9bb33",
+      color: "#c9bb33",
       term: "month",
       benefits: [
         {
@@ -22,14 +22,13 @@ export class PriceListItemComponent {
         },
         {
           index: 1,
-          description:
-            "Upload blog posts,comment and like other medics posts",
+          description: "Upload blog posts,comment and like other medics posts",
         },
       ],
     },
     {
       planType: "Pro",
-      color:"#33c96d",
+      color: "#33c96d",
       price: "520",
       term: "month",
       benefits: [

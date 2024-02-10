@@ -474,7 +474,7 @@
                 <ng-container *ngIf="currentUser?.easiMedicFor == 'Service Provider'">
                 <!-- appointment list below -->
                 <div class="appointment-container">
-                    <app-appointment-list [appointments]="userAppointments">
+                    <app-appointment-list [currentUser]="currentUser" [appointments]="userAppointments">
     
                     </app-appointment-list>
                 </div>
