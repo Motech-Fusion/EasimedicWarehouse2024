@@ -208,6 +208,7 @@ export class DashboardComponent implements OnInit {
     // this.fetchCurrentUserFriends();
     this.UserFriends = this.fetchCurrentUserFriends("");
   }
+  
   fetchAppointments() {
     this.fireStoreCollectionsService.getAllAppointments().subscribe(appointments=>{
       let filteredAppointment = [];

@@ -13,6 +13,7 @@ import { FireStoreCollectionsServiceService } from '../Services/fire-store-colle
 })
 export class AppHeaderComponent implements OnInit {
   @Input() image: string = '';
+  @Input() notificationCount: number = 0;
   @Input() currentUserObject!: IUsersInterface;
   @Input() currentUserId:string | null = ''
   isNavbarCollapsed: boolean = false;

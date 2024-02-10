@@ -13,6 +13,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from 'src/environments/environment.prod';
 import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { HttpClientModule } from '@angular/common/http';
+import { TutorialViewerComponent } from './tutorial-viewer/tutorial-viewer.component';
 
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'UserType', component: ChooseTypeOfUserComponent },
   { path: 'choose-image', component: ChooseImageComponent },
+  { path: 'tutorial', component: TutorialViewerComponent },
 ];
 
 const customNotifierOptions: NotifierOptions = {

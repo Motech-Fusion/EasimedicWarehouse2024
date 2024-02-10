@@ -2,22 +2,29 @@
 
     <h1 tabindex="-1" data-testid="header" class="text-header">Your appointments</h1>
     <div>
-        <p class="vads-u-font-family--serif" data-testid="date-text">Here are your appointments until today: <span class="current-date">{{currentDate | date}}</span></p>
+        <p class="vads-u-font-family--serif" data-testid="date-text">Here are your appointments until today: <span
+                class="current-date">{{currentDate | date}}</span></p>
         <ol class="vads-u-border-top--1px vads-u-margin-bottom--4 check-in--appointment-list appointment-list"
             data-testid="appointment-list" *ngFor="let appointment of appointments">
             <li class="vads-u-border-bottom--1px check-in--appointment-item" data-testid="appointment-list-item">
                 <div class="check-in--appointment-summary vads-u-margin-bottom--2 vads-u-margin-top--2">
                     <div data-testid="appointment-time"
-                        class="vads-u-font-size--h2 vads-u-font-family--serif vads-u-font-weight--bold">{{appointment?.datePosted | date}}</div>
+                        class="vads-u-font-size--h2 vads-u-font-family--serif vads-u-font-weight--bold">
+                        {{appointment?.datePosted | date}}</div>
                     <div data-testid="appointment-time"
-                        class="vads-u-font-size--h2 vads-u-font-family--serif vads-u-font-weight--bold">Patient : {{appointment?.patientName}}</div>
-                    <div data-testid="appointment-type-and-provider" class="vads-u-font-weight--bold">{{appointment.category}} with
+                        class="vads-u-font-size--h2 vads-u-font-family--serif vads-u-font-weight--bold">Patient :
+                        {{appointment?.patientName}}</div>
+                    <div data-testid="appointment-type-and-provider" class="vads-u-font-weight--bold">
+                        {{appointment.category}} with
                         Dr {{currentUser?.name ? currentUser?.name : currentUser?.fullname}}</div>
-                    <div  data-testid="appointment-type-and-provider" class="vads-u-font-weight--bold">Appointment status :
-                        <span style="color:red">{{appointment?.status}}</span></div>
+                    <div data-testid="appointment-type-and-provider" class="vads-u-font-weight--bold">Appointment status
+                        :
+                        <span style="color:red">{{appointment?.status}}</span>
+                    </div>
                     <div class="vads-u-display--flex vads-u-align-items--baseline">
                         <div data-testid="appointment-kind-and-location" class="vads-u-display--inline">In person at
-                            {{appointment?.location}}<br> <span style="color:grey">{{appointment?.description}}</span></div>
+                            {{appointment?.location}}<br> <span style="color:grey">{{appointment?.description}}</span>
+                        </div>
                     </div>
                     <div class="row" style="margin-top:8px">
                         <button style="background-color:#2ca1f2" type="submit"

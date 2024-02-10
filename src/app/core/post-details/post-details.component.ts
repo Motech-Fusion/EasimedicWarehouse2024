@@ -127,6 +127,7 @@ export class PostDetailsComponent implements OnInit {
   }
 
   AddComment() {
+    debugger
     this.firebaseService
       .addCommentToPost(
         this.Post.docId,

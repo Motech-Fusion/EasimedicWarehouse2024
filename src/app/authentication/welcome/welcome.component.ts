@@ -31,4 +31,8 @@ export class WelcomeComponent {
   proceed(): void {
     this.route.navigate(['authentication/login']);
   }
+
+  liveDemo(): void {
+    this.route.navigate(['authentication/tutorial']);
+  }
 }

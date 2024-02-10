@@ -93,6 +93,7 @@ export interface IAppointment {
   doctorName?:string;
   location?:string;
   docId?:string;
+  datePosted?:string;
 }
 
 export interface Story {
@@ -601,28 +602,32 @@ export class FireStoreCollectionsServiceService {
   }
 
   addCommentToPost(postId: string, userId: string, comment: string, senderId: string, username: string, userImage: string): Observable<void> {
-    const postDoc = doc(this.firestore, 'Posts', postId);
+    const postDoc = doc(this.firestore, 'UserPosts', postId);
   
     return from(getDoc(postDoc)).pipe(
       switchMap((postSnapshot) => {
         if (postSnapshot.exists()) {
           const post = postSnapshot.data() as IPosts;
-          const currentComments = post.comments || [];
-          const newComment = {
-            userId: userId,
-            comment: comment,
-            username: username,
-            userImage: userImage,
-            postedAt: new Date().toLocaleString('en-GB', { timeZone: 'UTC' }),
-          };
-          const updatedComments = [...currentComments, newComment];
+          if (post && post.comments !== undefined) {
+            const currentComments = post.comments || [];
+            const newComment = {
+              userId: userId,
+              comment: comment,
+              username: username,
+              userImage: userImage,
+              postedAt: new Date().toLocaleString('en-GB', { timeZone: 'UTC' }),
+            };
+            const updatedComments = [...currentComments, newComment];
   
-          return from(updateDoc(postDoc, { comments: updatedComments })).pipe(
-            map(() => undefined), // Map the result to void
-            catchError((error) => {
-              throw error; // Re-throw the error
-            })
-          );
+            return from(updateDoc(postDoc, { comments: updatedComments })).pipe(
+              map(() => undefined), // Map the result to void
+              catchError((error) => {
+                throw error; // Re-throw the error
+              })
+            );
+          } else {
+            throw new Error('Comments not found in the post object');
+          }
         } else {
           throw new Error('Post not found');
         }
@@ -632,6 +637,8 @@ export class FireStoreCollectionsServiceService {
       })
     );
   }
+  
+  
 
   removeCommentFromPost(postId: string, commentId: string): Observable<void> {
     const postDoc = doc(this.firestore, 'Posts', postId);
@@ -884,7 +891,7 @@ console.log('friend found',userDoc)
   
 
   addUserIdToLikedBy(postId: string, userId: string): Observable<void> {
-    const postDoc = doc(this.firestore, 'Posts', postId);
+    const postDoc = doc(this.firestore, 'UserPosts', postId);
   
     return new Observable<void>((observer) => {
       const unsubscribe = onSnapshot(postDoc, (postSnapshot) => {
