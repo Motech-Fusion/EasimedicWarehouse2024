@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 import { FormControl } from '@angular/forms';
 import { NavigationExtras, Route, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable, catchError, filter, map, switchMap, tap } from 'rxjs';
+import { CustomFile } from 'src/app/authentication/choose-image/choose-image.component';
 import { IHashTags } from 'src/app/shared/Interfaces/IHashTags';
 import { IMedicalPosts, IPosts } from 'src/app/shared/Interfaces/IPosts';
 import { IDoctorsInterface, IUsersInterface } from 'src/app/shared/Interfaces/IUsersInterface';
@@ -100,6 +101,10 @@ export class DashboardComponent implements OnInit {
   medicalProductDescription!: string;
   medicalProductPrice!: number;
   userAppointments: IAppointment[] = [];
+  @ViewChild("imageInput") imageInput!: ElementRef;
+  selectedImage: string = "";
+  selectedImageString: string = "";
+  selectedImages: any[] = [];
   
   constructor(
     private fireStoreCollectionsService: FireStoreCollectionsServiceService,
@@ -208,7 +213,7 @@ export class DashboardComponent implements OnInit {
     // this.fetchCurrentUserFriends();
     this.UserFriends = this.fetchCurrentUserFriends("");
   }
-  
+
   fetchAppointments() {
     this.fireStoreCollectionsService.getAllAppointments().subscribe(appointments=>{
       let filteredAppointment = [];
@@ -757,7 +762,7 @@ export class DashboardComponent implements OnInit {
       category: "this.medicalProductCategory",
       description: this.medicalProductDescription,
       doctor: this.currentUser?.docId as string,
-      image: "this.medicalProductImage",
+      image: this.selectedImageString,
       price: this.medicalProductPrice,
       doctorName:this.currentUser?.name ? this.currentUser?.name : this.currentUser?.fullname
     };
@@ -767,5 +772,49 @@ export class DashboardComponent implements OnInit {
         console.log(x);
         this.hideModal();
       });
+  }
+
+  triggerImageInput(): void {
+    // Access the native element using this.imageInput.nativeElement
+    this.imageInput.nativeElement.click();
+  }
+
+  onImageSelected(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files) {
+      const selectedImages: FileList = inputElement.files;
+      // You can now handle the selected images, for example, upload them to a server
+
+      // Read the contents of each image and create a data URL
+      const fileArray: CustomFile[] = Array.from(selectedImages);
+      fileArray.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          // Add the data URL to the CustomFile object
+          const base64String = (e.target?.result as string).split(",")[1];
+
+          // Add the base64 string to the CustomFile object
+          file.url = base64String;
+          this.selectedImage = base64String;
+
+          // Upload the base64 string to Firebase Storage
+          var firebaseUrl = this.fireStoreCollectionsService
+            .uploadPicture(base64String)
+            .then((firebaseUrl) => {
+              console.warn("download url here : ", firebaseUrl);
+              this.selectedImageString = firebaseUrl;
+              // this.uploadUserImage(firebaseUrl);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+          console.warn(firebaseUrl);
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // Set the updated array to selectedImages
+      this.selectedImages = fileArray;
+    }
   }
 }

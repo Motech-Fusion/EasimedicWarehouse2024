@@ -515,11 +515,15 @@
                     <div class="grid gap-4 mb-4 grid-cols-2">
 
                         <div class="flex items-center gap-4">
-                            <img class="rounded-full medical-product-image" src="https://cdn.dribbble.com/users/513398/screenshots/3330065/media/18bcce556d2699d32236bfc9a63b9d60.jpg?resize=800x600&vertical=center" alt="">
+                            <img class="rounded-full medical-product-image" src="{{selectedImageString ? selectedImageString : 'https://t4.ftcdn.net/jpg/05/42/36/11/360_F_542361185_VFRJWpR2FH5OiAEVveWO7oZnfSccZfD3.jpg'}}" alt="">
+                            <input
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            #imageInput type="file" accept="image/*" multiple style="display: none"
+                            (change)="onImageSelected($event)">
                             <div class="font-medium dark:text-white">
                                 <div *ngIf="this.medicalProductName">{{this.medicalProductName}}</div>
                                 <div *ngIf="this.medicalProductPrice" class="text-sm text-gray-500 dark:text-gray-400">R {{this.medicalProductPrice}}</div>
-                                <div class="text-sm text-gray-500 dark:text-gray-400 add-image-link">Add picture</div>
+                                <div (click)="triggerImageInput()" class="text-sm text-gray-500 dark:text-gray-400 add-image-link">Add picture</div>
                             </div>
                         </div>
 
