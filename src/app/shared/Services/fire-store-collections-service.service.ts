@@ -532,6 +532,7 @@ export class FireStoreCollectionsServiceService {
   }
 
   uploadAppointment(appointmentData: IAppointment): Observable<void> {
+
     const appointmentCollection = collection(this.firestore, 'DoctorAppointment');
     return new Observable<void>((observer) => {
       addDoc(appointmentCollection, {
@@ -598,6 +599,41 @@ export class FireStoreCollectionsServiceService {
           observer.error(error);
           observer.complete();
         });
+    });
+  }
+
+  declineAppointment(appointmentId: string): Observable<void> {
+    const postDoc = doc(this.firestore, 'DoctorAppointment', appointmentId);
+
+    return new Observable<void>((observer) => {
+      deleteDoc(postDoc)
+        .then(() => {
+          observer.next();
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+          observer.complete();
+        });
+    });
+  }
+
+  ApproveAppointment(appointmentId: string): Observable<void> {
+    const appointmentDoc = doc(this.firestore, 'DoctorAppointment', appointmentId);
+  
+    return new Observable<void>((observer) => {
+      updateDoc(appointmentDoc, {
+        datePosted: new Date().toLocaleString('en-GB', { timeZone: 'UTC' }), // Update datePosted to current date
+        status: 'Approved', // Update status to 'declined'
+      })
+      .then(() => {
+        observer.next();
+        observer.complete();
+      })
+      .catch((error) => {
+        observer.error(error);
+        observer.complete();
+      });
     });
   }
 

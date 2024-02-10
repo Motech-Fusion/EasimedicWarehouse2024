@@ -12,7 +12,7 @@
             </p> -->
         </div>
 
-        <app-search [placeholder]="'Search trending topics...'"></app-search>
+        <app-search [placeholder]="'Search trending topics...'" (searchEmitter)="search($event)"></app-search>
         <div class="get-started" *ngIf="hashtags">
             <dl class="max-w-md text-white-900 divide-y divide-white-200 dark:text-white dark:divide-gray-700" style="cursor: pointer;" *ngFor="let trend of hashtags | slice:0:10">
                 <div (click)="ViewTrendingDetails(trend.hashtag)" class="flex flex-col pb-3">

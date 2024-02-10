@@ -16,6 +16,7 @@ export class TrendingComponent {
   currentUserId!: string | null;
   trending:any[] = []
   hashtags: IHashTags[] | undefined;
+  OriginalTrends: IHashTags[] | undefined;
   constructor(
     private fireStoreCollectionsService: FireStoreCollectionsServiceService,
     private router: Router,
@@ -39,6 +40,7 @@ export class TrendingComponent {
       .subscribe((hashtags) => {
         console.warn("hastags right heereee",hashtags)
         this.hashtags = hashtags.sort((a, b) => b.count - a.count);
+        this.OriginalTrends = hashtags.sort((a, b) => b.count - a.count);
       });
   }
 
@@ -48,5 +50,26 @@ export class TrendingComponent {
         hashtag: trendTag
       },
     });
+  }
+
+  search(val: string) {
+    this.hashtags = this.fetchTrendingByTextSearch(val.toLocaleLowerCase())
+  }
+
+  fetchTrendingByTextSearch(
+    searchTerm: string = ""
+  ): IHashTags[] | undefined {
+    let filteredTrends = this.hashtags;
+    // Apply additional filtering based on the search term
+    if (searchTerm.trim() !== "") {
+      const lowerCaseSearchTerm = searchTerm.toLowerCase().trim();
+      filteredTrends = filteredTrends?.filter((user) =>
+        user.hashtag.toLowerCase().includes(lowerCaseSearchTerm)
+      );
+    } else {
+      filteredTrends = this.OriginalTrends;
+    }
+
+    return filteredTrends;
   }
 }

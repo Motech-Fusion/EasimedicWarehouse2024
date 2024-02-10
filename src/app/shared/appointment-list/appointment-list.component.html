@@ -19,7 +19,8 @@
                         Dr {{currentUser?.name ? currentUser?.name : currentUser?.fullname}}</div>
                     <div data-testid="appointment-type-and-provider" class="vads-u-font-weight--bold">Appointment status
                         :
-                        <span style="color:red">{{appointment?.status}}</span>
+                        <span *ngIf="appointment?.status == 'Pending'" style="color:red">{{appointment?.status}}</span>
+                        <span *ngIf="appointment?.status == 'Approved'" style="color:#07a54b;font-weight:800">{{appointment?.status}}</span>
                     </div>
                     <div class="vads-u-display--flex vads-u-align-items--baseline">
                         <div data-testid="appointment-kind-and-location" class="vads-u-display--inline">In person at
@@ -27,11 +28,11 @@
                         </div>
                     </div>
                     <div class="row" style="margin-top:8px">
-                        <button style="background-color:#2ca1f2" type="submit"
+                        <button (click)="ApproveAppointment(appointment.docId)" style="background-color:#2ca1f2" type="submit"
                             class="melachat-background-color inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
                             Approve
                         </button>
-                        <button style="background-color:red" [style.marginLeft]="'6px'" type="submit"
+                        <button (click)="declineAppointment(appointment.docId)" style="background-color:red" [style.marginLeft]="'6px'" type="submit"
                             class="melachat-background-color inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
                             Decline
                         </button>

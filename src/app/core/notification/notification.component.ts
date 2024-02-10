@@ -19,7 +19,7 @@ export class NotificationComponent {
   notification:number = 0
   currentUser!: IUsersInterface;
   userAppointments: IAppointment[] = [];
-
+  
   constructor(
     private fireStoreCollectionsService: FireStoreCollectionsServiceService,
     private router: Router,
@@ -31,7 +31,7 @@ export class NotificationComponent {
       this.currentUser = users.filter((x) => x.docId == this.currentUserId)[0];
       return (this.recommedations = users.filter(userValue => userValue.username && userValue.name));
     });
-   
+    
     this.store.select(selectDocId).subscribe((id) => {
       this.currentUserId = id;
       console.log('Current user id:', this.currentUserId);
@@ -60,5 +60,11 @@ export class NotificationComponent {
         }
         this.userAppointments = filteredAppointment;
       })
+    }
+    
+    cancelAppointment(docId: string|undefined) {
+      const docuId = docId as string
+    this.fireStoreCollectionsService.declineAppointment(docuId).subscribe(x=>{
+    })
     }
 }

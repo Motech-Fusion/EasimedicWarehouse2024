@@ -44,7 +44,9 @@
                                 <span style="color:black;font-weight:700">{{item?.datePosted | date}}</span>
                              </p>
                              <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                Appointment status: <span style="color:red">{{item.status}}</span>
+                                Appointment status: 
+                                <span *ngIf="item?.status == 'Approved'" style="color:#07a54b;font-weight:800" >{{item.status}}</span>
+                                <span *ngIf="item?.status == 'Pending'" style="color:red;font-weight:800" >{{item.status}}</span>
                              </p>
                              <p class="text-sm text-gray-500 truncate dark:text-gray-400">
                                 {{item.category}} with {{item.doctorName}}
@@ -54,7 +56,7 @@
                              </p>
                           </div>
                           <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                            <button style="background-color:#f21d1d" type="button" class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            <button (click)="cancelAppointment(item.docId)" style="background-color:#f21d1d" type="button" class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                 <svg class="h-3 w-3 text-white"  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="9" cy="7" r="4" />  <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />  <path d="M16 11h6m-3 -3v6" /></svg>                               
                                 Cancel
                                 </button>
