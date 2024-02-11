@@ -38,6 +38,7 @@ import { TowTruckUserItemComponent } from './tow-truck-user-item/tow-truck-user-
 import { PeriodTrackerComponent } from './period-tracker/period-tracker.component';
 import { PriceListItemComponent } from './price-list-item/price-list-item.component';
 import { AppointmentListComponent } from './appointment-list/appointment-list.component';
+import { NotificationShowComponent } from './notification-show/notification-show.component';
 
 @NgModule({
   declarations: [
@@ -70,7 +71,8 @@ import { AppointmentListComponent } from './appointment-list/appointment-list.co
     TowTruckUserItemComponent,
     PeriodTrackerComponent,
     PriceListItemComponent,
-    AppointmentListComponent
+    AppointmentListComponent,
+    NotificationShowComponent
   ],
   imports: [
     CommonModule,
@@ -115,7 +117,8 @@ import { AppointmentListComponent } from './appointment-list/appointment-list.co
     TowTruckUserItemComponent,
     PeriodTrackerComponent,
     PriceListItemComponent,
-    AppointmentListComponent
+    AppointmentListComponent,
+    NotificationShowComponent
   ],
   providers: [AlertService],
 })

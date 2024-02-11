@@ -113,3 +113,17 @@ input.ng-invalid {
 .disabled{
   background-color: grey;
 }
+
+div#crud-modal {
+  display: flex;
+  z-index: 9999999999;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+
+  background-color: #424242ab;
+}
+
+.flex.items-center.justify-between.p-4.md\:p-5.border-b.rounded-t.dark\:border-gray-600 {
+  background-color: #333d43;
+}

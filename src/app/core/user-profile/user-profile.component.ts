@@ -32,6 +32,8 @@ export class UserProfileComponent implements OnInit {
   myPosts: IMedicalPosts[] = [];
   selectedTabIndex: number = 0;
   showPaymentContainer = false;
+  userSelectedPlan: string = '';
+
   constructor(
     private fireStoreCollectionsService: FireStoreCollectionsServiceService,
     private store: Store<UserState>
@@ -150,4 +152,8 @@ export class UserProfileComponent implements OnInit {
   SubscriptionSettings() {
    this.showPaymentContainer = !this.showPaymentContainer;
   }
+
+  selectPlan(data: any) {
+   this.userSelectedPlan = data.planType
+    }
 }

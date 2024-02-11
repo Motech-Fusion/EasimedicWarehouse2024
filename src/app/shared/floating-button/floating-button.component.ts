@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-floating-button',
@@ -7,6 +7,7 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class FloatingButtonComponent {
   isMenuOpen = false;
+  @Input() showProviderOptionButtons = false;
   @Output() AddPostEmitter = new EventEmitter<unknown>();
   @Output() AddMedicalProductEmitter = new EventEmitter<unknown>();
 

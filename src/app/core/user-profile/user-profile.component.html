@@ -345,11 +345,11 @@
                             <!-- <app-no-posts-found></app-no-posts-found> -->
                             <div class="grid md:grid-cols-4 gap-4 grid-pricelist">
                                 <!-- put the pricing lists here -->
-                                <app-price-list-item></app-price-list-item>
+                                <app-price-list-item [selectedPlan]="userSelectedPlan" (seletcedPlanEmitter)="selectPlan($event)"></app-price-list-item>
                                 <!-- put the pricing lists here -->
                             </div>
                         </div>
-                        <div class="get-started-wrapper" [style.marginTop]="'22px'">
+                        <div *ngIf="userSelectedPlan" class="get-started-wrapper" [style.marginTop]="'22px'">
                             <div class="grid md:grid-cols-4 gap-4">
                                 <button style="background-color:#333d43;color:#fff" type="button"
                                     class="text-gray-900 bg-white hover:bg-gray-100 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-600 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 me-2 mb-2">

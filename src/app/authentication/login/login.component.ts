@@ -1,35 +1,39 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { AngularFireMessaging } from '@angular/fire/compat/messaging';
-import { FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { catchError, switchMap, tap } from 'rxjs';
-import { IUsersInterface } from 'src/app/shared/Interfaces/IUsersInterface';
-import { AlertService } from 'src/app/shared/Services/alert.service';
-import { FireStoreCollectionsServiceService } from 'src/app/shared/Services/fire-store-collections-service.service';
-import { setCurrentUser } from 'src/app/shared/State/user.actions';
-import { UserState } from 'src/app/shared/State/user.reducer';
+import { Component, ElementRef, ViewChild } from "@angular/core";
+import { AngularFireMessaging } from "@angular/fire/compat/messaging";
+import { FormControl, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { catchError, switchMap, tap } from "rxjs";
+import { IUsersInterface } from "src/app/shared/Interfaces/IUsersInterface";
+import { AlertService } from "src/app/shared/Services/alert.service";
+import { FireStoreCollectionsServiceService } from "src/app/shared/Services/fire-store-collections-service.service";
+import { setCurrentUser } from "src/app/shared/State/user.actions";
+import { UserState } from "src/app/shared/State/user.reducer";
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss'],
+  selector: "app-login",
+  templateUrl: "./login.component.html",
+  styleUrls: ["./login.component.scss"],
 })
 export class LoginComponent {
-  email: string = '';
-  password: string = '';
+  email: string = "";
+  password: string = "";
   showPassword: boolean = false;
   spinner: boolean = false;
-  PhoneContentFormControl = new FormControl('', [
+  PhoneContentFormControl = new FormControl("", [
     Validators.required,
-    Validators.pattern(/^\d{9}$/) // Adjust the pattern based on your phone number format
+    Validators.pattern(/^\d{9}$/), // Adjust the pattern based on your phone number format
   ]);
   PasswordContentFormControl: FormControl = new FormControl();
-  phoneNumber: string = '';
-  selectedCountryCode: string = '27';
+  phoneNumber: string = "";
+  selectedCountryCode: string = "27";
   isDropdownOpen: boolean = false;
-  countryCodes: string[] = ['1', '44', '81', '27', '33']; // Add your desired country codes
-
+  countryCodes: string[] = ["1", "44", "81", "27", "33"]; // Add your desired country codes
+  showNotification = false;
+  showForgotPasswordModal = false;
+  PhoneForgotPasswordFormControl: FormControl = new FormControl();
+  EmailForgotPasswordFormControl: FormControl = new FormControl();
+  
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
@@ -42,12 +46,13 @@ export class LoginComponent {
     // private msalService: MsalService,
     public router: Router,
     private fireStoreCollectionsService: FireStoreCollectionsServiceService,
-    private store: Store<UserState>,private alertService: AlertService, private afMessaging:AngularFireMessaging
+    private store: Store<UserState>,
+    private alertService: AlertService,
+    private afMessaging: AngularFireMessaging
   ) {}
 
-
   ngOnInit(): void {
-  // this.requestPermissionAndToken()
+    // this.requestPermissionAndToken()
     this.PhoneContentFormControl.valueChanges.subscribe((val) => {
       this.phoneNumber = val as string;
     });
@@ -66,15 +71,15 @@ export class LoginComponent {
     this.spinner = true;
 
     this.fireStoreCollectionsService
-      .signInWithPhoneNumber("+27"+this.phoneNumber, this.password)
+      .signInWithPhoneNumber("+27" + this.phoneNumber, this.password)
       .then((res) => {
         this.spinner = false;
         //dummy password U2FsdGVkX19JKjbWuwvP+m4lV4RRmEy4XZ8prl3Gows=
         var user = res as IUsersInterface;
-        this.store.dispatch(setCurrentUser({ user: user}));
-        localStorage.setItem('user', JSON.stringify(user));
-        if(user.image == ""){
-          this.router.navigate(['/authentication','choose-image'], {
+        this.store.dispatch(setCurrentUser({ user: user }));
+        localStorage.setItem("user", JSON.stringify(user));
+        if (user.image == "") {
+          this.router.navigate(["/authentication", "choose-image"], {
             queryParams: {
               InterestedIn: user.InterestedIn,
               availability: user.availability,
@@ -95,8 +100,8 @@ export class LoginComponent {
               username: user.username,
             },
           });
-        }else{
-          this.router.navigate(['home'], {
+        } else {
+          this.router.navigate(["home"], {
             queryParams: {
               InterestedIn: user.InterestedIn,
               availability: user.availability,
@@ -121,7 +126,11 @@ export class LoginComponent {
       })
       .catch((error) => {
         this.spinner = false;
-        this.alertService.error('Invalid username or password, please enter valid info');
+        this.showNotification = true;
+        setTimeout(() => {
+          this.showNotification = false;
+        }, 2000);
+        // this.alertService.error('Invalid username or password, please enter valid info');
         // Swal.fire({
         //   title: 'Something went wrong.',
         //   text: `Unable to sign in with this account: ${error.message}`,
@@ -157,4 +166,14 @@ export class LoginComponent {
   //     )
   //     .subscribe();
   // }
+
+  SubmitForgotPassword() {
+    throw new Error("Method not implemented.");
+  }
+  showResetPasswordModal() {
+    this.showForgotPasswordModal = true;
+  }
+  hideModal() {
+    this.showForgotPasswordModal = false;
+  }
 }

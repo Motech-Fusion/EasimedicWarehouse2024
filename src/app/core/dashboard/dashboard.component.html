@@ -484,7 +484,7 @@
         </div>
     </div>
     <app-floating-button (AddMedicalProductEmitter)="AddMedicalProduct()"
-        (AddPostEmitter)="AddPost()"></app-floating-button>
+        (AddPostEmitter)="AddPost()" [showProviderOptionButtons]="currentUser?.easiMedicFor == 'Service Provider' ? true:false"></app-floating-button>
     <app-dialog #dialog *ngIf="openModalFlag" (onCancel)="closeModal($event)"
         (onConfirm)="confirmFriendRequest()"></app-dialog>
 

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 
 @Component({
   selector: "app-price-list-item",
@@ -45,4 +45,16 @@ export class PriceListItemComponent {
       ],
     },
   ];
+  @Input() selectedPlan = ""
+  @Output() seletcedPlanEmitter: any = new EventEmitter<any>();
+
+  selectPayment(_t4: {
+    planType: string;
+    price: string;
+    color: string;
+    term: string;
+    benefits: { index: number; description: string }[];
+  }) {
+    this.seletcedPlanEmitter.emit(_t4)
+  }
 }

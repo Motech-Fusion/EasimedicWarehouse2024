@@ -263,7 +263,7 @@ showAppointmentDialog: boolean = false;
         patient: this.currentUserId,
         patientName: this.currentUser?.name ? this.currentUser?.name : this.currentUser?.fullname,
         patientImage: this.currentUser?.image ? this.currentUser?.image : null,
-        status:"pending",
+        status:"Pending",
         location:"Pretoria"
        }
        this.fireStoreCollectionsService.uploadAppointment(appointmentData).subscribe(x=>{

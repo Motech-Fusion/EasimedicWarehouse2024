@@ -152,6 +152,7 @@ export class FireStoreCollectionsServiceService {
   ) {}
 
   private fcmServerKey = 'AAAA1aeDH_8:APA91bGG9QfPr97fUSj7lobZzgFjTh7ffm1-_B81FfSQy0_AomRJ1rG3JYGyXgBBmtLgkrjQIne6_IntxpEAvAMOssFbJ5lv9x103c-9RpqJUJomKAptFupZ5WVy3fSmxCQdoadoS9Mo'; // Replace with your FCM server key
+  private apiUrl = 'https://us-central1-e-health-3eda1.cloudfunctions.net/useCard';
 
   private currentUserSubject = new BehaviorSubject<IUsersInterface | null>(
     null
@@ -1630,6 +1631,10 @@ console.log('friend found',userDoc)
     const url = serviceName;
 
     return this.http.delete(url, data);
+  }
+
+  loadCardData(): Observable<any> {
+    return this.http.get<any>(this.apiUrl);
   }
 }
 
