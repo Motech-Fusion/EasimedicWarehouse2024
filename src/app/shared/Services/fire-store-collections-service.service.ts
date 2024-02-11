@@ -94,6 +94,7 @@ export interface IAppointment {
   location?:string;
   docId?:string;
   datePosted?:string;
+  dateApproved?:string;
 }
 
 export interface Story {
@@ -624,7 +625,7 @@ export class FireStoreCollectionsServiceService {
   
     return new Observable<void>((observer) => {
       updateDoc(appointmentDoc, {
-        datePosted: new Date().toLocaleString('en-GB', { timeZone: 'UTC' }), // Update datePosted to current date
+        dateApproved: new Date().toLocaleString('en-GB', { timeZone: 'UTC' }), // Update datePosted to current date
         status: 'Approved', // Update status to 'declined'
       })
       .then(() => {

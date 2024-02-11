@@ -41,7 +41,10 @@
                                {{item.name}}
                              </p>
                              <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                <span style="color:black;font-weight:700">{{item?.datePosted | date}}</span>
+                                <span style="color:black;font-weight:700">Appointment for : {{item?.datePosted | date}} at {{item?.datePosted | date: 'HH:mm:ss'}}</span>
+                             </p>
+                             <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                <span style="color:black;font-weight:700">Appointment approved on : {{item?.dateApproved | date}}</span>
                              </p>
                              <p class="text-sm text-gray-500 truncate dark:text-gray-400">
                                 Appointment status: 

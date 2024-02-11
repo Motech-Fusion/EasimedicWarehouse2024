@@ -22,6 +22,7 @@ import { ViewAdsDetailsComponent } from './view-ads-details/view-ads-details.com
 import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { environment } from 'src/environments/environment.prod';
+import { PaymentScreenComponent } from './payment-screen/payment-screen.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: 'image-viewer', component: GalleryViewerComponent },
   { path: 'promote-item', component: PromoteItemMainComponent },
   { path: 'view-ads-details', component: ViewAdsDetailsComponent },
+  { path: 'checkout', component: PaymentScreenComponent },
 ];
 
 
@@ -62,7 +64,8 @@ const routes: Routes = [
     GalleryViewerComponent,
     StoriesViewerWrapperComponent,
     PromoteItemMainComponent,
-    ViewAdsDetailsComponent
+    ViewAdsDetailsComponent,
+    PaymentScreenComponent
   ],
   imports: [
     CommonModule,RouterModule.forChild(routes), SharedModule, FormsModule,ReactiveFormsModule, AngularFireModule.initializeApp(environment.firebase),

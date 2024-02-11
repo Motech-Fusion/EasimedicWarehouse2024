@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
+import { Router } from "@angular/router";
 import { Store } from "@ngrx/store";
 import { CustomFile } from "src/app/authentication/choose-image/choose-image.component";
 import { IMedicalPosts, IPosts } from "src/app/shared/Interfaces/IPosts";
@@ -36,8 +37,11 @@ export class UserProfileComponent implements OnInit {
 
   constructor(
     private fireStoreCollectionsService: FireStoreCollectionsServiceService,
-    private store: Store<UserState>
+    private store: Store<UserState>,
+    private router: Router,
   ) {}
+
+  
   ngOnInit(): void {
     // this.store.select(selectCurrentUser).subscribe((user) => {
     //   this.currentUser = user;
@@ -155,5 +159,9 @@ export class UserProfileComponent implements OnInit {
 
   selectPlan(data: any) {
    this.userSelectedPlan = data.planType
+    }
+
+    checkout() {
+      this.router.navigate(["/", "checkout"]);
     }
 }
