@@ -1,48 +1,53 @@
 <ng-container>
 
-    <h1 tabindex="-1" data-testid="header" class="text-header">Your appointments</h1>
+    <h1 *ngIf="appointments.length" tabindex="-1" data-testid="header" class="text-header">Your appointments</h1>
     <div>
-        <p class="vads-u-font-family--serif" data-testid="date-text">Here are your appointments until today: <span
+        <p *ngIf="appointments.length" class="vads-u-font-family--serif" data-testid="date-text">Here are your appointments until today: <span
                 class="current-date">{{currentDate | date}}</span></p>
-        <ol class="vads-u-border-top--1px vads-u-margin-bottom--4 check-in--appointment-list appointment-list"
-            data-testid="appointment-list" *ngFor="let appointment of appointments">
-            <li class="vads-u-border-bottom--1px check-in--appointment-item" data-testid="appointment-list-item">
-                <div class="check-in--appointment-summary vads-u-margin-bottom--2 vads-u-margin-top--2">
-                    <div data-testid="appointment-time"
-                        class="vads-u-font-size--h2 vads-u-font-family--serif vads-u-font-weight--bold">
-                        {{appointment?.datePosted | date}} at {{appointment?.datePosted | date: 'HH:mm:ss'}}</div>
-                    <div data-testid="appointment-time"
-                        class="vads-u-font-size--h2 vads-u-font-family--serif vads-u-font-weight--bold">
-                        Approved on : {{appointment?.dateApproved | date}} at {{appointment?.dateApproved | date: 'HH:mm:ss'}}</div>
-                    <div data-testid="appointment-time"
-                        class="vads-u-font-size--h2 vads-u-font-family--serif vads-u-font-weight--bold">Patient :
-                        {{appointment?.patientName}}</div>
-                    <div data-testid="appointment-type-and-provider" class="vads-u-font-weight--bold">
-                        {{appointment.category}} with
-                        Dr {{currentUser?.name ? currentUser?.name : currentUser?.fullname}}</div>
-                    <div data-testid="appointment-type-and-provider" class="vads-u-font-weight--bold">Appointment status
-                        :
-                        <span *ngIf="appointment?.status == 'Pending'" style="color:red">{{appointment?.status}}</span>
-                        <span *ngIf="appointment?.status == 'Approved'" style="color:#07a54b;font-weight:800">{{appointment?.status}}</span>
-                    </div>
-                    <div class="vads-u-display--flex vads-u-align-items--baseline">
-                        <div data-testid="appointment-kind-and-location" class="vads-u-display--inline">In person at
-                            {{appointment?.location}}<br> <span style="color:grey">{{appointment?.description}}</span>
-                        </div>
-                    </div>
-                    <div class="row" style="margin-top:8px">
-                        <button (click)="ApproveAppointment(appointment.docId)" style="background-color:#2ca1f2" type="submit"
-                            class="melachat-background-color inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
-                            Approve
-                        </button>
-                        <button (click)="declineAppointment(appointment.docId)" style="background-color:red" [style.marginLeft]="'6px'" type="submit"
-                            class="melachat-background-color inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
-                            Decline
-                        </button>
-                    </div>
-                </div>
-            </li>
-            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
-        </ol>
+                <ng-container *ngIf="appointments.length">
+                    <ol class="vads-u-border-top--1px vads-u-margin-bottom--4 check-in--appointment-list appointment-list"
+                        data-testid="appointment-list" *ngFor="let appointment of appointments">
+                        <li class="vads-u-border-bottom--1px check-in--appointment-item" data-testid="appointment-list-item">
+                            <div class="check-in--appointment-summary vads-u-margin-bottom--2 vads-u-margin-top--2">
+                                <div data-testid="appointment-time"
+                                    class="vads-u-font-size--h2 vads-u-font-family--serif vads-u-font-weight--bold">
+                                    {{appointment?.datePosted | date}} at {{appointment?.datePosted | date: 'HH:mm:ss'}}</div>
+                                <div data-testid="appointment-time"
+                                    class="vads-u-font-size--h2 vads-u-font-family--serif vads-u-font-weight--bold">
+                                    Approved on : {{appointment?.dateApproved | date}} at {{appointment?.dateApproved | date: 'HH:mm:ss'}}</div>
+                                <div data-testid="appointment-time"
+                                    class="vads-u-font-size--h2 vads-u-font-family--serif vads-u-font-weight--bold">Patient :
+                                    {{appointment?.patientName}}</div>
+                                <div data-testid="appointment-type-and-provider" class="vads-u-font-weight--bold">
+                                    {{appointment.category}} with
+                                    Dr {{currentUser?.name ? currentUser?.name : currentUser?.fullname}}</div>
+                                <div data-testid="appointment-type-and-provider" class="vads-u-font-weight--bold">Appointment status
+                                    :
+                                    <span *ngIf="appointment?.status == 'Pending'" style="color:red">{{appointment?.status}}</span>
+                                    <span *ngIf="appointment?.status == 'Approved'" style="color:#07a54b;font-weight:800">{{appointment?.status}}</span>
+                                </div>
+                                <div class="vads-u-display--flex vads-u-align-items--baseline">
+                                    <div data-testid="appointment-kind-and-location" class="vads-u-display--inline">In person at
+                                        {{appointment?.location}}<br> <span style="color:grey">{{appointment?.description}}</span>
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top:8px">
+                                    <button *ngIf="appointment?.status !== 'Approved'" (click)="ApproveAppointment(appointment.docId)" style="background-color:#2ca1f2" type="submit"
+                                        class="melachat-background-color inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+                                        Approve
+                                    </button>
+                                    <button (click)="declineAppointment(appointment.docId)" style="background-color:red" [style.marginLeft]="'6px'" type="submit"
+                                        class="melachat-background-color inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+                                        {{appointment?.status == 'Approved' ? 'Delete Appointment':'Decline'}}
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+                    </ol>
+                </ng-container>
+                <ng-container *ngIf="!appointments.length">
+                    <h1 tabindex="-1" data-testid="header" class="text-header">Your have no appointments at this time</h1>
+                </ng-container>
     </div>
 </ng-container>

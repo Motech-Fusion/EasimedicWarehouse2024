@@ -30,6 +30,7 @@ export class LoginComponent {
   isDropdownOpen: boolean = false;
   countryCodes: string[] = ["1", "44", "81", "27", "33"]; // Add your desired country codes
   showNotification = false;
+  showResetNotification = false;
   showForgotPasswordModal = false;
   PhoneForgotPasswordFormControl: FormControl = new FormControl();
   EmailForgotPasswordFormControl: FormControl = new FormControl();
@@ -168,8 +169,13 @@ export class LoginComponent {
   // }
 
   SubmitForgotPassword() {
-    throw new Error("Method not implemented.");
+    this.showResetNotification = true;
+    this.hideModal()
+    setTimeout(() => {
+      this.showResetNotification = false;
+    }, 5000);
   }
+
   showResetPasswordModal() {
     this.showForgotPasswordModal = true;
   }

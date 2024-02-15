@@ -54,7 +54,7 @@
     justify-content: space-between;
 }
 
-@media (min-width: 200px) and (max-width:450px){
+@media (min-width: 200px) and (max-width:450px) {
   .user-profile {
     width: 52px;
     height: 52px;
@@ -63,13 +63,13 @@
     background-size: cover;
     border-color: #dfdfdf;
     border-width: 2px;
-}
+  }
 
-.for-business{
-  display:none
+  h1.for-business {
+    visibility: hidden;
+    display: none;
+  }
 }
-}
-
 
 .md\:py-4 {
   padding-top: 1rem;
@@ -82,4 +82,11 @@
   padding-bottom: 1rem;
   // background: rgb(2,2,74);
   background: #333d43
+}
+
+@media (min-width: 200px) and (max-width:450px) {
+  h1.for-business {
+    visibility: hidden!important;
+    display: none!important;
+  }
 }

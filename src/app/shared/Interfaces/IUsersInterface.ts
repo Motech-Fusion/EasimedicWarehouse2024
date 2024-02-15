@@ -21,6 +21,7 @@ export interface IUsersInterface {
     easiMedicFor:string,
     messages:string,
     fullname:string,
+    operatingHours?:any,
   }
 
   export interface IDoctorsInterface {
@@ -67,5 +68,6 @@ export interface IUsersInterface {
     street: string;
     type: string;
     experience: string;
+    operatingHours?:any
     
   }

@@ -12,23 +12,24 @@ export class AppointmentListComponent implements OnInit {
   @Input() currentUser!: IUsersInterface | null;
   currentDate: Date = new Date();
 
-  constructor(private fireStoreCollectionsService:FireStoreCollectionsServiceService){
-
-  }
+  constructor(
+    private fireStoreCollectionsService: FireStoreCollectionsServiceService
+  ) {}
   ngOnInit(): void {
     // alert(JSON.stringify(this.appointments))
   }
 
-
-    declineAppointment(docId: string|undefined) {
-      const docuId = docId as string
-    this.fireStoreCollectionsService.declineAppointment(docuId).subscribe(x=>{
-    })
+  declineAppointment(docId: string | undefined) {
+    const docuId = docId as string;
+    this.fireStoreCollectionsService
+      .declineAppointment(docuId)
+      .subscribe((x) => {});
   }
 
-  ApproveAppointment(docId: string|undefined) {
-      const docuId = docId as string
-    this.fireStoreCollectionsService.ApproveAppointment(docuId).subscribe(x=>{
-    })
+  ApproveAppointment(docId: string | undefined) {
+    const docuId = docId as string;
+    this.fireStoreCollectionsService
+      .ApproveAppointment(docuId)
+      .subscribe((x) => {});
   }
 }

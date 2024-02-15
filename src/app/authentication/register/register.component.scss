@@ -1,6 +1,6 @@
 .main-app-container{
     width:100%!important;
-    display:flex;
+    // display:flex;
     justify-content: center;
     align-items: center;
     height:100%!important;
@@ -9,6 +9,10 @@
     background-image: url("../../../assets/easimedicbackground.png");
 }
 
+
+.max-w-sm {
+    max-width: 60rem!important;
+}
 .margin-topclass{
     margin-top:22px
 }
@@ -34,10 +38,29 @@
     margin-bottom: 40px!important;
 }
 
+input.time {
+    border-radius: 10px;
+    border-width: 0.3px;
+    margin-left: 9px;
+    color: grey;
+}
+.start-time{
+color:grey
+}
+
+.end-time{
+    color:grey;
+    padding-left:18px
+}
    
 .disabled{
     background-color: grey;
   }
 .active{
     background-color: #1da1f2;;
+  }
+
+  .operating-hours{
+    padding:6px;
+    margin-top:16px
   }

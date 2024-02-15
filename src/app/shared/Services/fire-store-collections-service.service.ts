@@ -282,7 +282,7 @@ export class FireStoreCollectionsServiceService {
     });
   }
   getAllSangomas(): Observable<IDoctorsInterface[]> {
-    const usersCollection = collection(this.firestore, 'Sangoma');
+    const usersCollection = collection(this.firestore, 'Sangomas');
     const usersQuery = query(usersCollection);
   
     return new Observable<IDoctorsInterface[]>((observer: Observer<IDoctorsInterface[]>) => {
@@ -1352,6 +1352,46 @@ console.log('friend found',userDoc)
 
   updateduserprofile(currentUserNumber:string,image:string,name?:string,bio?:string) {
     const usersCollection = 'Users';
+    const queryRef = query(collection(this.firestore, usersCollection), where('phone', '==', currentUserNumber));
+    
+    return new Observable<void>((observer: Observer<void>) => {
+      from(getDocs(queryRef)).pipe(
+        switchMap((querySnapshot) => {
+          if (querySnapshot.empty) {
+            console.log('current user does not exist')
+            // Friend not found
+            // You can handle this case differently, like showing an error message.
+            observer.complete(); // No error, just complete the observer
+            return throwError('current user not found');
+          } else {
+            // Friend found
+            console.warn("called")
+            const userDoc: DocumentReference<DocumentData> = querySnapshot.docs[0].ref;
+            console.log('current user found',userDoc)
+            // Update the friend's requests array
+            return from(updateDoc(userDoc, {
+              image: image,
+              name:name,
+              bio:bio
+            }));
+          }
+        }),
+        catchError((error) => {
+          console.error('Error adding friend:', error);
+          observer.error(error);
+          return throwError(error);
+        })
+      ).subscribe(
+        () => {
+          observer.next();
+          observer.complete();
+        }
+      );
+    });
+  }
+
+  updatedDoctorprofile(currentUserNumber:string,image:string,name?:string,bio?:string) {
+    const usersCollection = 'Doctors';
     const queryRef = query(collection(this.firestore, usersCollection), where('phone', '==', currentUserNumber));
     
     return new Observable<void>((observer: Observer<void>) => {

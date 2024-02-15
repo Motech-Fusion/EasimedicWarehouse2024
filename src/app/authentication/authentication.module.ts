@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment.prod';
 import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { HttpClientModule } from '@angular/common/http';
 import { TutorialViewerComponent } from './tutorial-viewer/tutorial-viewer.component';
-
+import { FormsModule } from '@angular/forms';
 
 const routes: Routes = [
   { path: '', component: WelcomeComponent },
@@ -70,7 +70,7 @@ const customNotifierOptions: NotifierOptions = {
     declarations: [LoginComponent, WelcomeComponent, RegisterComponent, ChooseTypeOfUserComponent, ChooseImageComponent],
     imports: [CommonModule, RouterModule.forChild(routes), SharedModule,ReactiveFormsModule,  NotifierModule.withConfig(customNotifierOptions),
       AngularFireModule.initializeApp(environment.firebase),
-      AngularFireMessagingModule,HttpClientModule],
+      AngularFireMessagingModule,HttpClientModule,FormsModule],
     providers:[]
 })
 export class AuthenticationModule { }

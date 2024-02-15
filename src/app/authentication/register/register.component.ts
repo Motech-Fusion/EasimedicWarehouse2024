@@ -82,8 +82,16 @@ export class RegisterComponent implements OnInit {
   ServiceProviderTypeFormControl: FormControl = new FormControl();
   ServiceProviderCategoryContentFormControl: FormControl = new FormControl();
   providerType: string = "";
+  providerCategory: string = "";
+  showRegisterNotification: boolean = false;
+  daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  workHours:any = {};
 
-  constructor(private firestore: Firestore, public router: Router) {}
+  constructor(private firestore: Firestore, public router: Router) {
+    this.daysOfWeek.forEach(day => {
+      this.workHours[day] = { start: '', end: '' };
+    });
+  }
   ngOnInit(): void {
     this.router.routerState.root.queryParams.subscribe((params: any) => {
       // console.warn(params.comments);
@@ -114,6 +122,9 @@ export class RegisterComponent implements OnInit {
     this.ServiceProviderTypeFormControl.valueChanges.subscribe((value) => {
       this.providerType = value;
     });
+    this.ServiceProviderCategoryContentFormControl.valueChanges.subscribe((value) => {
+      this.providerCategory = value;
+    });
   }
 
   onOptionChange(optionId: string): void {
@@ -134,11 +145,14 @@ export class RegisterComponent implements OnInit {
       const userCollection = collection(this.firestore, "Users");
       const doctorsCollection = collection(this.firestore, "Doctors");
       const sangomaCollection = collection(this.firestore, "Sangomas");
-      const towTrucksCollection = collection(this.firestore, "TowTruckServices");
+      const towTrucksCollection = collection(
+        this.firestore,
+        "TowTruckServices"
+      );
 
       // Generate a random key for encryption
       let key = "";
-      
+
       const possible =
         "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
       for (let i = 0; i < 10; i++) {
@@ -169,82 +183,81 @@ export class RegisterComponent implements OnInit {
         InterestedIn: "",
         suspended: false,
         easiMedicFor: this.selectedUserType,
-      }).then(async(x)=>{
+      }).then(async (x) => {
         x.id;
-        if(this.providerType == "Doctors"){
-          await setDoc(doc(doctorsCollection, x.id), {
-            username: username,
-        name: name,
-        phone: phone,
-        fullname:name,
-        password: { ciphertext, key },
-        notificationToken: token,
-        image:
-          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-        bio: "",
-        friends: [],
-        blocked: [],
-        location: {},
-        requests: [],
-        language: "English",
-        dob: dob,
-        created: moment().format("DD-MM-YYYY"),
-        availability: "online",
-        InterestedIn: "",
-        suspended: false,
-        easiMedicFor: this.selectedUserType,
-          })
-         }
-         else if(this.providerType == "Sangoma"){
-          await setDoc(doc(sangomaCollection, x.id), {
-            username: username,
-        name: name,
-        fullname:name,
-        phone: phone,
-        password: { ciphertext, key },
-        notificationToken: token,
-        image:
-          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-        bio: "",
-        friends: [],
-        blocked: [],
-        location: {},
-        requests: [],
-        language: "English",
-        dob: dob,
-        created: moment().format("DD-MM-YYYY"),
-        availability: "online",
-        InterestedIn: "",
-        suspended: false,
-        easiMedicFor: this.selectedUserType,
-          })
-         }
-         else if(this.providerType == "TowTrucks"){
-          await setDoc(doc(towTrucksCollection, x.id), {
-            username: username,
-        name: name,
-        fullname:name,
-        phone: phone,
-        password: { ciphertext, key },
-        notificationToken: token,
-        image:
-          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-        bio: "",
-        friends: [],
-        blocked: [],
-        location: {},
-        requests: [],
-        language: "English",
-        dob: dob,
-        created: moment().format("DD-MM-YYYY"),
-        availability: "online",
-        InterestedIn: "",
-        suspended: false,
-        easiMedicFor: this.selectedUserType,
-          })
-         }
+        // if (this.providerType == "Doctors") {
+        //   await setDoc(doc(doctorsCollection, x.id), {
+        //     username: username,
+        //     name: name,
+        //     phone: phone,
+        //     fullname: name,
+        //     password: { ciphertext, key },
+        //     notificationToken: token,
+        //     image:
+        //       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+        //     bio: "",
+        //     friends: [],
+        //     blocked: [],
+        //     location: {},
+        //     requests: [],
+        //     language: "English",
+        //     dob: dob,
+        //     userId: x.id,
+        //     created: moment().format("DD-MM-YYYY"),
+        //     availability: "online",
+        //     InterestedIn: "",
+        //     suspended: false,
+        //     easiMedicFor: this.selectedUserType,
+        //   });
+        // } else if (this.providerType == "Sangoma") {
+        //   await setDoc(doc(sangomaCollection, x.id), {
+        //     username: username,
+        //     name: name,
+        //     fullname: name,
+        //     phone: phone,
+        //     userId: x.id,
+        //     password: { ciphertext, key },
+        //     notificationToken: token,
+        //     image:
+        //       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+        //     bio: "",
+        //     friends: [],
+        //     blocked: [],
+        //     location: {},
+        //     requests: [],
+        //     language: "English",
+        //     dob: dob,
+        //     created: moment().format("DD-MM-YYYY"),
+        //     availability: "online",
+        //     InterestedIn: "",
+        //     suspended: false,
+        //     easiMedicFor: this.selectedUserType,
+        //   });
+        // } else if (this.providerType == "TowTrucks") {
+        //   await setDoc(doc(towTrucksCollection, x.id), {
+        //     username: username,
+        //     name: name,
+        //     fullname: name,
+        //     phone: phone,
+        //     password: { ciphertext, key },
+        //     notificationToken: token,
+        //     image:
+        //       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+        //     bio: "",
+        //     friends: [],
+        //     blocked: [],
+        //     location: {},
+        //     requests: [],
+        //     language: "English",
+        //     dob: dob,
+        //     created: moment().format("DD-MM-YYYY"),
+        //     availability: "online",
+        //     InterestedIn: "",
+        //     suspended: false,
+        //     easiMedicFor: this.selectedUserType,
+        //   });
+        // }
       });
-      
 
       // Additional logic if needed
     } catch (error: any) {
@@ -265,21 +278,37 @@ export class RegisterComponent implements OnInit {
     type: string
   ): Promise<void> {
     try {
-      const userCollection = collection(this.firestore, collectionName);
+      // const userCollection = collection(this.firestore, collectionName);
+      const userCollection = collection(this.firestore, "Users");
+      const doctorsCollection = collection(this.firestore, "Doctors");
+      const sangomaCollection = collection(this.firestore, "Sangomas");
+      const towTrucksCollection = collection(
+        this.firestore,
+        "TowTruckServices"
+      );
 
       // Generate a random key for encryption
-      let key = "";
-      const possible =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      for (let i = 0; i < 10; i++) {
-        key += possible.charAt(Math.floor(Math.random() * possible.length));
-      }
+     // Generate a random key for encryption
+     let key = "";
 
-      // Encrypt the password
-      const ciphertext = CryptoJS.AES.encrypt(password, key).toString();
+     const possible =
+       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+     for (let i = 0; i < 10; i++) {
+       key += possible.charAt(Math.floor(Math.random() * possible.length));
+     }
+
+     // Encrypt the password
+     const ciphertext = CryptoJS.AES.encrypt(password, key).toString();
 
       // Set user data in Firestore
       await addDoc(userCollection, {
+        username: username,
+        name: name,
+        phone: phone,
+        password: { ciphertext, key },
+        notificationToken: token,
+        image:
+          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
         address: "",
         approved: "",
         closed: [],
@@ -287,34 +316,102 @@ export class RegisterComponent implements OnInit {
         experience: 0,
         fee: 0,
         fullname: this.fullNames,
-        image: "",
+        qualification:this.providerCategory,
         latitude: "",
         location: {},
+        friends: [],
+        blocked: [],
+        requests: [],
+        language: "English",
         open: [],
         plan: "Basic",
-        qualification: "",
         regDate: moment().format("DD-MM-YYYY"),
         street: "",
         type: type,
-        // username: username,
-        // name: name,
-        // phone: phone,
-        // password: { ciphertext, key },
-        // notificationToken: token,
-        // image: 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
-        // bio: '',
-        // friends: [],
-        // blocked: [],
-        // location: {},
-        // requests: [],
-        // language: 'English',
-        // dob: dob,
-        // created: moment().format('DD-MM-YYYY'),
-        // availability: 'online',
-        // InterestedIn: '',
-        // suspended: false,
-        // melachatFor:this.selectedOption
-      });
+        bio:this.bio,
+        availability: "online",
+        InterestedIn: "",
+        suspended: false,
+        easiMedicFor:this.selectedUserType,
+        operatingHours:this.workHours,
+      }).then(async (x) => {
+        x.id;
+        if (this.providerType == "Doctors") {
+          await setDoc(doc(doctorsCollection, x.id), {
+            username: username,
+            name: name,
+            phone: phone,
+            fullname: name,
+            password: { ciphertext, key },
+            notificationToken: token,
+            image:
+              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+            bio: "",
+            friends: [],
+            blocked: [],
+            location: {},
+            requests: [],
+            language: "English",
+            dob: dob,
+            userId: x.id,
+            created: moment().format("DD-MM-YYYY"),
+            availability: "online",
+            InterestedIn: "",
+            suspended: false,
+            easiMedicFor: this.selectedUserType,
+            operatingHours:this.workHours,
+            qualification:this.providerCategory,
+          });
+        } else if (this.providerType == "Sangoma") {
+          await setDoc(doc(sangomaCollection, x.id), {
+            username: username,
+            name: name,
+            fullname: name,
+            phone: phone,
+            userId: x.id,
+            password: { ciphertext, key },
+            notificationToken: token,
+            image:
+              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+            bio: "",
+            friends: [],
+            blocked: [],
+            location: {},
+            requests: [],
+            language: "English",
+            dob: dob,
+            created: moment().format("DD-MM-YYYY"),
+            availability: "online",
+            InterestedIn: "",
+            suspended: false,
+            easiMedicFor: this.selectedUserType,
+            qualification:this.providerCategory,
+          });
+        } else if (this.providerType == "TowTrucks") {
+          await setDoc(doc(towTrucksCollection, x.id), {
+            username: username,
+            name: name,
+            fullname: name,
+            phone: phone,
+            password: { ciphertext, key },
+            notificationToken: token,
+            image:
+              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+            bio: "",
+            friends: [],
+            blocked: [],
+            location: {},
+            requests: [],
+            language: "English",
+            dob: dob,
+            created: moment().format("DD-MM-YYYY"),
+            availability: "online",
+            InterestedIn: "",
+            suspended: false,
+            easiMedicFor: this.selectedUserType,
+            qualification:this.providerCategory,
+          });
+        }});
 
       // Additional logic if needed
     } catch (error: any) {
@@ -332,16 +429,6 @@ export class RegisterComponent implements OnInit {
       // Check if user already exists in Firestore (optional, you can uncomment if needed)
 
       // Register new user in Firestore
-      await this.registerUserInFirestore(
-        this.phone,
-        this.username,
-        this.fullNames,
-        this.password,
-        "",
-        "",
-        this.selectedOption as string
-      );
-
       if (this.selectedUserType == "Service Provider") {
         await this.registerProviderUserInFirestore(
           this.phone,
@@ -353,10 +440,25 @@ export class RegisterComponent implements OnInit {
           this.selectedOption as string,
           this.providerType
         );
+      }else{
+        await this.registerUserInFirestore(
+          this.phone,
+          this.username,
+          this.fullNames,
+          this.password,
+          "",
+          "",
+          this.selectedOption as string
+        );
       }
 
+
       // Registration successful, navigate to the next screen
-      this.router.navigate(["authentication/login"]);
+      this.showRegisterNotification = true;
+      setTimeout(() => {
+        this.showRegisterNotification = false;
+        this.router.navigate(["authentication/login"]);
+      }, 4000);
     } catch (error) {
       // Handle errors or show messages as needed
     }
@@ -364,5 +466,13 @@ export class RegisterComponent implements OnInit {
 
   GoToLogin() {
     this.router.navigate(["authentication/login"]);
+  }
+
+  addHours(day: string, start: string, end: string) {
+    this.workHours[day] = { start, end };
+  }
+
+  getKeys(object: {}) {
+    return Object.keys(object);
   }
 }

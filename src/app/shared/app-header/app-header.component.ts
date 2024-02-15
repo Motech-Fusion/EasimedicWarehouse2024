@@ -45,29 +45,29 @@ export class AppHeaderComponent implements OnInit {
   navigate(url: string) {
     this.router.navigate([`${url}`], {
       queryParams: {
-        InterestedIn: this.currentUserDetails!.InterestedIn,
-        availability: this.currentUserDetails!.availability,
-        bio: this.currentUserDetails!.bio,
-        blocked: this.currentUserDetails!.blocked,
-        created: this.currentUserDetails!.created,
-        dob: this.currentUserDetails!.dob,
-        friends: this.currentUserDetails!.friends,
-        image: this.currentUserDetails!.image,
-        language: this.currentUserDetails!.language,
-        location: this.currentUserDetails!.location,
-        name: this.currentUserDetails!.name,
-        notificationToken: this.currentUserDetails!.notificationToken,
-        password: this.currentUserDetails!.password,
-        phone: this.currentUserDetails!.phone,
-        requests: this.currentUserDetails!.requests,
-        suspended: this.currentUserDetails!.suspended,
-        username: this.currentUserDetails!.username,
+        InterestedIn: this.currentUserDetails?.InterestedIn,
+        availability: this.currentUserDetails?.availability,
+        bio: this.currentUserDetails?.bio,
+        blocked: this.currentUserDetails?.blocked,
+        created: this.currentUserDetails?.created,
+        dob: this.currentUserDetails?.dob,
+        friends: this.currentUserDetails?.friends,
+        image: this.currentUserDetails?.image,
+        language: this.currentUserDetails?.language,
+        location: this.currentUserDetails?.location,
+        name: this.currentUserDetails?.name,
+        notificationToken: this.currentUserDetails?.notificationToken,
+        password: this.currentUserDetails?.password,
+        phone: this.currentUserDetails?.phone,
+        requests: this.currentUserDetails?.requests,
+        suspended: this.currentUserDetails?.suspended,
+        username: this.currentUserDetails?.username,
       },
     });
   }
 
   truncateText(text: any, maxLength: number): string {
-    if (text.length > maxLength) {
+    if (text?.length > maxLength) {
       return text.substring(0, maxLength) + '...';
     }
     return text;

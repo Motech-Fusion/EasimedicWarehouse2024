@@ -80,7 +80,7 @@ span{
         background-color: white;
         padding: 54px;
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(3, minmax(0, 1fr));
         margin-right: 148px;
         margin-left: 148px;
         border-radius: 12px
@@ -120,6 +120,7 @@ span{
   }
 
     @media (min-width: 200px) and (max-width:450px) {
+      
         .news-grid {
             grid-template-columns: repeat(1, minmax(0, 1fr));
         }
@@ -374,4 +375,14 @@ div#crud-modal {
     margin-right: 148px;
     margin-left: 148px;
     border-radius: 12px
+}
+
+@media (min-width: 200px) and (max-width:450px) {
+.appointment-container {
+  background-color: white;
+  padding: 54px;
+  margin-right:6px;
+  margin-left: 6px; 
+  border-radius: 12px;
+}
 }

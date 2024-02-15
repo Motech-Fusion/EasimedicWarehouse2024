@@ -364,6 +364,14 @@
         </div>
         <div *ngIf="selectedTabTitle == SANGOMA">
             <ng-container *ngIf="sangomas.length">
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid doctor-user">
+                    <ng-container *ngFor="let sangoma of sangomas">
+                        <app-doctor-user-item [senderUserId]="currentUserId" (chatEmitter)="navigateToChat($event)"
+                            [doctorsList]="doctors" [userItem]="sangoma"></app-doctor-user-item>
+                        <!-- Card -->
+
+                    </ng-container>
+                </div>
             </ng-container>
             <div *ngIf="!sangomas.length"
                 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white no-friends-section">

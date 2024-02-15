@@ -34,12 +34,18 @@ export class UserProfileComponent implements OnInit {
   selectedTabIndex: number = 0;
   showPaymentContainer = false;
   userSelectedPlan: string = '';
+  daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  workHours:any = {};
 
   constructor(
     private fireStoreCollectionsService: FireStoreCollectionsServiceService,
     private store: Store<UserState>,
     private router: Router,
-  ) {}
+  ) {
+    this.daysOfWeek.forEach(day => {
+      this.workHours[day] = { start: '', end: '' };
+    });
+  }
 
   
   ngOnInit(): void {
@@ -51,7 +57,8 @@ export class UserProfileComponent implements OnInit {
     this.fireStoreCollectionsService.getAllUsers().subscribe((users) => {
       // console.log('users here', users);
       this.currentUser = users.filter((x) => x.docId == this.currentUserId)[0];
-      this.UserNameFormControl.setValue(this.currentUser?.name)
+      this.UserNameFormControl.setValue(this.currentUser?.name);
+      this.UserBioFormControl.setValue(this.currentUser?.bio);
       return users.filter((x) => x.docId == this.currentUserId);
     });
 
@@ -138,6 +145,10 @@ export class UserProfileComponent implements OnInit {
     this.fireStoreCollectionsService
       .updateduserprofile(this.currentUser?.phone as string, firebaseUrl,this.userName,this.userBio)
       .subscribe((x) => {});
+    this.fireStoreCollectionsService
+      .updatedDoctorprofile(this.currentUser?.phone as string, firebaseUrl,this.userName,this.userBio)
+      .subscribe((x) => {});
+    
   }
 
   saveUserDetails() {
@@ -163,5 +174,9 @@ export class UserProfileComponent implements OnInit {
 
     checkout() {
       this.router.navigate(["/", "checkout"]);
+    }
+
+    getKeys(object: {}) {
+      return Object.keys(object);
     }
 }

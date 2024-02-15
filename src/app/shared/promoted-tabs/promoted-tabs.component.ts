@@ -14,7 +14,7 @@ export interface headerAds{
 
 export class PromotedTabsComponent implements AfterViewInit{
   @Input() ads:any[] = []
-  selectedTabTitle: string = '';
+  selectedTabTitle: string = 'Global Health News';
   @Input() tabsHeader:headerAds[] = [];
   @ViewChild('promoList') promoList!: ElementRef;
   @Output() selectTabEmitter = new EventEmitter<headerAds>()

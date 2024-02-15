@@ -61,29 +61,26 @@
                             <li style="color:grey">
                                 <span class="font-semibold text-white" style="color: #d9d9d9;">{{myPosts.length}}</span>
                                 posts
-                            </li>
-
-                            <!-- <li style="color:grey">
-                                <span class="font-semibold text-white" style="color: #000;">{{currentUser?.friends?.length}}</span>
-                                friends
-                            </li> -->
-                            <!-- <li style="color:grey">
-                            <span class="font-semibold text-white">302</span>
-                            following
-                        </li> -->
                         </ul>
 
                         <!-- user meta form medium screens -->
                         <div class="hidden md:block">
                             <span class="text-white" *ngIf="!editUser">{{currentUser?.bio}}</span>
+                            <p class="text-white" style="color: #d9d9d9;">Joined on {{currentUser?.created}}</p>
+                            <div *ngIf="!editUser && currentUser?.easiMedicFor == 'Service Provider'">
+                                <h2 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text" style="margin-top:16px;color:white">
+                                    Operating Work Hours</h2>
+                                <div *ngFor="let day of getKeys(currentUser?.operatingHours)">
+                                    <span [style.color]="'grey'" style="display: flex;">{{ day }}: <p [style.color]="'white'">{{ currentUser?.operatingHours[day].start }} AM - {{ currentUser?.operatingHours[day].end }} PM</p></span>
+                                </div>
+                            </div>
                             <input
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 [formControl]="UserBioFormControl" style="margin:6px;color:black" *ngIf="editUser"
                                 placeholder="Enter your bio here" />
-                            <p class="text-white" style="color: #d9d9d9;">Joined on {{currentUser?.created}}</p>
                         </div>
                         <ng-container *ngIf="currentUser?.easiMedicFor == 'Service Provider'">
-                            <div class="hidden md:block" *ngIf="!editUser" [style.marginTop]="'22px'">
+                            <div class="md:block" *ngIf="!editUser" [style.marginTop]="'22px'">
                                 <a style="cursor:pointer" *ngIf="!showPaymentContainer" (click)="SubscriptionSettings()"
                                     class="bg-blue-500 px-2 py-1 
                                 text-white font-semibold text-sm rounded block text-center 
@@ -106,6 +103,15 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             [formControl]="UserBioFormControl" style="margin:6px" *ngIf="editUser"
                             placeholder="Enter your bio here" />
+
+                    </div>
+                    <div *ngIf="!editUser && currentUser?.easiMedicFor == 'Service Provider'" class="md:hidden text-sm my-2">
+                        <!-- <h1 class="font-semibold">Mr Travlerrr...</h1> -->
+                        <h2 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text" style="margin-top:16px;color:white">
+                            Operating Work Hours</h2>
+                        <div *ngFor="let day of getKeys(currentUser?.operatingHours)">
+                            <span [style.color]="'grey'" style="display: flex;">{{ day }}: <p [style.color]="'white'">{{ currentUser?.operatingHours[day].start }} AM - {{ currentUser?.operatingHours[day].end }} PM</p></span>
+                        </div>
 
                     </div>
 
@@ -343,7 +349,7 @@
                             <h1 class="text-white padding-top-text" style="color:#333d43"> Manage your EasiMedic
                                 subscriptions below</h1>
                             <!-- <app-no-posts-found></app-no-posts-found> -->
-                            <div class="grid md:grid-cols-4 gap-4 grid-pricelist">
+                            <div class="grid gap-4 grid-pricelist">
                                 <!-- put the pricing lists here -->
                                 <app-price-list-item [selectedPlan]="userSelectedPlan" (seletcedPlanEmitter)="selectPlan($event)"></app-price-list-item>
                                 <!-- put the pricing lists here -->
@@ -385,7 +391,7 @@
                         <ul class="flex md:hidden justify-around space-x-8 border-t 
                       text-center p-2 text-gray-600 leading-snug text-sm">
                             <li style="color:grey">
-                                <span class="font-semibold text-white">0</span>
+                                <span class="font-semibold text-white" style="color:black">{{myPosts.length}}</span>
                                 posts
                             </li>
 

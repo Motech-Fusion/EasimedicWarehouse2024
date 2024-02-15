@@ -16,7 +16,7 @@
       <div (click)="navigate('home')" [ngClass]="{'hidden': isNavbarCollapsed, 'flex': !isNavbarCollapsed}"
         class="md:flex flex-col md:flex-row md:ml-auto mt-3 md:mt-0" style=" flex-direction: row;">
         <h1 *ngIf="currentUserDetails?.easiMedicFor"
-          style="margin-top: 12px;margin-right:20px;color:white;font-weight:800" class="for-business;">EasiMedic for
+          style="margin-top: 12px;margin-right:20px;color:white;font-weight:800" class="for-business">EasiMedic for
           Service provider</h1>
         <h1 *ngIf="!currentUserDetails?.easiMedicFor"
           style="margin-top: 12px;margin-right:20px;color:white;font-weight:800" class="for-business">EasiMedic for

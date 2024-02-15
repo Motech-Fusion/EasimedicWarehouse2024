@@ -25,3 +25,10 @@ p.vads-u-font-family--serif {
     font-weight: 700;
     text-decoration: underline;
 }
+
+@media (min-width: 200px) and (max-width:450px) {
+    h1.text-header {
+        font-size: 24px;
+        font-weight: 600;
+    }
+    }

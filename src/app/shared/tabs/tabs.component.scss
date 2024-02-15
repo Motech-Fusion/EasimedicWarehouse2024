@@ -9,32 +9,37 @@
 
 /* Add styles for the active tab */
 .active {
-  color: #1da1f2!important; /* You can change the color to your preference */
-  border-color: #1da1f2; /* You can change the border color to your preference */
+  color: #1da1f2 !important;
+  /* You can change the color to your preference */
+  border-color: #1da1f2;
+  /* You can change the border color to your preference */
 
-  .text-blue-600{
-      color: #1da1f2 !important;
-      border-color: #1da1f2!important;
+  .text-blue-600 {
+    color: #1da1f2 !important;
+    border-color: #1da1f2 !important;
   }
 }
 
 /* Add styles for grayed-out tabs */
 /* For example, make the text color gray */
 .grayed-out {
-  color: gray; /* You can change the color to your preference */
-  border-color: gray; /* You can change the border color to your preference */
+  color: gray;
+  /* You can change the color to your preference */
+  border-color: gray;
+  /* You can change the border color to your preference */
 }
 
-.mr-2{
+.mr-2 {
   cursor: pointer;
 }
 
-.h-8{
-  height:1.5rem;
+.h-8 {
+  height: 1.5rem;
   color: rgb(208, 208, 208)
 }
-.w-8{
-  width:1.5rem
+
+.w-8 {
+  width: 1.5rem
 }
 
 .border-gray-200 {
@@ -44,9 +49,9 @@
   border-radius: 32px;
 }
 
-.text-blue-600{
-color: grey !important;
-border-color: transparent;
+.text-blue-600 {
+  color: grey !important;
+  border-color: transparent;
 }
 
 a.inline-flex.items-center.justify-center.p-4.border-b-2.border-transparent.rounded-t-lg.hover\:text-gray-600.hover\:border-gray-300.dark\:hover\:text-gray-300.group:hover {
@@ -55,9 +60,20 @@ a.inline-flex.items-center.justify-center.p-4.border-b-2.border-transparent.roun
   /* color: white; */
   border-color: transparent;
 }
+
 a.inline-flex.items-center.justify-center.p-4.border-b-2.border-transparent.rounded-t-lg.hover\:text-gray-600.hover\:border-gray-300.dark\:hover\:text-gray-300.group.active {
   background-color: #333d4312;
   border-radius: 32px;
   /* color: white; */
   border-color: transparent;
+}
+
+@media (min-width: 200px) and (max-width:450px) {
+
+  ul.flex.flex-wrap.-mb-px.text-sm.font-medium.text-center.text-gray-500.dark\:text-gray-400 {
+    font-size: 9px;
+    display: grid;
+    grid-column: 12px;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }

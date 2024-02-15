@@ -175,3 +175,19 @@
         padding: 6px;
     }
   }
+
+  .hidden.md\:block {
+    background-color: #333d430d;
+    padding: 12px;
+    border-radius: 12px;
+    border-width: 0.1px;
+    border-color: #333d434d;
+}
+
+.md\:hidden.text-sm.my-2 {
+  background-color: #333d430d;
+  padding: 12px;
+  border-radius: 12px;
+  border-width: 0.1px;
+  border-color: #333d434d;
+}

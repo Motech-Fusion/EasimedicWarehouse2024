@@ -1,5 +1,9 @@
 <!-- component -->
 <div class="main-app-container">
+    <div *ngIf="showRegisterNotification">
+        <app-notification-show [errorNotification]="false" [successNotification]="true"
+            [message]="'Account successfully registered.'"></app-notification-show>
+    </div>
     <div class="bg-grey-lighter min-h-screen flex flex-col">
         <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
             <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
@@ -27,58 +31,87 @@
                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Write your thoughts here..."></textarea>
 
-                        <div *ngIf="selectedUserType === 'Service Provider'"
-                        >
-                      <h1 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text" style="margin-top:16px">
-                        Please select below</h1>
-                    <div *ngFor="let option of options"
-                        class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
-                        <input [formControl]="ServiceProviderTypeFormControl" [id]="option.id" type="radio" value="{{ option.id }}"
-                            name="melachat-option"
-                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                            [checked]="selectedOption === option.id" (change)="onOptionChange(option.id)">
-                        <label [formControl]="ServiceProviderTypeFormControl" [for]="option.id"
-                            class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-                            {{ option.label }}
-                        </label>
+                    <div *ngIf="selectedUserType === 'Service Provider'">
+                        <h1 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text"
+                            style="margin-top:16px">
+                            Please select below</h1>
+                        <div *ngFor="let option of options"
+                            class="flex items-center ps-4 border border-gray-200 rounded dark:border-gray-700">
+                            <input [formControl]="ServiceProviderTypeFormControl" [id]="option.id" type="radio"
+                                value="{{ option.id }}" name="melachat-option"
+                                class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                                [checked]="selectedOption === option.id" (change)="onOptionChange(option.id)">
+                            <label [formControl]="ServiceProviderTypeFormControl" [for]="option.id"
+                                class="w-full py-4 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+                                {{ option.label }}
+                            </label>
+                        </div>
+
+                    </div> 
+                </div>
+
+
+                <div class="dropdown-container" *ngIf="selectedUserType === 'Service Provider'">
+                    <div class="col-span-2 sm:col-span-1" *ngIf="providerType == 'Doctors'">
+                        <label for="category"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Doctor
+                            category</label>
+                        <select [formControl]="ServiceProviderCategoryContentFormControl" id="category"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <option selected="">Select Doctor category</option>
+                            <option value="General Practioner">General Practioner</option>
+                            <option value="Dentist">Dentist</option>
+                            <option value="Physiotherapist">Physiotherapist</option>
+                            <option value="Dietician">Dietician</option>
+                            <option value="Radiographer">Radiographer</option>
+                            <option value="Therapist">Therapist</option>
+                        </select>
                     </div>
-
                 </div>
-                  
-
-                </div>
-
+                
                 <div class="dropdown-container" *ngIf="selectedUserType === 'Service Provider'">
-                <div class="col-span-2 sm:col-span-1" *ngIf="providerType == 'Doctors'">
-                    <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Doctor category</label>
-                    <select [formControl]="ServiceProviderCategoryContentFormControl"  id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        <option selected="">Select Doctor category</option>
-                        <option value="General Practioner">General Practioner</option>
-                        <option value="Dentist">Dentist</option>
-                        <option value="Physiotherapist">Physiotherapist</option>
-                        <option value="Dietician">Dietician</option>
-                        <option value="Radiographer">Radiographer</option>
-                        <option value="Therapist">Therapist</option>
-                    </select>
+                    <h1 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text"
+                            style="margin-top:16px">
+                            Please select operating hours</h1>
+                    <div *ngFor="let day of daysOfWeek">
+                        <h3>{{ day }}</h3>
+                        <label class="start-time">Start Time:</label>
+                        <input class="time" type="time" [(ngModel)]="workHours[day].start">
+                        <label class="end-time">End Time:</label>
+                        <input class="time"  type="time" [(ngModel)]="workHours[day].end">
+                        <!-- <button (click)="addHours(day, workHours[day].start, workHours[day].end)">Save Hours</button> -->
+                      </div>
+                      
+                      <h2 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text"
+                            style="margin-top:16px">
+                            Selected Work Hours</h2>
+                      <div *ngFor="let day of getKeys(workHours)">
+                        <p>{{ day }}: {{ workHours[day].start }} - {{ workHours[day].end }}</p>
+                      </div>
                 </div>
-            </div>
                 <div class="dropdown-container" *ngIf="selectedUserType === 'Service Provider'">
-                <div class="col-span-2 sm:col-span-1" *ngIf="providerType == 'Sangoma'">
-                    <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Sangoma category</label>
-                    <select [formControl]="ServiceProviderCategoryContentFormControl"  id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        <option selected="">Select Sangoma category</option>
-                        <option value="Healer">Healer</option>
-                        <option value="Healer">Prophet</option>
-                    </select>
+                    <div class="col-span-2 sm:col-span-1" *ngIf="providerType == 'Sangoma'">
+                        <label for="category"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Sangoma
+                            category</label>
+                        <select [formControl]="ServiceProviderCategoryContentFormControl" id="category"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <option selected="">Select Sangoma category</option>
+                            <option value="Healer">Healer</option>
+                            <option value="Healer">Prophet</option>
+                        </select>
+                    </div>
                 </div>
-            </div>
 
-                <input [formControl]="PasswordFormControl" type="password" class="block border border-grey-light w-full p-3 rounded mb-4" name="password"
+                <input [formControl]="PasswordFormControl" type="password"
+                    class="block border border-grey-light w-full p-3 rounded mb-4" name="password"
                     placeholder="Password" />
                 <input type="password" class="block border border-grey-light w-full p-3 rounded mb-4"
                     name="confirm_password" placeholder="Confirm Password" />
 
-                <button [ngClass]="bio == '' || bio == null || phone == '' || phone == null || password == '' || password == null ? 'disabled':'active'" (click)="handleSignup()" type="submit"
+                <button
+                    [ngClass]="bio == '' || bio == null || phone == '' || phone == null || password == '' || password == null ? 'disabled':'active'"
+                    (click)="handleSignup()" type="submit"
                     class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 melachat-button-color">Create
                     Account</button>
 
