@@ -67,9 +67,11 @@
                             <p class="text-white" style="color:grey">About me : <span style="color:#000">{{currentUser?.bio}}</span></p>
                             <h2 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text" style="margin-top:16px">
                                 Operating Work Hours</h2>
-                            <div *ngFor="let day of getKeys(currentUser?.operatingHours)">
-                                <span [style.color]="'grey'" style="display: flex;">{{ day }}: <p [style.color]="'black'">{{ currentUser.operatingHours[day].start }} AM - {{ currentUser.operatingHours[day].end }} PM</p></span>
-                            </div>
+                                <ng-container *ngIf="currentUser?.operatingHours !== undefined">
+                                    <div *ngFor="let day of getKeys(currentUser?.operatingHours)">
+                                        <span [style.color]="'grey'" style="display: flex;">{{ day }}: <p [style.color]="'black'">{{ currentUser.operatingHours[day].start }} AM - {{ currentUser.operatingHours[day].end }} PM</p></span>
+                                    </div>
+                                </ng-container>
                             <p  class="text-gray-500 dark:text-gray-400">Book me now, my consultation fee start from. <a (click)="bookAppointmentDialog()" class="inline-flex items-center font-medium text-blue-600 dark:text-blue-500 hover:underline">
                                 Book Appointment
                                 <svg class="w-4 h-4 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
@@ -87,9 +89,11 @@
                         <div *ngIf="!editUser && currentUser?.easiMedicFor == 'Service Provider'">
                             <h2 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text" style="margin-top:16px">
                                 Operating Work Hours</h2>
-                            <div *ngFor="let day of getKeys(currentUser?.operatingHours)">
-                                <span [style.color]="'grey'" style="display: flex;">{{ day }}: <p [style.color]="'black'">{{ currentUser.operatingHours[day].start }} AM - {{ currentUser.operatingHours[day].end }} PM</p></span>
-                            </div>
+                            <ng-container *ngIf="currentUser?.operatingHours !== undefined">
+                                <div *ngFor="let day of getKeys(currentUser?.operatingHours)">
+                                    <span [style.color]="'grey'" style="display: flex;">{{ day }}: <p [style.color]="'black'">{{ currentUser.operatingHours[day].start }} AM - {{ currentUser.operatingHours[day].end }} PM</p></span>
+                                </div>
+                            </ng-container>    
                         </div>
 
                         <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" [formControl]="UserBioFormControl" style="margin:6px" *ngIf="editUser" placeholder="Enter your bio here" />
@@ -202,9 +206,11 @@
                                                  <p class="text-white font-medium text-gray-900 truncate " style="color:grey">Qualification :  <span style="color:#000">{{currentUser?.qualification}}</span></p>
                                                  <h2 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text" style="margin-top:16px">
                                                     Operating Work Hours</h2>
-                                                <div *ngFor="let day of getKeys(currentUser?.operatingHours)">
-                                                    <span [style.color]="'grey'" style="display: flex;">{{ day }}: <p [style.color]="'black'">{{ currentUser.operatingHours[day].start }} AM - {{ currentUser.operatingHours[day].end }} PM</p></span>
-                                                </div>
+                                                    <ng-container *ngIf="currentUser?.operatingHours !== undefined">
+                                                        <div *ngFor="let day of getKeys(currentUser?.operatingHours)">
+                                                            <span [style.color]="'grey'" style="display: flex;">{{ day }}: <p [style.color]="'black'">{{ currentUser.operatingHours[day].start }} AM - {{ currentUser.operatingHours[day].end }} PM</p></span>
+                                                        </div>
+                                                    </ng-container>
                                               </div>
                                               <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                                                 <button (click)="messagingNavigation(item);$event.stopPropagation()" style="background-color:#1da1f2" type="button" class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">

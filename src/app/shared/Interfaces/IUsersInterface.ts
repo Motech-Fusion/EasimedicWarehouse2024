@@ -22,6 +22,7 @@ export interface IUsersInterface {
     messages:string,
     fullname:string,
     operatingHours?:any,
+    providerType?:any,
   }
 
   export interface IDoctorsInterface {

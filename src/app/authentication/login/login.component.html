@@ -1,10 +1,12 @@
 <!-- new login here -->
 <section class="bg-gray-50 min-h-screen flex items-center justify-center">
   <div *ngIf="showNotification">
-    <app-notification-show [errorNotification]="true" [message]="'Invalid username or password, please enter valid info.'"></app-notification-show>
+    <app-notification-show [errorNotification]="true"
+      [message]="'Invalid username or password, please enter valid info.'"></app-notification-show>
   </div>
   <div *ngIf="showResetNotification">
-    <app-notification-show [errorNotification]="false" [successNotification]="true" [message]="'Password reset successful, an email has been sent to reset the password.'"></app-notification-show>
+    <app-notification-show [errorNotification]="false" [successNotification]="true"
+      [message]="'Password reset successful, an email has been sent to reset the password.'"></app-notification-show>
   </div>
   <!-- login container -->
   <div class="bg-gray-100 flex rounded-2xl shadow-lg max-w-3xl p-5 items-center">
@@ -12,24 +14,44 @@
     <div class="md:w-1/2 px-8 md:px-16">
       <h2 class="font-bold text-2xl text-[#002D74]">Login</h2>
       <p class="text-xs mt-4 text-[#002D74]">If you are already a member, easily log in</p>
+      <div class="wrap-container">
+        <label class="inline-flex items-center cursor-pointer">
+          <input type="checkbox" value="" class="sr-only peer" type="checkbox" [(ngModel)]="useEmailLogin"
+            (change)="useEmailLogin == true ? toggleEmailLogin($event): untoggleEmailLogin($event)">
+          <div
+            class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600">
+          </div>
+          <span class="ms-3 text-sm font-medium text-xs text-[#002D74] ">Use email to login</span>
+        </label>
+      </div>
 
       <form action="" class="flex flex-col gap-4" [style.margin-top]="'16px'">
-        <!-- <input [formControl]="PhoneContentFormControl" #phoneNumberId class="p-2 mt-8 rounded-xl border" type="email" name="phone" placeholder="Phone">
-          <div class="relative">
-            <input class="p-2 rounded-xl border w-full" type="password" [formControl]="PasswordContentFormControl"  #passwordId type="password" name="password" id="password" placeholder="••••••••">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-eye absolute top-1/2 right-3 -translate-y-1/2" viewBox="0 0 16 16">
-              <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
-              <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
-            </svg>
-          </div> -->
+
         <div class="flex">
-          <span
+          <span *ngIf="!useEmailLogin"
             class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
             <p class="w-4 h-4 text-gray-500 dark:text-gray-400">+27</p>
           </span>
-          <input max="9" maxlength="9" [formControl]="PhoneContentFormControl" type="text" id="phone"
+          <span *ngIf="useEmailLogin"
+            class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-e-0 border-gray-300 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" viewBox="0 0 24 24" fill="none"
+              xmlns="http://www.w3.org/2000/svg">
+              <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+              <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+              <g id="SVGRepo_iconCarrier">
+                <path
+                  d="M4 7L10.94 11.3375C11.5885 11.7428 12.4115 11.7428 13.06 11.3375L20 7M5 18H19C20.1046 18 21 17.1046 21 16V8C21 6.89543 20.1046 6 19 6H5C3.89543 6 3 6.89543 3 8V16C3 17.1046 3.89543 18 5 18Z"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+              </g>
+            </svg>
+          </span>
+          <input *ngIf="!useEmailLogin" max="9" maxlength="9" [formControl]="PhoneContentFormControl" type="number"
+            id="phone"
             class="rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Phone number">
+          <input *ngIf="useEmailLogin" [formControl]="PhoneContentFormControl" type="text" id="email"
+            class="rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Email Address">
         </div>
         <div class="flex">
           <span
@@ -40,9 +62,16 @@
             </svg>
 
           </span>
-          <input type="password" [formControl]="PasswordContentFormControl" id="password"
+          <input [type]="showPassword ? 'text' : 'password'" [formControl]="PasswordContentFormControl" id="password"
             class="rounded-none rounded-e-lg bg-gray-50 border border-gray-300 text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="••••••••">
+        </div>
+
+        <div class="show-password">
+          <div class="flex items-center">
+            <input #checkboxInput id="checked-checkbox" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" (change)="toggleShowPassword(checkboxInput.checked)">
+            <label for="checked-checkbox" class="ms-3 text-sm font-medium text-xs text-[#002D74] ">Show password</label>
+          </div>
         </div>
         <button [disabled]="phoneNumber == '' " [ngClass]="phoneNumber == ''  ? 'disabled':''" (click)="signIn($event)"
           class="bg-[#002D74] rounded-xl text-white py-2 hover:scale-105 duration-300 button-color">Login</button>
@@ -82,62 +111,58 @@
     </div>
   </div>
 
-      <!-- modal below -->
-      <div *ngIf="showForgotPasswordModal" id="crud-modal" tabindex="-1" aria-hidden="true"
-      class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-      <div class="relative p-4 w-full max-w-md max-h-full">
-          <!-- Modal content -->
-          <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-              <!-- Modal header -->
-              <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                  <h3 class="text-lg font-semibold text-gray-900 dark:text-white" style="color:white">
-                      Password Reset
-                  </h3>
-                  <button (click)="hideModal()" type="button"
-                      class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-                      data-modal-toggle="crud-modal">
-                      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                          viewBox="0 0 14 14">
-                          <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                      </svg>
-                      <span class="sr-only">Close modal</span>
-                  </button>
-              </div>
-              <!-- Modal body -->
-              <form class="p-4 md:p-5">
-                  <div class="grid gap-4 mb-4 grid-cols-2">
+  <!-- modal below -->
+  <div *ngIf="showForgotPasswordModal" id="crud-modal" tabindex="-1" aria-hidden="true"
+    class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-md max-h-full">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+          <h3 class="text-lg font-semibold text-gray-900 dark:text-white" style="color:white">
+            Password Reset
+          </h3>
+          <button (click)="hideModal()" type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-toggle="crud-modal">
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <path stroke="#fff" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <form class="p-4 md:p-5">
+          <div class="grid gap-4 mb-4 grid-cols-2">
 
 
-                      <div class="col-span-2">
-                          <label for="name"
-                              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
-                          <input [formControl]="PhoneForgotPasswordFormControl" type="text" name="name" id="name"
-                              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                              placeholder="Type your phone number" required="">
-                      </div>
-                      <div class="col-span-2">
-                          <label for="name"
-                              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-                          <input [formControl]="EmailForgotPasswordFormControl" type="email" name="name" id="name"
-                              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                              placeholder="Type your email address" required="">
-                      </div>
+            <div class="col-span-2">
+              <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone</label>
+              <input [formControl]="PhoneForgotPasswordFormControl" type="text" name="name" id="name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Type your phone number" required="">
+            </div>
+            <div class="col-span-2">
+              <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+              <input [formControl]="EmailForgotPasswordFormControl" type="email" name="name" id="name"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                placeholder="Type your email address" required="">
+            </div>
 
-                  </div>
-                  <button (click)="SubmitForgotPassword()" type="submit"
-                      class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                      <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <path fill-rule="evenodd"
-                              d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
-                              clip-rule="evenodd"></path>
-                      </svg>
-                      Reset Password
-                  </button>
-              </form>
           </div>
+          <button (click)="SubmitForgotPassword()" type="submit"
+            class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            <svg class="me-1 -ms-1 w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd"
+                d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z"
+                clip-rule="evenodd"></path>
+            </svg>
+            Reset Password
+          </button>
+        </form>
       </div>
+    </div>
   </div>
   <!-- modal below -->
 </section>

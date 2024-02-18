@@ -59,7 +59,7 @@
                         <!-- post, following, followers list for medium screens -->
                         <ul class="hidden md:flex space-x-8 mb-4">
                             <li style="color:grey">
-                                <span class="font-semibold text-white" style="color: #d9d9d9;">{{myPosts.length}}</span>
+                                <span class="font-semibold text-white" style="color: #d9d9d9;">{{myPosts?.length}}</span>
                                 posts
                         </ul>
 
@@ -70,9 +70,11 @@
                             <div *ngIf="!editUser && currentUser?.easiMedicFor == 'Service Provider'">
                                 <h2 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text" style="margin-top:16px;color:white">
                                     Operating Work Hours</h2>
-                                <div *ngFor="let day of getKeys(currentUser?.operatingHours)">
-                                    <span [style.color]="'grey'" style="display: flex;">{{ day }}: <p [style.color]="'white'">{{ currentUser?.operatingHours[day].start }} AM - {{ currentUser?.operatingHours[day].end }} PM</p></span>
-                                </div>
+                                    <ng-container *ngIf="currentUser?.operatingHours !== null && currentUser?.operatingHours !== undefined">
+                                        <div *ngFor="let day of getKeys(currentUser?.operatingHours)">
+                                            <span [style.color]="'grey'" style="display: flex;">{{ day }}: <p [style.color]="'white'">{{ currentUser?.operatingHours[day].start }} AM - {{ currentUser?.operatingHours[day].end }} PM</p></span>
+                                        </div>
+                                    </ng-container>
                             </div>
                             <input
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -109,9 +111,11 @@
                         <!-- <h1 class="font-semibold">Mr Travlerrr...</h1> -->
                         <h2 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text" style="margin-top:16px;color:white">
                             Operating Work Hours</h2>
-                        <div *ngFor="let day of getKeys(currentUser?.operatingHours)">
-                            <span [style.color]="'grey'" style="display: flex;">{{ day }}: <p [style.color]="'white'">{{ currentUser?.operatingHours[day].start }} AM - {{ currentUser?.operatingHours[day].end }} PM</p></span>
-                        </div>
+                            <ng-container *ngIf="currentUser?.operatingHours !== null && currentUser?.operatingHours !== undefined">
+                                <div *ngFor="let day of getKeys(currentUser?.operatingHours)">
+                                    <span [style.color]="'grey'" style="display: flex;">{{ day }}: <p [style.color]="'white'">{{ currentUser?.operatingHours[day].start }} AM - {{ currentUser?.operatingHours[day].end }} PM</p></span>
+                                </div>
+                            </ng-container>
 
                     </div>
 

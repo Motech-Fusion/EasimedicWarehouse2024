@@ -57,6 +57,7 @@ export class UserProfileComponent implements OnInit {
     this.fireStoreCollectionsService.getAllUsers().subscribe((users) => {
       // console.log('users here', users);
       this.currentUser = users.filter((x) => x.docId == this.currentUserId)[0];
+      console.log(this.currentUser)
       this.UserNameFormControl.setValue(this.currentUser?.name);
       this.UserBioFormControl.setValue(this.currentUser?.bio);
       return users.filter((x) => x.docId == this.currentUserId);

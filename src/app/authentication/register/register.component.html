@@ -9,19 +9,22 @@
             <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
                 <h1 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text">Sign up</h1>
                 <input [formControl]="UsernameFormControl" type="text"
-                    class="block border border-grey-light w-full p-3 rounded mb-4" name="username"
+                    class="block border border-grey-light w-full p-3 rounded mb-4" name="username*"
                     placeholder="Username" />
 
                 <input [formControl]="FullNamesFormControl" type="text"
-                    class="block border border-grey-light w-full p-3 rounded mb-4" name="fullname"
+                    class="block border border-grey-light w-full p-3 rounded mb-4" name="fullname*"
                     placeholder="Full Names" />
 
                 <input [formControl]="SurnameFormControl" type="text"
-                    class="block border border-grey-light w-full p-3 rounded mb-4" name="surname"
+                    class="block border border-grey-light w-full p-3 rounded mb-4" name="surname*"
                     placeholder="Surname" />
 
                 <input [formControl]="PhoneFormControl" type="text"
-                    class="block border border-grey-light w-full p-3 rounded mb-4" name="phone" placeholder="Phone" />
+                    class="block border border-grey-light w-full p-3 rounded mb-4" name="phone" placeholder="Phone*" />
+
+                <input [formControl]="EmailFormControl" type="email"
+                    class="block border border-grey-light w-full p-3 rounded mb-4" name="phone" placeholder="Email address*" />
 
                 <div class="dropdown-container">
 
@@ -47,11 +50,11 @@
                             </label>
                         </div>
 
-                    </div> 
+                    </div>
                 </div>
 
 
-                <div class="dropdown-container" *ngIf="selectedUserType === 'Service Provider'">
+                <div class="dropdown-container" *ngIf="selectedUserType === 'Service Provider' && providerType == 'Doctors'">
                     <div class="col-span-2 sm:col-span-1" *ngIf="providerType == 'Doctors'">
                         <label for="category"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Doctor
@@ -63,33 +66,17 @@
                             <option value="Dentist">Dentist</option>
                             <option value="Physiotherapist">Physiotherapist</option>
                             <option value="Dietician">Dietician</option>
+                            <option value="Dermatologists">Dermatologists</option>
                             <option value="Radiographer">Radiographer</option>
                             <option value="Therapist">Therapist</option>
+                            <option value="Immunologists">Allergists/Immunologists</option>
+                            <option value="Anesthesiologists">Anesthesiologists</option>
+                            <option value="Cardiologists">Cardiologists</option>
                         </select>
                     </div>
                 </div>
-                
-                <div class="dropdown-container" *ngIf="selectedUserType === 'Service Provider'">
-                    <h1 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text"
-                            style="margin-top:16px">
-                            Please select operating hours</h1>
-                    <div *ngFor="let day of daysOfWeek">
-                        <h3>{{ day }}</h3>
-                        <label class="start-time">Start Time:</label>
-                        <input class="time" type="time" [(ngModel)]="workHours[day].start">
-                        <label class="end-time">End Time:</label>
-                        <input class="time"  type="time" [(ngModel)]="workHours[day].end">
-                        <!-- <button (click)="addHours(day, workHours[day].start, workHours[day].end)">Save Hours</button> -->
-                      </div>
-                      
-                      <h2 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text"
-                            style="margin-top:16px">
-                            Selected Work Hours</h2>
-                      <div *ngFor="let day of getKeys(workHours)">
-                        <p>{{ day }}: {{ workHours[day].start }} - {{ workHours[day].end }}</p>
-                      </div>
-                </div>
-                <div class="dropdown-container" *ngIf="selectedUserType === 'Service Provider'">
+
+                <div class="dropdown-container" *ngIf="selectedUserType === 'Service Provider' && providerType == 'Sangoma'">
                     <div class="col-span-2 sm:col-span-1" *ngIf="providerType == 'Sangoma'">
                         <label for="category"
                             class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Sangoma
@@ -98,8 +85,68 @@
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                             <option selected="">Select Sangoma category</option>
                             <option value="Healer">Healer</option>
-                            <option value="Healer">Prophet</option>
+                            <option value="prophet">Prophet</option>
+                            <option value="herbalist">herbalist(Inyanga)</option>
                         </select>
+                    </div>
+                </div>
+
+                <div class="dropdown-container" *ngIf="selectedUserType === 'Service Provider' && providerType == 'Emergency'">
+                    <div class="col-span-2 sm:col-span-1" *ngIf="providerType == 'Emergency'">
+                        <label for="category"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Emergency Services
+                            category</label>
+                        <select [formControl]="ServiceProviderCategoryContentFormControl" id="category"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <option selected="">Select Emergency Services category</option>
+                            <option value="privateAmbulance">Private Ambulance</option>
+                            <option value="er24">ER24</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="dropdown-container" *ngIf="selectedUserType === 'Service Provider' && providerType == 'Security'">
+                    <div class="col-span-2 sm:col-span-1" *ngIf="providerType == 'Security'">
+                        <label for="category"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Security Services
+                            category</label>
+                        <select [formControl]="ServiceProviderCategoryContentFormControl" id="category"
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <option selected="">Select Security Services category</option>
+                            <option value="Police">Police (SAPS 10111)</option>
+                            <option value="PrivateSecurity">Private Security</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="dropdown-container" *ngIf="selectedUserType === 'Service Provider' && providerType == 'TowTrucks'">
+                    <div class="col-span-2 sm:col-span-1" *ngIf="providerType == 'TowTrucks'">
+                        <label for="category"
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Truck
+                            category</label>
+                            <div class="scroll-container">
+                                <div class="card" *ngFor="let item of carItems" [class.selected]="item === selected" (click)="selectItem(item)">
+                                    <img class="truck-img" src="{{item.src}}">
+                                  <h3>{{ item.title }}</h3>
+                                  <p>{{ item.description }}</p>
+                                </div>
+                              </div>
+                    </div>
+                </div>
+                <div class="dropdown-container" *ngIf="selectedUserType === 'Service Provider'">
+                    <h1 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text" style="margin-top:16px">
+                        Please select operating hours</h1>
+                    <div *ngFor="let day of daysOfWeek">
+                        <h3>{{ day }}</h3>
+                        <label class="start-time">Start Time:</label>
+                        <input class="time" type="time" [(ngModel)]="workHours[day].start">
+                        <label class="end-time">End Time:</label>
+                        <input class="time" type="time" [(ngModel)]="workHours[day].end">
+                        <!-- <button (click)="addHours(day, workHours[day].start, workHours[day].end)">Save Hours</button> -->
+                    </div>
+
+                    <h2 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text" style="margin-top:16px">
+                        Selected Work Hours</h2>
+                    <div *ngFor="let day of getKeys(workHours)">
+                        <p>{{ day }}: {{ workHours[day].start }} - {{ workHours[day].end }}</p>
                     </div>
                 </div>
 

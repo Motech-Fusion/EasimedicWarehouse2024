@@ -74,6 +74,7 @@ export interface IMedicalProduct {
   name: string;
   price: number;
   doctorName?:string
+  docId?:string
 }
 
 export interface IAppointment {
@@ -234,6 +235,71 @@ export class FireStoreCollectionsServiceService {
     });
   }
 
+  signInWithEmail(email: string, password: string): Promise<{}> {
+    return new Promise((resolve, reject) => {
+
+      const usersCollection = collection(this.firestore, 'Users');
+      const usersQuery = query(
+        usersCollection,
+        where('email', '==', email)
+      );
+
+      getDocs(usersQuery)
+        .then((querySnapshot) => {
+          if (querySnapshot.size <= 0) {
+            // Handle invalid phone number
+            console.warn('Invalid email', email);
+            reject('Invalid phone number');
+          } else {
+            console.warn('User data exist:');
+            // Phone number exists, now check the password
+            querySnapshot.forEach((doc) => {
+              const userData = doc.data();
+              const docId = doc.id;
+              this.store.dispatch(setDocId({ docId }));
+              localStorage.setItem('userId', docId);
+              let userPasswordCipher = userData['password']
+              let userPasswordKey = userData['password']
+              console.warn('User password:', userPasswordCipher['ciphertext']);
+              console.warn('User key:', userPasswordKey['key']);
+
+              // Check if users password matches
+              // Uncomment the following lines when you decide to use them
+                let originalText = '';
+              
+                // Rest of the decryption logic
+                let bytes = CryptoJS.AES.decrypt(
+                  userPasswordCipher['ciphertext'].toString(),
+                  userPasswordKey['key'].toString()
+                );
+                originalText = bytes.toString(CryptoJS.enc.Utf8);
+                console.log("original",originalText);
+              // } catch (error) {
+              //   console.error('Error during decryption:', error);
+              // }
+              if (originalText == password) {
+                // Successful sign-in
+                resolve(userData);
+              } else {
+                // Handle invalid password
+                reject('Invalid password');
+              }
+            });
+
+            // If you reached here, it means the password check logic was not triggered
+            // Handle this case if needed, e.g., if there was an issue with the data
+            console.warn('Password check not triggered');
+            reject('Password check not triggered');
+          }
+        })
+        .catch((error) => {
+          // Handle sign-in error
+          console.error('Error during sign-in:', error);
+          reject(error.message);
+        });
+    });
+  }
+
   getAllUsers(): Observable<IUsersInterface[]> {
     const usersCollection = collection(this.firestore, 'Users');
     const usersQuery = query(usersCollection);
@@ -281,6 +347,57 @@ export class FireStoreCollectionsServiceService {
       return () => unsubscribe();
     });
   }
+
+  getAllSecurity(): Observable<IDoctorsInterface[]> {
+    const usersCollection = collection(this.firestore, 'Security');
+    const usersQuery = query(usersCollection);
+  
+    return new Observable<IDoctorsInterface[]>((observer: Observer<IDoctorsInterface[]>) => {
+      const unsubscribe = onSnapshot(usersQuery, (querySnapshot) => {
+        const users: IDoctorsInterface[] = [];
+        querySnapshot.forEach((doc) => {
+          
+          const userData = doc.data() as IDoctorsInterface;
+          const userDataWithId: IDoctorsInterface = {
+            ...userData,
+            docId: doc.id, // Include the document ID
+          };
+          users.push(userDataWithId);
+        });
+  
+        observer.next(users);
+      });
+  
+      // Return an unsubscribe function to clean up the subscription when it's no longer needed
+      return () => unsubscribe();
+    });
+  }
+
+  getAllEmergency(): Observable<IDoctorsInterface[]> {
+    const usersCollection = collection(this.firestore, 'Emergency');
+    const usersQuery = query(usersCollection);
+  
+    return new Observable<IDoctorsInterface[]>((observer: Observer<IDoctorsInterface[]>) => {
+      const unsubscribe = onSnapshot(usersQuery, (querySnapshot) => {
+        const users: IDoctorsInterface[] = [];
+        querySnapshot.forEach((doc) => {
+          
+          const userData = doc.data() as IDoctorsInterface;
+          const userDataWithId: IDoctorsInterface = {
+            ...userData,
+            docId: doc.id, // Include the document ID
+          };
+          users.push(userDataWithId);
+        });
+  
+        observer.next(users);
+      });
+  
+      // Return an unsubscribe function to clean up the subscription when it's no longer needed
+      return () => unsubscribe();
+    });
+  }
+
   getAllSangomas(): Observable<IDoctorsInterface[]> {
     const usersCollection = collection(this.firestore, 'Sangomas');
     const usersQuery = query(usersCollection);
@@ -393,7 +510,6 @@ export class FireStoreCollectionsServiceService {
 
   public async analyzeAndUploadTrendingHashtags(posts: IMedicalPosts[]): Promise<void> {
     const hashtagCountMap: Map<string, number> = new Map();
-    debugger;
     // Analyze hashtags in posts
     posts.forEach((post) => {
       const hashtags = this.extractHashtags(post.post);
@@ -589,7 +705,7 @@ export class FireStoreCollectionsServiceService {
   }
 
   deletePost(postId: string): Observable<void> {
-    const postDoc = doc(this.firestore, 'Posts', postId);
+    const postDoc = doc(this.firestore, 'UserPosts', postId);
 
     return new Observable<void>((observer) => {
       deleteDoc(postDoc)
@@ -875,7 +991,7 @@ console.log('friend found',userDoc)
   }
 
   addCurrentUserIdToFriendsArray(recieverUserId: string, currentUserId: string | null): Observable<void> {
-    debugger
+ 
     if (currentUserId === null) {
       return throwError("Current user ID is null.");
     }
@@ -1453,11 +1569,16 @@ console.log('friend found',userDoc)
         return querySnapshot.docs.map((doc) => {
           const data = doc.data() as IMedicalProduct;
           // Optionally, you can include the docId in the data object
-          // data.docId = doc.id;
+          data.docId = doc.id;
           return data;
         });
       })
     );
+  }
+
+  deleteMedicalProduct(docId: string): Observable<void> {
+    const medicalProductDoc = doc(this.firestore, 'MedicalProducts', docId);
+    return from(deleteDoc(medicalProductDoc));
   }
 
   favoriteComment(postId: string, commentId: string, userId: string, commentFromUser: any): Observable<void> {

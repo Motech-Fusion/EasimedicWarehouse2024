@@ -52,7 +52,11 @@ export class PostItemComponent implements OnInit {
   this.likePostEmitter.emit(post);
   }
   deletePost(post:IPosts){
-  this.deletePostEmitter.emit(post);
+  // this.deletePostEmitter.emit(post);
+  console.log(post.docId)
+  this.fireStoreCollectionsService.deletePost(post.docId).subscribe(x=>{
+    console.log("post deleted",x)
+  })
   }
 
   likedByCount(postId:string,userId:string|null){

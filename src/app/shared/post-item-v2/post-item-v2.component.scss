@@ -40,3 +40,19 @@
     border-width: 0.2px;
     border-color: #f2f2f2;
   }
+
+  .flex.items-center.w-full.mt-3.text-xs.font-medium.text-gray-400{
+    background-color:#333d4305;
+    padding:5px;
+    border-radius:40px
+  }
+
+  .relative.flex.flex-col.items-start.p-4.mt-3.bg-white.rounded-lg.cursor-pointer.bg-opacity-90.group.hover\:bg-opacity-100{
+    background-color: #333d43;
+  }
+
+  .flex.flex-col.pb-2.overflow-auto {
+    background-color: #333d43;
+    border-radius: 8px;
+}
+  

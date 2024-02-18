@@ -1,49 +1,66 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { IUsersInterface } from 'src/app/shared/Interfaces/IUsersInterface';
-import { AlertService } from 'src/app/shared/Services/alert.service';
-import { FireStoreCollectionsServiceService, IMedicalProduct } from 'src/app/shared/Services/fire-store-collections-service.service';
-import { UserState } from 'src/app/shared/State/user.reducer';
-import { selectDocId } from 'src/app/shared/State/user.selectors';
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { Store } from "@ngrx/store";
+import { IUsersInterface } from "src/app/shared/Interfaces/IUsersInterface";
+import { AlertService } from "src/app/shared/Services/alert.service";
+import {
+  FireStoreCollectionsServiceService,
+  IMedicalProduct,
+} from "src/app/shared/Services/fire-store-collections-service.service";
+import { UserState } from "src/app/shared/State/user.reducer";
+import { selectDocId } from "src/app/shared/State/user.selectors";
 
 @Component({
-  selector: 'app-add-friend',
-  templateUrl: './add-friend.component.html',
-  styleUrls: ['./add-friend.component.scss'],
+  selector: "app-add-friend",
+  templateUrl: "./add-friend.component.html",
+  styleUrls: ["./add-friend.component.scss"],
 })
-export class AddFriendComponent {
+export class AddFriendComponent implements OnInit {
   recommedations: IMedicalProduct[] = [];
   originalRecommendations: IMedicalProduct[] = [];
   ModalData!: IMedicalProduct;
   openModalFlag!: boolean;
   currentUserId!: string | null;
-showProductModal: boolean = false;
+  showProductModal: boolean = false;
   productPrice!: number;
   productDescription!: string;
   productName!: string;
-;
-
+  showUsersMeds: boolean = false;
   constructor(
     private fireStoreCollectionsService: FireStoreCollectionsServiceService,
     private router: Router,
     private store: Store<UserState>,
     private alertService: AlertService
   ) {}
+
   ngOnInit(): void {
-    this.store.select(selectDocId).subscribe((id) => {
-      this.currentUserId = id;
-      console.log('Current user id:', this.currentUserId);
-    });
-    this.fireStoreCollectionsService.getMedicalProducts().subscribe((users) => {
-      console.log('users here', users);
-      this.recommedations = users
-      this.originalRecommendations = users.filter(
-        (userValue) => userValue.price
-      )
-      return (this.recommedations = this.originalRecommendations);
+    this.router.routerState.root.queryParams.subscribe((params: any) => {
+      // const val = JSON.parse(params)
+
+      this.showUsersMeds = params?.showProviderMeds == "true" ? true : false;
     });
 
+    this.store.select(selectDocId).subscribe((id) => {
+      this.currentUserId = id;
+      console.log("Current user id:", this.currentUserId);
+    });
+    this.fireStoreCollectionsService.getMedicalProducts().subscribe((users) => {
+      console.log("users here", users);
+      if (this.showUsersMeds) {
+        this.recommedations = users.filter(
+          (u) => u.doctor == this.currentUserId
+        );
+        this.originalRecommendations = users.filter(
+          (userValue) => userValue.doctor == this.currentUserId
+        );
+      } else {
+        this.recommedations = users;
+        this.originalRecommendations = users.filter(
+          (userValue) => userValue.price
+        );
+      }
+      return (this.recommedations = this.originalRecommendations);
+    });
   }
 
   openModal($event: IMedicalProduct) {
@@ -63,36 +80,38 @@ showProductModal: boolean = false;
         // alert(val);
       });
     this.alertService.success(
-      'Friend requested successully sent to ' + userNumber
+      "Friend requested successully sent to " + userNumber
     );
   }
 
   searchFriends(value: string) {
     const searchTerm = value.toLowerCase();
-  
+
     // If the search term is empty, restore the original list
     if (!searchTerm) {
       this.recommedations = this.originalRecommendations;
       return;
     }
-  
+
     // Filter recommendations based on the search term
-    const filteredRecommendations = this.originalRecommendations?.filter((recommendation) => {
-      return (
-        recommendation.name.toLowerCase().includes(searchTerm) ||
-        recommendation.name.toLowerCase().includes(searchTerm)
-      );
-    });
-  
+    const filteredRecommendations = this.originalRecommendations?.filter(
+      (recommendation) => {
+        return (
+          recommendation.name.toLowerCase().includes(searchTerm) ||
+          recommendation.name.toLowerCase().includes(searchTerm)
+        );
+      }
+    );
+
     this.recommedations = filteredRecommendations;
   }
 
   userProfileNavigation(item: IMedicalProduct) {
     // this.router.navigate(['friend-profile'], {
-      this.showProductModal = true;
-      this.productName = item.name;
-      this.productDescription = item.description;
-      this.productPrice = item.price;
+    this.showProductModal = true;
+    this.productName = item.name;
+    this.productDescription = item.description;
+    this.productPrice = item.price;
     //   queryParams: {
     //     friendData: JSON.stringify(friend),
     //     usersList:JSON.stringify(this.recommedations)
@@ -108,12 +127,17 @@ showProductModal: boolean = false;
 
     // Replace characters from the 5th to the 10th position with '*'
     const obscuredPhoneNumber =
-      phone.substring(0, 4) + '******' + phone.substring(10);
+      phone.substring(0, 4) + "******" + phone.substring(10);
 
     return obscuredPhoneNumber;
   }
 
-  hideModal(){
+  hideModal() {
     this.showProductModal = false;
+  }
+
+  deleteProduct(id: string|undefined) {
+    // deleteMedicalProduct
+    this.fireStoreCollectionsService.deleteMedicalProduct(id as string).subscribe((users) => {})
   }
 }

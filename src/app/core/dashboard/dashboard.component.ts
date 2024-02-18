@@ -39,6 +39,8 @@ export class DashboardComponent implements OnInit {
   readonly TOWTRUCK = "Tow Trucks";
   readonly NEWS = "News";
   readonly PERIODTRACKER = "Period tracker";
+  readonly EMERGENCY = "Emergency";
+  readonly SECURITY = "Security";
   readonly MESSAGES = "Messages";
   selectedTabTitle: string = this.MESSAGES;
   ModalData!: IUsersInterface;
@@ -105,6 +107,8 @@ export class DashboardComponent implements OnInit {
   selectedImage: string = "";
   selectedImageString: string = "";
   selectedImages: any[] = [];
+  security!: IDoctorsInterface[];
+  emergency!: IDoctorsInterface[];
   
   constructor(
     private fireStoreCollectionsService: FireStoreCollectionsServiceService,
@@ -148,6 +152,15 @@ export class DashboardComponent implements OnInit {
     this.fireStoreCollectionsService.getAllSangomas().subscribe((users) => {
       // console.log('users here', users);
       return (this.sangomas = users);
+    });
+    this.fireStoreCollectionsService.getAllSecurity().subscribe((users) => {
+      // console.log('users here', users);
+      return (this.security = users);
+    });
+
+    this.fireStoreCollectionsService.getAllEmergency().subscribe((users) => {
+      // console.log('users here', users);
+      return (this.emergency = users);
     });
 
     this.store.select(selectDocId).subscribe((id) => {
@@ -481,6 +494,15 @@ export class DashboardComponent implements OnInit {
   browseFriends() {
     this.router.navigate(["/", "browse-friends"]);
   }
+
+  browseMyMedicalProducts(provider:boolean) {
+    this.router.navigate(["/", "browse-friends"],{
+      queryParams: {
+        showProviderMeds: provider,
+      },
+    });
+  }
+
   navigateTotrending() {
     this.router.navigate(["/", "trending"]);
   }

@@ -293,6 +293,7 @@ export class FriendProfileComponent implements OnInit {
   }
 
   getKeys(object: {}) {
+
     return Object.keys(object);
   }
 }

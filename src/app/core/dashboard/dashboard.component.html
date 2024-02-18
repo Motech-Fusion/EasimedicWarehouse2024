@@ -1,5 +1,6 @@
 <div class="main-container">
-    <app-app-header [notificationCount]="userAppointments.length" [currentUserId]="currentUserId" [image]="currentUser!.image"></app-app-header>
+    <app-app-header [notificationCount]="userAppointments.length" [currentUserId]="currentUserId"
+        [image]="currentUser!.image"></app-app-header>
     <ng-container>
         <ul class="c-accordion">
             <li id="GP" class="c-accordion__item"
@@ -115,7 +116,7 @@
     <!-- <app-post-item></app-post-item>
     <app-recommendations></app-recommendations> -->
     <!-- <app-modal></app-modal> -->
-    <div class="search-container-center" style="margin-top:40px">
+    <div class="search-container-center container-with-nice-border" style="margin-top:40px">
         <div class="get-started">
             <h1 *ngIf="!hideAds"
                 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
@@ -140,7 +141,7 @@
             </p>
 
             <div style="display: flex;flex-direction: row;">
-                <h5 class="text-xl font-bold dark:text-white" style="padding-bottom:12px;color:#333d43">View News and
+                <h5 class="text-xl font-bold dark:text-white" style="padding-bottom:12px;color:#333d43">News and
                     Weather forecast
                 </h5>
                 <svg *ngIf="hideAds" (click)="toggleAdsVisibility('hide')"
@@ -159,31 +160,130 @@
                 </svg>
             </div>
             <app-promoted-tabs [ads]="news" [tabsHeader]="adsHeaders" *ngIf="showAds"></app-promoted-tabs>
-            <!-- <span *ngIf="currentUser?.easiMedicFor" (click)="browseFriends()"
-                class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
-                My Patients</span> -->
-            <!-- <span *ngIf="!currentUser?.easiMedicFor" (click)="browseFriends()"
-                class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
-                My messages</span> -->
-            <span (click)="browseFriends()"
-                class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-green-400 border border-green-400">
-                Browse Medical products</span>
-            <span (click)="navigateTotrending()"
-                class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">Trending
-                Medical Posts
-                <span
-                    class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-white-800 bg-red-200 rounded-full melachat-text-color"
-                    style="background-color: white;">
-                    {{hashtags?.length}}
-                </span></span>
-            <span (click)="navigateToFriendRequests()"
-                class="bg-red-100 text-orange-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-red-400">Blood
-                donations
-                <span
-                    class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-white-800 bg-red-200 rounded-full melachat-text-color"
-                    style="background-color: white;">
-                    {{currentUserFriendRequests.length}}
-                </span></span>
+            <!-- new menu -->
+            <ng-container>
+
+
+                <!-- Breadcrumb -->
+                <nav class="flex px-5 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700 menu-nav"
+                    aria-label="Breadcrumb">
+                    <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
+                        <li *ngIf="currentUser?.providerType =='Doctors'" class="inline-flex items-center" style="cursor: pointer;">
+                            <a (click)="browseMyMedicalProducts(true)"
+                                class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white nav-text">
+                                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1"
+                                    viewBox="0 0 292.917 292.917" xml:space="preserve">
+                                    <g>
+                                        <g>
+                                            <g>
+                                                <g id="XMLID_25_">
+                                                    <g>
+                                                        <path style="fill:#2D213F;"
+                                                            d="M246.883,137.987v146.54c0,4.651-3.805,8.39-8.455,8.39H54.456c-4.651,0-8.423-3.74-8.423-8.39       v-146.54c0-22.667,13.399-43.741,34.602-55.091v-12.39H71.79c-4.683,0-8.455-3.772-8.455-8.39V8.39       c0-4.618,3.772-8.39,8.455-8.39h147.158c4.683,0,8.455,3.772,8.455,8.39v53.725c0,4.618-3.772,8.39-8.455,8.39h-6.699v12.391       C233.452,94.246,246.883,115.32,246.883,137.987z M229.973,276.136v-27.74H62.912v27.74H229.973z M229.973,231.615v-93.628       c0-2.016-0.163-4.033-0.423-5.984H63.368c-0.293,1.951-0.455,3.968-0.455,5.984v93.628L229.973,231.615L229.973,231.615z        M69.514,115.222h153.857c-5.106-8.228-13.008-15.025-22.96-19.415c-3.09-1.333-5.073-4.325-5.073-7.675V70.506H97.547v17.626       c0,3.35-1.984,6.342-5.041,7.675C82.522,100.165,74.652,106.994,69.514,115.222z M210.493,53.725V16.781h-17.074v36.944       H210.493z M176.508,53.725V16.781h-19.513v36.944H176.508z M140.085,53.725V16.781h-21.659v36.944H140.085z M101.547,53.725       V16.781H80.246v36.944H101.547z" />
+                                                        <rect x="62.912" y="248.396" style="fill:#EAEEEF;"
+                                                            width="167.061" height="27.74" />
+                                                        <path style="fill:#F47C6D;"
+                                                            d="M229.973,137.987v93.628H62.912v-93.628c0-2.016,0.163-4.033,0.455-5.984h166.183       C229.811,133.954,229.973,135.97,229.973,137.987z M180.997,192.557v-28.326h-21.366v-21.236H131.11v21.236H109.71v28.326       h21.399v21.236h28.521v-21.236H180.997z" />
+                                                        <path style="fill:#EAEEEF;"
+                                                            d="M223.372,115.222H69.514c5.138-8.228,13.008-15.057,22.992-19.415       c3.057-1.333,5.041-4.325,5.041-7.675V70.506h97.791v17.626c0,3.35,1.984,6.342,5.073,7.675       C210.363,100.197,218.266,106.994,223.372,115.222z" />
+                                                        <path style="fill:#EF685E;"
+                                                            d="M84.529,210.525v-37.064c0-14.618,3.704-28.849,10.569-41.458H63.368       c-0.293,1.951-0.455,3.968-0.455,5.984v93.628h26.401C86.239,225.202,84.529,218.041,84.529,210.525z" />
+                                                        <rect x="193.42" y="16.781" style="fill:#F47C6D;" width="17.074"
+                                                            height="36.944" />
+                                                        <polygon style="fill:#2D213F;"
+                                                            points="180.997,164.231 180.997,192.557 159.63,192.557 159.63,213.793 131.109,213.793        131.109,192.557 109.71,192.557 109.71,164.231 131.109,164.231 131.109,142.995 159.63,142.995 159.63,164.231      " />
+                                                        <rect x="156.995" y="16.781" style="fill:#F47C6D;"
+                                                            width="19.513" height="36.944" />
+                                                        <rect x="118.425" y="16.781" style="fill:#F47C6D;"
+                                                            width="21.659" height="36.944" />
+                                                        <rect x="80.246" y="16.781" style="fill:#F47C6D;" width="21.301"
+                                                            height="36.944" />
+                                                    </g>
+                                                </g>
+                                            </g>
+                                            <path style="fill:#C5CBCF;"
+                                                d="M229.973,274.754c-29.695-4.787-72.366-11.23-103.82-15.919    c-8.953-1.333-17.028-5.047-23.636-10.436H62.912v27.74h167.061v-1.385H229.973z" />
+                                            <path style="fill:#C5CBCF;"
+                                                d="M188.355,70.506h-68.902H99.849h-2.302v17.626c0,3.369-2.042,6.361-5.125,7.711    c-9.945,4.358-17.783,11.174-22.908,19.379h37.487c0.946-1.044,1.922-2.072,2.924-3.073l0.53-0.53    c5.763-5.763,9.002-13.581,9.002-21.731v-5.057c0-3.903,2.94-7.177,6.82-7.6L188.355,70.506z" />
+                                        </g>
+                                    </g>
+                                </svg>
+                                My products
+                            </a>
+                        </li>
+                        <li class="inline-flex items-center" style="cursor: pointer;">
+                            <div class="flex items-center">
+                                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg"
+                                    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1"
+                                    viewBox="0 0 292.917 292.917" xml:space="preserve">
+                                    <g>
+                                        <g>
+                                            <g>
+                                                <g id="XMLID_25_">
+                                                    <g>
+                                                        <path style="fill:#2D213F;"
+                                                            d="M246.883,137.987v146.54c0,4.651-3.805,8.39-8.455,8.39H54.456c-4.651,0-8.423-3.74-8.423-8.39       v-146.54c0-22.667,13.399-43.741,34.602-55.091v-12.39H71.79c-4.683,0-8.455-3.772-8.455-8.39V8.39       c0-4.618,3.772-8.39,8.455-8.39h147.158c4.683,0,8.455,3.772,8.455,8.39v53.725c0,4.618-3.772,8.39-8.455,8.39h-6.699v12.391       C233.452,94.246,246.883,115.32,246.883,137.987z M229.973,276.136v-27.74H62.912v27.74H229.973z M229.973,231.615v-93.628       c0-2.016-0.163-4.033-0.423-5.984H63.368c-0.293,1.951-0.455,3.968-0.455,5.984v93.628L229.973,231.615L229.973,231.615z        M69.514,115.222h153.857c-5.106-8.228-13.008-15.025-22.96-19.415c-3.09-1.333-5.073-4.325-5.073-7.675V70.506H97.547v17.626       c0,3.35-1.984,6.342-5.041,7.675C82.522,100.165,74.652,106.994,69.514,115.222z M210.493,53.725V16.781h-17.074v36.944       H210.493z M176.508,53.725V16.781h-19.513v36.944H176.508z M140.085,53.725V16.781h-21.659v36.944H140.085z M101.547,53.725       V16.781H80.246v36.944H101.547z" />
+                                                        <rect x="62.912" y="248.396" style="fill:#EAEEEF;"
+                                                            width="167.061" height="27.74" />
+                                                        <path style="fill:#F47C6D;"
+                                                            d="M229.973,137.987v93.628H62.912v-93.628c0-2.016,0.163-4.033,0.455-5.984h166.183       C229.811,133.954,229.973,135.97,229.973,137.987z M180.997,192.557v-28.326h-21.366v-21.236H131.11v21.236H109.71v28.326       h21.399v21.236h28.521v-21.236H180.997z" />
+                                                        <path style="fill:#EAEEEF;"
+                                                            d="M223.372,115.222H69.514c5.138-8.228,13.008-15.057,22.992-19.415       c3.057-1.333,5.041-4.325,5.041-7.675V70.506h97.791v17.626c0,3.35,1.984,6.342,5.073,7.675       C210.363,100.197,218.266,106.994,223.372,115.222z" />
+                                                        <path style="fill:#EF685E;"
+                                                            d="M84.529,210.525v-37.064c0-14.618,3.704-28.849,10.569-41.458H63.368       c-0.293,1.951-0.455,3.968-0.455,5.984v93.628h26.401C86.239,225.202,84.529,218.041,84.529,210.525z" />
+                                                        <rect x="193.42" y="16.781" style="fill:#F47C6D;" width="17.074"
+                                                            height="36.944" />
+                                                        <polygon style="fill:#2D213F;"
+                                                            points="180.997,164.231 180.997,192.557 159.63,192.557 159.63,213.793 131.109,213.793        131.109,192.557 109.71,192.557 109.71,164.231 131.109,164.231 131.109,142.995 159.63,142.995 159.63,164.231      " />
+                                                        <rect x="156.995" y="16.781" style="fill:#F47C6D;"
+                                                            width="19.513" height="36.944" />
+                                                        <rect x="118.425" y="16.781" style="fill:#F47C6D;"
+                                                            width="21.659" height="36.944" />
+                                                        <rect x="80.246" y="16.781" style="fill:#F47C6D;" width="21.301"
+                                                            height="36.944" />
+                                                    </g>
+                                                </g>
+                                            </g>
+                                            <path style="fill:#C5CBCF;"
+                                                d="M229.973,274.754c-29.695-4.787-72.366-11.23-103.82-15.919    c-8.953-1.333-17.028-5.047-23.636-10.436H62.912v27.74h167.061v-1.385H229.973z" />
+                                            <path style="fill:#C5CBCF;"
+                                                d="M188.355,70.506h-68.902H99.849h-2.302v17.626c0,3.369-2.042,6.361-5.125,7.711    c-9.945,4.358-17.783,11.174-22.908,19.379h37.487c0.946-1.044,1.922-2.072,2.924-3.073l0.53-0.53    c5.763-5.763,9.002-13.581,9.002-21.731v-5.057c0-3.903,2.94-7.177,6.82-7.6L188.355,70.506z" />
+                                        </g>
+                                    </g>
+                                </svg>
+                                <a (click)="browseFriends()"
+                                    class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white nav-text">Medical
+                                    products</a>
+                            </div>
+                        </li>
+                        <li aria-current="page" class="inline-flex items-center">
+                            <div class="flex items-center">
+                                <svg class="w-3 h-3 mx-1 text-gray-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M21 7L13 15L9 11L3 17M21 7H15M21 7V13" stroke="#001A72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                <span (click)="navigateTotrending()"
+                                class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white nav-text">Trending
+                                    posts <span
+                                        class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-white-800 bg-red-200 rounded-full melachat-text-color"
+                                        style="background-color: white;">{{hashtags?.length}}</span></span>
+                            </div>
+                        </li>
+                        <li aria-current="page" class="inline-flex items-center">
+                            <div class="flex items-center">
+                                <svg class="w-3 h-3 mx-1 text-gray-400" fill="#000000" viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.00024000000000000003"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.048"></g><g id="SVGRepo_iconCarrier"><path d="M4 21h9.62a3.995 3.995 0 0 0 3.037-1.397l5.102-5.952a1 1 0 0 0-.442-1.6l-1.968-.656a3.043 3.043 0 0 0-2.823.503l-3.185 2.547-.617-1.235A3.98 3.98 0 0 0 9.146 11H4c-1.103 0-2 .897-2 2v6c0 1.103.897 2 2 2zm0-8h5.146c.763 0 1.448.423 1.789 1.105l.447.895H7v2h6.014a.996.996 0 0 0 .442-.11l.003-.001.004-.002h.003l.002-.001h.004l.001-.001c.011.003.003-.001.003-.001.012 0 .002-.001.002-.001h.001l.002-.001.003-.001.002-.001.002-.001.003-.001.002-.001.002-.001.003-.002.002-.001.002-.001.003-.001.002-.001h.001l.002-.001h.001l.002-.001.002-.001c.011-.001.003-.001.003-.001l.002-.001a.915.915 0 0 0 .11-.078l4.146-3.317c.261-.208.623-.273.94-.167l.557.186-4.133 4.823a2.029 2.029 0 0 1-1.52.688H4v-6zm9.761-10.674C13.3 2.832 11 5.457 11 7.5c0 1.93 1.57 3.5 3.5 3.5S18 9.43 18 7.5c0-2.043-2.3-4.668-2.761-5.174-.379-.416-1.099-.416-1.478 0zM16 7.5c0 .827-.673 1.5-1.5 1.5S13 8.327 13 7.5c0-.708.738-1.934 1.5-2.934.762 1 1.5 2.226 1.5 2.934z"></path></g></svg>
+                                <span (click)="navigateToFriendRequests()"
+                                class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white nav-text">Blood
+                                    donations <span
+                                        class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-white-800 bg-red-200 rounded-full melachat-text-color"
+                                        style="background-color: white;">
+                                        {{currentUserFriendRequests.length}}
+                                    </span></span>
+                            </div>
+                        </li>
+                    </ol>
+                </nav>
+
+            </ng-container>
+            <!-- new menu -->
 
         </div>
         <div class="get-started">
@@ -259,7 +359,9 @@
     </div>
     <div class="container-center justify-center items-center">
         <div>
-            <app-tabs [showAppointment]="currentUser?.easiMedicFor == 'Service Provider' ? true:false" [backgroundColor]="currentUser?.easiMedicFor == 'Service Provider' ? '#333d43':'#f9f9f9'" (tabSelected)="onTabSelected($event)"></app-tabs>
+            <app-tabs [showAppointment]="currentUser?.easiMedicFor == 'Service Provider' ? true:false"
+                [backgroundColor]="currentUser?.easiMedicFor == 'Service Provider' ? '#333d43':'#f9f9f9'"
+                (tabSelected)="onTabSelected($event)"></app-tabs>
         </div>
     </div>
     <div class="tab-content">
@@ -413,7 +515,7 @@
             </div>
         </div>
 
-        <div *ngIf="selectedTabTitle == TOWTRUCK">
+        <div *ngIf="selectedTabTitle == TOWTRUCK" class="tow-trucks-container">
             <!-- <ng-container *ngIf="towTrucks.length"> -->
             <!-- <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid doctor-user"> -->
             <ng-container>
@@ -424,7 +526,7 @@
             <!-- </ng-container> -->
             <div *ngIf="!towTrucks.length"
                 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white no-friends-section">
-                <h1 class="no-friends">No Sangomas found</h1>
+                <h1 class="no-friends">No Tow trucks found</h1>
 
                 <div role="status" class="space-y-2.5 animate-pulse max-w-lg" style="width:100%">
                     <div class="flex items-center w-full">
@@ -480,19 +582,48 @@
                     <app-period-tracker></app-period-tracker>
                 </ng-container>
                 <ng-container *ngIf="currentUser?.easiMedicFor == 'Service Provider'">
-                <!-- appointment list below -->
-                <div class="appointment-container">
-                    <app-appointment-list [currentUser]="currentUser" [appointments]="userAppointments">
-    
-                    </app-appointment-list>
-                </div>
-                <!-- appointment list below -->
+                    <!-- appointment list below -->
+                    <div class="appointment-container">
+                        <app-appointment-list [currentUser]="currentUser" [appointments]="userAppointments">
+
+                        </app-appointment-list>
+                    </div>
+                    <!-- appointment list below -->
+                </ng-container>
+            </div>
+        </div>
+        <div *ngIf="selectedTabTitle == SECURITY" class="tow-trucks-container">
+            <div>
+                <ng-container *ngIf="security.length">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid doctor-user">
+                        <ng-container *ngFor="let secu of security">
+                            <app-doctor-user-item [senderUserId]="currentUserId" (chatEmitter)="navigateToChat($event)"
+                                [doctorsList]="doctors" [userItem]="secu"></app-doctor-user-item>
+                            <!-- Card -->
+
+                        </ng-container>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+
+        <div *ngIf="selectedTabTitle == EMERGENCY" class="tow-trucks-container">
+            <div>
+                <ng-container *ngIf="emergency.length">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid doctor-user">
+                        <ng-container *ngFor="let emerg of emergency">
+                            <app-doctor-user-item [senderUserId]="currentUserId" (chatEmitter)="navigateToChat($event)"
+                                [doctorsList]="doctors" [userItem]="emerg"></app-doctor-user-item>
+                            <!-- Card -->
+
+                        </ng-container>
+                    </div>
                 </ng-container>
             </div>
         </div>
     </div>
-    <app-floating-button (AddMedicalProductEmitter)="AddMedicalProduct()"
-        (AddPostEmitter)="AddPost()" [showProviderOptionButtons]="currentUser?.easiMedicFor == 'Service Provider' ? true:false"></app-floating-button>
+    <app-floating-button (AddMedicalProductEmitter)="AddMedicalProduct()" (AddPostEmitter)="AddPost()"
+        [showProviderOptionButtons]="currentUser?.easiMedicFor == 'Service Provider' ? true:false"></app-floating-button>
     <app-dialog #dialog *ngIf="openModalFlag" (onCancel)="closeModal($event)"
         (onConfirm)="confirmFriendRequest()"></app-dialog>
 
@@ -523,15 +654,19 @@
                     <div class="grid gap-4 mb-4 grid-cols-2">
 
                         <div class="flex items-center gap-4">
-                            <img class="rounded-full medical-product-image" src="{{selectedImageString ? selectedImageString : 'https://t4.ftcdn.net/jpg/05/42/36/11/360_F_542361185_VFRJWpR2FH5OiAEVveWO7oZnfSccZfD3.jpg'}}" alt="">
+                            <img class="rounded-full medical-product-image"
+                                src="{{selectedImageString ? selectedImageString : 'https://t4.ftcdn.net/jpg/05/42/36/11/360_F_542361185_VFRJWpR2FH5OiAEVveWO7oZnfSccZfD3.jpg'}}"
+                                alt="">
                             <input
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            #imageInput type="file" accept="image/*" multiple style="display: none"
-                            (change)="onImageSelected($event)">
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                #imageInput type="file" accept="image/*" multiple style="display: none"
+                                (change)="onImageSelected($event)">
                             <div class="font-medium dark:text-white">
                                 <div *ngIf="this.medicalProductName">{{this.medicalProductName}}</div>
-                                <div *ngIf="this.medicalProductPrice" class="text-sm text-gray-500 dark:text-gray-400">R {{this.medicalProductPrice}}</div>
-                                <div (click)="triggerImageInput()" class="text-sm text-gray-500 dark:text-gray-400 add-image-link">Add picture</div>
+                                <div *ngIf="this.medicalProductPrice" class="text-sm text-gray-500 dark:text-gray-400">R
+                                    {{this.medicalProductPrice}}</div>
+                                <div (click)="triggerImageInput()"
+                                    class="text-sm text-gray-500 dark:text-gray-400 add-image-link">Add picture</div>
                             </div>
                         </div>
 

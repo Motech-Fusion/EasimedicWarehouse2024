@@ -24,6 +24,11 @@
 .dropdown-container {
     margin-top: 12px;
     margin-bottom: 16px;
+    background-color: #333d430d;
+    padding: 12px;
+    border-radius: 12px;
+    border-width: 0.1px;
+    border-color: #333d434d;
     /* padding: 2.5rem; */
 }
 
@@ -63,4 +68,29 @@ color:grey
   .operating-hours{
     padding:6px;
     margin-top:16px
+  }
+
+  .scroll-container {
+    display: flex;
+    overflow-x: auto;
+  }
+  
+  .card {
+    flex: 0 0 auto;
+    width: 200px;
+    margin-right: 20px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+  }
+  
+  .card.selected {
+    background-color: lightblue;
+  }
+  
+  .truck-img{
+    width:85%;
+    aspect-ratio: 3/2;
+    object-fit: contain;
+    mix-blend-mode: color-burn;
   }

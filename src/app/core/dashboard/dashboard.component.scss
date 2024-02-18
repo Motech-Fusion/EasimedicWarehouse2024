@@ -120,6 +120,34 @@ span{
   }
 
     @media (min-width: 200px) and (max-width:450px) {
+      .menu-nav {
+        padding-left: 0.15rem;
+        padding-right: 0.15rem;
+    }
+      ol.inline-flex.items-center.space-x-1.md\:space-x-2.rtl\:space-x-reverse {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 7px;
+        align-items: center;
+        justify-content: center;
+
+        li.inline-flex.items-center {
+          // background-color: #333d430f;
+          padding: 6px;
+          border-radius: 5px;
+          color: white!important;
+          cursor: pointer;
+      }
+    }
+    
+      .nav-text{
+        font-size: 11px;
+      }
+      .tow-trucks-container[_ngcontent-ng-c3003531253] {
+        margin-right: 5px; 
+         margin-left: 5px; 
+        border-radius: 12px;
+    }
       
         .news-grid {
             grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -377,7 +405,26 @@ div#crud-modal {
     border-radius: 12px
 }
 
+.container-with-nice-border{
+  background-color: rgba(51, 61, 67, 0.0509803922);
+  padding: 12px;
+  border-radius: 12px;
+  border-width: 0.1px;
+  border-color: rgba(51, 61, 67, 0.3019607843);
+  margin: 8px;
+  max-width: 99%;
+}
+
 @media (min-width: 200px) and (max-width:450px) {
+  .container-with-nice-border{
+    background-color: rgba(51, 61, 67, 0.0509803922);
+    padding: 12px;
+    border-radius: 12px;
+    border-width: 0.1px;
+    border-color: rgba(51, 61, 67, 0.3019607843);
+    margin: 8px;
+    max-width: 97%;
+  }
 .appointment-container {
   background-color: white;
   padding: 54px;
@@ -385,4 +432,18 @@ div#crud-modal {
   margin-left: 6px; 
   border-radius: 12px;
 }
+}
+
+.tow-trucks-container{
+    margin-right: 140px;
+    margin-left: 140px;
+    border-radius:12px
+}
+
+a.inline-block.w-full.p-4.bg-white.border-r.border-gray-200.dark\:border-gray-700.hover\:text-gray-700.hover\:bg-gray-50.focus\:ring-4.focus\:ring-blue-300.focus\:outline-none.dark\:hover\:text-white.dark\:bg-gray-800.dark\:hover\:bg-gray-700 {
+  color: #333d43;
+}
+
+.hover-top-header:hover{
+  background-color: #333d430d;
 }

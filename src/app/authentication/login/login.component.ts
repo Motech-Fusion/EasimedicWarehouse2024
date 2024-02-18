@@ -9,6 +9,7 @@ import { AlertService } from "src/app/shared/Services/alert.service";
 import { FireStoreCollectionsServiceService } from "src/app/shared/Services/fire-store-collections-service.service";
 import { setCurrentUser } from "src/app/shared/State/user.actions";
 import { UserState } from "src/app/shared/State/user.reducer";
+import { ChangeDetectorRef } from "@angular/core";
 
 @Component({
   selector: "app-login",
@@ -34,7 +35,8 @@ export class LoginComponent {
   showForgotPasswordModal = false;
   PhoneForgotPasswordFormControl: FormControl = new FormControl();
   EmailForgotPasswordFormControl: FormControl = new FormControl();
-  
+  useEmailLogin: boolean = false;
+
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
@@ -49,7 +51,8 @@ export class LoginComponent {
     private fireStoreCollectionsService: FireStoreCollectionsServiceService,
     private store: Store<UserState>,
     private alertService: AlertService,
-    private afMessaging: AngularFireMessaging
+    private afMessaging: AngularFireMessaging,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -71,6 +74,7 @@ export class LoginComponent {
     event.preventDefault();
     this.spinner = true;
 
+    if(!this.useEmailLogin){
     this.fireStoreCollectionsService
       .signInWithPhoneNumber("+27" + this.phoneNumber, this.password)
       .then((res) => {
@@ -131,20 +135,71 @@ export class LoginComponent {
         setTimeout(() => {
           this.showNotification = false;
         }, 2000);
-        // this.alertService.error('Invalid username or password, please enter valid info');
-        // Swal.fire({
-        //   title: 'Something went wrong.',
-        //   text: `Unable to sign in with this account: ${error.message}`,
-        //   icon: 'warning',
-        //   confirmButtonText: 'Ok',
-        // }).then((result) => {
-        //   if (result.isConfirmed) {
-        //     console.log('Clicked Yes, File deleted!');
-        //   } else if (result.isDismissed) {
-        //     console.log('Clicked No, File is safe!');
-        //   }
-        // });
       });
+    }else{
+      this.fireStoreCollectionsService
+      .signInWithEmail(this.phoneNumber, this.password)
+      .then((res) => {
+        this.spinner = false;
+        //dummy password U2FsdGVkX19JKjbWuwvP+m4lV4RRmEy4XZ8prl3Gows=
+        var user = res as IUsersInterface;
+        this.store.dispatch(setCurrentUser({ user: user }));
+        localStorage.setItem("user", JSON.stringify(user));
+        if (user.image == "") {
+          this.router.navigate(["/authentication", "choose-image"], {
+            queryParams: {
+              InterestedIn: user.InterestedIn,
+              availability: user.availability,
+              bio: user.bio,
+              blocked: user.blocked,
+              created: user.created,
+              dob: user.dob,
+              friends: user.friends,
+              image: user.image,
+              language: user.language,
+              location: user.location,
+              name: user.name,
+              notificationToken: user.notificationToken,
+              password: user.password,
+              phone: user.phone,
+              requests: user.requests,
+              suspended: user.suspended,
+              username: user.username,
+            },
+          });
+        } else {
+          this.router.navigate(["home"], {
+            queryParams: {
+              InterestedIn: user.InterestedIn,
+              availability: user.availability,
+              bio: user.bio,
+              blocked: user.blocked,
+              created: user.created,
+              dob: user.dob,
+              friends: user.friends,
+              image: user.image,
+              language: user.language,
+              location: user.location,
+              name: user.name,
+              notificationToken: user.notificationToken,
+              password: user.password,
+              phone: user.phone,
+              requests: user.requests,
+              suspended: user.suspended,
+              username: user.username,
+            },
+          });
+        }
+      })
+      .catch((error) => {
+        this.spinner = false;
+        this.showNotification = true;
+        setTimeout(() => {
+          this.showNotification = false;
+        }, 2000);
+      });
+    }
+
 
     setTimeout(() => {
       this.spinner = false;
@@ -170,7 +225,7 @@ export class LoginComponent {
 
   SubmitForgotPassword() {
     this.showResetNotification = true;
-    this.hideModal()
+    this.hideModal();
     setTimeout(() => {
       this.showResetNotification = false;
     }, 5000);
@@ -182,4 +237,20 @@ export class LoginComponent {
   hideModal() {
     this.showForgotPasswordModal = false;
   }
+
+  toggleEmailLogin(event:any) {
+    // alert(JSON.stringify(event))
+    this.useEmailLogin = true;
+    this.cdr.detectChanges();
+  }
+
+  untoggleEmailLogin(event:any) {
+    // alert(JSON.stringify(event))
+    this.useEmailLogin = false;
+    this.cdr.detectChanges();
+  }
+
+toggleShowPassword(checked: boolean) {
+  this.showPassword = checked;
+}
 }

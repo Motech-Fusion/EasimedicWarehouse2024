@@ -61,21 +61,19 @@ export class RegisterComponent implements OnInit {
   PhoneContentFormControl: FormControl = new FormControl();
   UsernameFormControl: FormControl = new FormControl();
   FullNamesFormControl: FormControl = new FormControl();
+  EmailFormControl: FormControl = new FormControl();
   PhoneFormControl: FormControl = new FormControl();
   SurnameFormControl: FormControl = new FormControl();
   BioFormControl: FormControl = new FormControl();
   PasswordFormControl: FormControl = new FormControl();
   ConfirmPasswordFormControl: FormControl = new FormControl();
-  options = [
-    { id: "Doctors", label: "Medical Doctor" },
-    { id: "Sangoma", label: "Sangoma" },
-    { id: "TowTrucks", label: "Tow truck driver" },
-    { id: "Security", label: "Security" },
+  options:any = [
   ];
   bio: string = "";
   phone: string = "";
   username: string = "";
   fullNames: string = "";
+  emailAddress: string = "";
   password: string = "";
   confirmPassword: string = "";
   selectedUserType: string | null = null;
@@ -86,11 +84,26 @@ export class RegisterComponent implements OnInit {
   showRegisterNotification: boolean = false;
   daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   workHours:any = {};
+  carItems = [
+    { id: 1, title: 'FLATBED TOW TRUCKS', description: 'flatbed tow trucks have a long metal flatbed with hydraulics that allows the bed to move up and down vertically',src:"https://i.pinimg.com/474x/6d/78/33/6d7833a7bafe60812e62a516d505b660.jpg" },
+    { id: 2, title: 'WHEEL LIFT TOW TRUCKS', description: 'Wheel lift tow trucks are tow trucks that use a metal yoke to lift a vehicle’s front or rear wheels off the ground.',src:'https://t3.ftcdn.net/jpg/04/95/43/08/360_F_495430813_UBIa1LlNgtA8lHCbfTPOKPs4oT3snyUK.jpg' },
+    { id: 3, title: 'HOOK AND CHAIN TOW TRUCKS', description: 'Hook and chain tow trucks are one of the oldest methods of vehicle towing, being both powerful and effective',src:'https://t3.ftcdn.net/jpg/03/53/41/22/360_F_353412240_tTnnhYyR7STEWoA05IOPBoVVbPhjZxAI.jpg' },
+    // Add more items as needed
+  ];
+  selected: any;
+
 
   constructor(private firestore: Firestore, public router: Router) {
     this.daysOfWeek.forEach(day => {
       this.workHours[day] = { start: '', end: '' };
     });
+    this.options = [
+      { id: "Doctors", label: "Medical Doctor" },
+      { id: "Sangoma", label: "Sangoma" },
+      { id: "TowTrucks", label: "Tow truck driver" },
+      { id: "Security", label: "Security" },
+      { id: "Emergency", label: "Emergency" },
+    ];
   }
   ngOnInit(): void {
     this.router.routerState.root.queryParams.subscribe((params: any) => {
@@ -112,6 +125,9 @@ export class RegisterComponent implements OnInit {
     });
     this.FullNamesFormControl.valueChanges.subscribe((value) => {
       this.fullNames = value;
+    });
+    this.EmailFormControl.valueChanges.subscribe((value) => {
+      this.emailAddress = value;
     });
     this.PasswordFormControl.valueChanges.subscribe((value) => {
       this.password = value;
@@ -183,6 +199,7 @@ export class RegisterComponent implements OnInit {
         InterestedIn: "",
         suspended: false,
         easiMedicFor: this.selectedUserType,
+        email: this.emailAddress,
       }).then(async (x) => {
         x.id;
         // if (this.providerType == "Doctors") {
@@ -282,6 +299,8 @@ export class RegisterComponent implements OnInit {
       const userCollection = collection(this.firestore, "Users");
       const doctorsCollection = collection(this.firestore, "Doctors");
       const sangomaCollection = collection(this.firestore, "Sangomas");
+      const securityCollection = collection(this.firestore, "Security");
+      const emergencyCollection = collection(this.firestore, "Emergency");
       const towTrucksCollection = collection(
         this.firestore,
         "TowTruckServices"
@@ -334,6 +353,8 @@ export class RegisterComponent implements OnInit {
         suspended: false,
         easiMedicFor:this.selectedUserType,
         operatingHours:this.workHours,
+        email: this.emailAddress,
+        providerType:this.providerType
       }).then(async (x) => {
         x.id;
         if (this.providerType == "Doctors") {
@@ -346,7 +367,8 @@ export class RegisterComponent implements OnInit {
             notificationToken: token,
             image:
               "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-            bio: "",
+              description: this.bio,
+              experience: 0,
             friends: [],
             blocked: [],
             location: {},
@@ -361,6 +383,7 @@ export class RegisterComponent implements OnInit {
             easiMedicFor: this.selectedUserType,
             operatingHours:this.workHours,
             qualification:this.providerCategory,
+            email: this.emailAddress,
           });
         } else if (this.providerType == "Sangoma") {
           await setDoc(doc(sangomaCollection, x.id), {
@@ -373,7 +396,8 @@ export class RegisterComponent implements OnInit {
             notificationToken: token,
             image:
               "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-            bio: "",
+              description: this.bio,
+              experience: 0,
             friends: [],
             blocked: [],
             location: {},
@@ -386,6 +410,7 @@ export class RegisterComponent implements OnInit {
             suspended: false,
             easiMedicFor: this.selectedUserType,
             qualification:this.providerCategory,
+            email: this.emailAddress,
           });
         } else if (this.providerType == "TowTrucks") {
           await setDoc(doc(towTrucksCollection, x.id), {
@@ -397,7 +422,8 @@ export class RegisterComponent implements OnInit {
             notificationToken: token,
             image:
               "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-            bio: "",
+              description: this.bio,
+              experience: 0,
             friends: [],
             blocked: [],
             location: {},
@@ -410,8 +436,64 @@ export class RegisterComponent implements OnInit {
             suspended: false,
             easiMedicFor: this.selectedUserType,
             qualification:this.providerCategory,
+            email: this.emailAddress,
           });
-        }});
+        }
+         else if (this.providerType == "Security") {
+          await setDoc(doc(securityCollection, x.id), {
+            username: username,
+            name: name,
+            fullname: name,
+            phone: phone,
+            password: { ciphertext, key },
+            notificationToken: token,
+            image:
+              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+              description: this.bio,
+              experience: 0,
+            friends: [],
+            blocked: [],
+            location: {},
+            requests: [],
+            language: "English",
+            dob: dob,
+            created: moment().format("DD-MM-YYYY"),
+            availability: "online",
+            InterestedIn: "",
+            suspended: false,
+            easiMedicFor: this.selectedUserType,
+            qualification:this.providerCategory,
+            email: this.emailAddress,
+          });
+        }
+         else if (this.providerType == "Emergency") {
+          await setDoc(doc(emergencyCollection, x.id), {
+            username: username,
+            name: name,
+            fullname: name,
+            phone: phone,
+            password: { ciphertext, key },
+            notificationToken: token,
+            image:
+              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+              description: this.bio,
+              experience: 0,
+            friends: [],
+            blocked: [],
+            location: {},
+            requests: [],
+            language: "English",
+            dob: dob,
+            created: moment().format("DD-MM-YYYY"),
+            availability: "online",
+            InterestedIn: "",
+            suspended: false,
+            easiMedicFor: this.selectedUserType,
+            qualification:this.providerCategory,
+            email: this.emailAddress,
+          });
+        }
+      });
 
       // Additional logic if needed
     } catch (error: any) {
@@ -474,5 +556,10 @@ export class RegisterComponent implements OnInit {
 
   getKeys(object: {}) {
     return Object.keys(object);
+  }
+
+  selectItem(item: any) {
+    this.selected = item;
+    this.providerCategory = item.title;
   }
 }

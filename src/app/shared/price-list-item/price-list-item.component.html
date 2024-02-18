@@ -1,4 +1,4 @@
-<div style="display:flex;margin-left:5px">
+<div style="display:flex;margin-left:5px" class="price-list-container">
     <div class="w-full max-w-sm p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700"
         *ngFor="let item of priceList" [class.highlight-selected]="selectedPlan == item.planType">
         <h5 class="mb-4 text-xl font-medium text-gray-500 dark:text-gray-400" [style.color]="item.color">
