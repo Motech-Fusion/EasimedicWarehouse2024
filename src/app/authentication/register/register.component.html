@@ -7,7 +7,20 @@
     <div class="bg-grey-lighter min-h-screen flex flex-col">
         <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
             <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+                
                 <h1 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text">Sign up</h1>
+                <div class="md:w-3/12 md:ml-16" style="margin-bottom:16px">
+                    <!-- profile image -->
+                    <img (click)="triggerImageInput()" class="w-20 h-20 md:w-40 md:h-40 object-cover rounded-full
+                   border-2 border-pink-600 p-1"
+                        src="{{selectedImageString ? selectedImageString : 'https://t4.ftcdn.net/jpg/05/42/36/11/360_F_542361185_VFRJWpR2FH5OiAEVveWO7oZnfSccZfD3.jpg'}}"
+                        alt="profile" style="color:white">
+                    <input
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        #imageInput type="file" accept="image/*" multiple style="display: none"
+                        (change)="onImageSelected($event)">
+                </div>
+
                 <input [formControl]="UsernameFormControl" type="text"
                     class="block border border-grey-light w-full p-3 rounded mb-4" name="username*"
                     placeholder="Username" />
@@ -19,12 +32,39 @@
                 <input [formControl]="SurnameFormControl" type="text"
                     class="block border border-grey-light w-full p-3 rounded mb-4" name="surname*"
                     placeholder="Surname" />
+                <div class="date-of-birth">
+                        <label for="dob">Date of Birth:</label>
+                        <input class="dob" type="date" id="dob" name="dob" [(ngModel)]="dob">
+                </div>
 
                 <input [formControl]="PhoneFormControl" type="text"
                     class="block border border-grey-light w-full p-3 rounded mb-4" name="phone" placeholder="Phone*" />
 
                 <input [formControl]="EmailFormControl" type="email"
                     class="block border border-grey-light w-full p-3 rounded mb-4" name="phone" placeholder="Email address*" />
+
+                <input [formControl]="LocationFormControl" type="text"
+                    class="block border border-grey-light w-full p-3 rounded mb-4" name="placess" placeholder="Enter your location" />
+                
+                    <div class="dropdown-container" >
+                        <div class="col-span-2 sm:col-span-1">
+                            <label for="category"
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select Province
+                            </label>
+                            <select [formControl]="ProvinceCategoryContentFormControl" id="province"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option value="Gauteng">Gauteng</option>
+                                <option value="Western Cape">Western Cape</option>
+                                <option value="Kwazulu Natal">Kwazulu Natal</option>
+                                <option value="Limpopo">Limpopo</option>
+                                <option value="Free State">Free State</option>
+                                <option value="Mpumalanga">Mpumalanga</option>
+                                <option value="Eastern Cape">Eastern Cape</option>
+                                <option value="North West">North West</option>
+                                <option value="Northern Cape">Northern Cape</option>
+                            </select>
+                        </div>
+                    </div>
 
                 <div class="dropdown-container">
 
@@ -117,6 +157,13 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="dropdown-container" *ngIf="selectedUserType === 'Service Provider' && providerType == 'Security'">
+                    <input [formControl]="StationNameFormControl" type="number"
+                    class="block border border-grey-light w-full p-3 rounded mb-4" name="fullname*"
+                    [placeholder]="providerCategory == 'Police' ? 'Add Station help-line number':'Add security help-line number'" />
+                </div>
+
                 <div class="dropdown-container" *ngIf="selectedUserType === 'Service Provider' && providerType == 'TowTrucks'">
                     <div class="col-span-2 sm:col-span-1" *ngIf="providerType == 'TowTrucks'">
                         <label for="category"
@@ -130,6 +177,13 @@
                                 </div>
                               </div>
                     </div>
+                </div>
+
+                <div class="dropdown-container" *ngIf="selectedUserType === 'Service Provider' && providerType == 'TowTrucks'">
+                    <input [formControl]="FeePerKmFormControl" type="number"
+                    class="block border border-grey-light w-full p-3 rounded mb-4" name="fullname*"
+                    placeholder="Add price(in rands) per 10km" />
+                    <h1 *ngIf="feePerKm"><span class="fee-per-km">R{{feePerKm}} </span>per 10 km distance</h1>
                 </div>
                 <div class="dropdown-container" *ngIf="selectedUserType === 'Service Provider'">
                     <h1 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text" style="margin-top:16px">

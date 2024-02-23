@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { IUsersInterface } from 'src/app/shared/Interfaces/IUsersInterface';
-import { FireStoreCollectionsServiceService, IAppointment } from 'src/app/shared/Services/fire-store-collections-service.service';
+import { FireStoreCollectionsServiceService, IAppointment, ITruckAppointment } from 'src/app/shared/Services/fire-store-collections-service.service';
 import { UserState } from 'src/app/shared/State/user.reducer';
 import { selectDocId } from 'src/app/shared/State/user.selectors';
 
@@ -19,6 +19,7 @@ export class NotificationComponent {
   notification:number = 0
   currentUser!: IUsersInterface;
   userAppointments: IAppointment[] = [];
+  towTrucksAppointments: ITruckAppointment[] = [];
   
   constructor(
     private fireStoreCollectionsService: FireStoreCollectionsServiceService,
@@ -39,6 +40,7 @@ export class NotificationComponent {
 
     this.scrollToTop();
     this. fetchAppointments();
+    this. getTruckAppointments();
   }
 
   scrollToTop(): void {
@@ -61,10 +63,31 @@ export class NotificationComponent {
         this.userAppointments = filteredAppointment;
       })
     }
+
+    getTruckAppointments() {
+      this.fireStoreCollectionsService.getAllTruckAppointments().subscribe(appointments=>{
+        let filteredAppointment = [];
+        if(this.currentUser?.easiMedicFor == 'Service Provider' && this.currentUser?.providerType !== "TowTrucks"){
+          filteredAppointment = appointments.filter(app => app.customerId == this.currentUserId);
+        } else if(this.currentUser?.easiMedicFor == 'Service Provider' && this.currentUser?.providerType == "TowTrucks"){
+          filteredAppointment = appointments.filter(app => app.TruckerId == this.currentUserId);
+        }else{
+          filteredAppointment = appointments.filter(app => app.customerId == this.currentUserId);
+        }
+        this.towTrucksAppointments = filteredAppointment;
+        console.log(filteredAppointment,"id user here "+ this.currentUserId);
+      })
+    }
     
     cancelAppointment(docId: string|undefined) {
       const docuId = docId as string
     this.fireStoreCollectionsService.declineAppointment(docuId).subscribe(x=>{
+    })
+    }
+
+    cancelTruckAppointment(docId: string|undefined) {
+      const docuId = docId as string
+    this.fireStoreCollectionsService.declineTruckAppointment(docuId).subscribe(x=>{
     })
     }
 }

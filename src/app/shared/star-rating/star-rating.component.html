@@ -1,0 +1,5 @@
+<ul class="star-rating" [ngClass]="{readonly: readOnly}">
+    <li *ngFor="let star of stars" class="star" [ngClass]="{filled: star.filled}"
+      (click)="toggle(star.index)" (mouseenter)="paintStars(star.index)" (mouseleave)="unpaintStars()">
+    </li>
+  </ul>

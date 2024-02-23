@@ -4,7 +4,7 @@
         <div class="get-started">
             <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
                 style="color:rgb(30, 30, 30)">
-                You have <span class="text-blue-600 dark:text-blue-500">{{notification}}</span> notifications.</h1>
+                You have <span class="text-blue-600 dark:text-blue-500">{{notification+towTrucksAppointments.length}}</span> notifications.</h1>
             <p class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">Filter notifications
                 by searching notification title or description below to
                 get started
@@ -27,7 +27,7 @@
             <ng-container *ngFor="let item of userAppointments">
                 <ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700" style="width:100%;min-width: 100%;">
                     <li class="pb-3 sm:pb-4 friend-item" style="background-color: white;border-radius:4px;margin-bottom:2px;padding:16px">
-                       <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                       <div class="flex items-center space-x-4 rtl:space-x-reverse notification-mobile">
                           <div class="flex-shrink-0">
                              <img *ngIf="item.doctorImage"  class="w-8 h-8 rounded-full" src="{{item.doctorImage}}" alt="Neil image">
                              <div *ngIf="!item.doctorImage" class="w-8 h-8 rounded-full">
@@ -58,8 +58,8 @@
                                 <span style="color:rgb(129, 129, 129)">{{item.description}}</span>
                              </p>
                           </div>
-                          <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
-                            <button (click)="cancelAppointment(item.docId)" style="background-color:#f21d1d" type="button" class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                          <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white button-wrap">
+                            <button (click)="cancelAppointment(item.docId)" style="background-color:#f21d1d" type="button" class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 button-padd">
                                 <svg class="h-3 w-3 text-white"  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="9" cy="7" r="4" />  <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />  <path d="M16 11h6m-3 -3v6" /></svg>                               
                                 Cancel
                                 </button>
@@ -68,8 +68,52 @@
                     </li>
                     </ul>
             </ng-container>
+            <ng-container *ngFor="let item of towTrucksAppointments">
+                <ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700" style="width:100%;min-width: 100%;">
+                    <li class="pb-3 sm:pb-4 friend-item" style="background-color: white;border-radius:4px;margin-bottom:2px;padding:16px">
+                       <div class="flex items-center space-x-4 rtl:space-x-reverse notification-mobile">
+                          <div class="flex-shrink-0">
+                             <img *ngIf="item.Truckerimage"  class="w-8 h-8 rounded-full" src="{{item.Truckerimage}}" alt="Neil image">
+                             <div *ngIf="!item.Truckerimage" class="w-8 h-8 rounded-full">
+                                <svg class="w-10 h-10 text-gray-200 dark:text-gray-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
+                                    <path d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z"/>
+                                </svg>
+                            </div>
+                          </div>
+                          <div class="flex-1 min-w-0">
+                             <span style="color:grey;display:flex;padding-bottom:8px" class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                               Truck Company :  <h1 style="color:black;font-weight: 700;font-size: 22px;">{{item.TruckName}}</h1>
+                             </span>
+                             <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                <span style="color:black;font-weight:700">Appointment for : {{item?.created}} </span>
+                             </p>
+                             <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                <span style="color:black;font-weight:700">Appointment approved on : {{item?.dateApproved | date}}</span>
+                             </p>
+                             <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                Appointment status: 
+                                <span *ngIf="item?.status == 'Approved'" style="color:#07a54b;font-weight:800" >{{item.status}}</span>
+                                <span *ngIf="item?.status == 'Pending'" style="color:red;font-weight:800" >{{item.status}}</span>
+                             </p>
+                             <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                {{'TowTruck appointment'}} with {{item.TruckName}}
+                             </p>
+                             <!-- <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                <span style="color:rgb(129, 129, 129)">{{item.description}}</span>
+                             </p> -->
+                          </div>
+                          <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                            <button (click)="cancelTruckAppointment(item.docId)" style="background-color:#f21d1d" type="button" class="px-3 py-2 text-xs font-medium text-center inline-flex items-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 button-padd">
+                                <svg class="h-3 w-3 text-white"  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="9" cy="7" r="4" />  <path d="M3 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" />  <path d="M16 11h6m-3 -3v6" /></svg>                               
+                                Cancel Truck Appointment
+                                </button>
+                          </div>
+                       </div>
+                    </li>
+                    </ul>
+            </ng-container>
         </div>
-        <div class="get-started" *ngIf="!userAppointments">
+        <div class="get-started" *ngIf="!userAppointments.length && !towTrucksAppointments.length">
             <div role="status" class="space-y-2.5 animate-pulse max-w-lg" style="width:100%">
                 <div class="flex items-center w-full">
                     <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>

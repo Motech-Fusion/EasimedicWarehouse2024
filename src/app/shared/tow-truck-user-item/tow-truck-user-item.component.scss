@@ -12,3 +12,42 @@ img.fill-current.flex-shrink-0.mr-5 {
 //     padding-left:120px!important;
 //     padding-right:120px!important;
 // }
+.buttons-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.truck-image{
+    height:60px;width:60px
+}
+@media (min-width: 200px) and (max-width:450px) {
+.table-head{
+    display: none;
+}
+    .truck-image{
+        height: 160px;
+        /* width: 85%; */
+        border-radius: 0px;
+        aspect-ratio: 3/2;
+        object-fit: cover;
+        /* mix-blend-mode: color-burn; */
+        width: 100%;
+    }
+    .truck-name {
+        font-size: 22px;
+        font-weight: 800;
+    }
+
+    tr {
+        display: grid;
+    }
+
+    .buttons-wrapper {
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+    }
+}

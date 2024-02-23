@@ -82,6 +82,11 @@ color:grey
     padding: 10px;
     border: 1px solid #ccc;
     cursor: pointer;
+    background-color: #e8e8e8;
+    border-radius: 12px;
+    -webkit-box-shadow: 10px 10px 5px 0px rgba(240,240,240,1);
+    -moz-box-shadow: 10px 10px 5px 0px rgba(240,240,240,1);
+    box-shadow: 10px 10px 5px 0px rgba(240,240,240,1);
   }
   
   .card.selected {
@@ -94,3 +99,37 @@ color:grey
     object-fit: contain;
     mix-blend-mode: color-burn;
   }
+  
+  .date-of-birth {
+    margin-bottom: 16px;
+    padding-top: 5px;
+    border-color: #fff;
+    border-width: 1px;
+    width: auto;
+    padding-bottom: 4px;
+    border-radius: 4px;
+}
+
+input#dob {
+  border-color: grey;
+  border-radius: 5px;
+}
+
+span.fee-per-km {
+  font-weight: 800;
+  color: #32b009;
+  font-size: larger;
+}
+
+.md\:ml-16 {
+   margin-left: 2px;
+   cursor: pointer; 
+}
+
+.border-pink-600 {
+  --tw-border-opacity: 1;
+  border-color: #efefef;
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(240,240,240,1);
+-moz-box-shadow: 10px 10px 5px 0px rgba(240,240,240,1);
+box-shadow: 10px 10px 5px 0px rgba(240,240,240,1);
+}

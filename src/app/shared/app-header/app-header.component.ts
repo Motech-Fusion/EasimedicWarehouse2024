@@ -16,6 +16,7 @@ export class AppHeaderComponent implements OnInit {
   @Input() notificationCount: number = 0;
   @Input() currentUserObject!: IUsersInterface;
   @Input() currentUserId:string | null = ''
+  @Input() goBack: boolean = false;
   isNavbarCollapsed: boolean = false;
   currentUser!: IUsersInterface | null;
   currentUserDetails!: IUsersInterface | null;

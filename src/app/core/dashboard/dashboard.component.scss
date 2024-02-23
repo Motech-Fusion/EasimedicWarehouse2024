@@ -17,6 +17,10 @@
     display: flex;
 }
 
+.second-expandable{
+  margin-top:-40px
+}
+
 .search-container-center {
     width: 100% !important;
     align-items: center;
@@ -120,6 +124,29 @@ span{
   }
 
     @media (min-width: 200px) and (max-width:450px) {
+
+      .play-buttons {
+        padding: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+      .stores-container {
+        padding-left: 10px;
+        display: grid;
+        scale: 0.9;
+    }
+      .no-friends {
+        color: rgb(32, 32, 32);
+        font-size: 34px;
+        padding: 22px;
+    }
+      .tabs-container{
+        padding:12px
+      }
+      .second-expandable{
+        margin-top:-10px
+      }
       .menu-nav {
         padding-left: 0.15rem;
         padding-right: 0.15rem;
@@ -379,6 +406,15 @@ div#crud-modal {
 
   background-color: #424242ab;
 }
+div#tow-truck-modal {
+  display: flex;
+  z-index: 9999999999;
+  justify-content: center;
+  align-items: center;
+  height: auto;
+
+  background-color: #424242ab;
+}
 
 .add-image-link{
   cursor:pointer;
@@ -415,6 +451,20 @@ div#crud-modal {
   max-width: 99%;
 }
 
+@media (min-width: 768px){
+  .tow-trucks-container{
+  .md\:grid-cols-4[_ngcontent-ng-c3346275198] {
+      background-color: white;
+      padding: 54px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-right: 10px;
+      margin-left: 10px;
+      border-radius: 12px;
+  }
+}
+}
+
 @media (min-width: 200px) and (max-width:450px) {
   .container-with-nice-border{
     background-color: rgba(51, 61, 67, 0.0509803922);
@@ -432,6 +482,11 @@ div#crud-modal {
   margin-left: 6px; 
   border-radius: 12px;
 }
+.tow-trucks-container{
+  margin-right: 10px!important;
+  margin-left: 10px!important;
+  border-radius:12px
+}
 }
 
 .tow-trucks-container{
@@ -447,3 +502,54 @@ a.inline-block.w-full.p-4.bg-white.border-r.border-gray-200.dark\:border-gray-70
 .hover-top-header:hover{
   background-color: #333d430d;
 }
+
+hr.h-px.my-8.bg-gray-200.border-0.dark\:bg-gray-700 {
+  margin-top: 3px;
+  margin-bottom: 5px;
+}
+
+h1.title-head-item {
+  font-weight: 800;
+  color: #ff8a00;
+}
+
+img.w-8.h-8.rounded-full {
+  height: 60px;
+  width: 60px;
+}
+.call-button-emergency{
+  background-color: #046ef9;
+  color:white
+}
+.call-button{
+  background-color: #f93f04;
+  color:white
+}
+li.pb-3.sm\:pb-4 {
+  // border-width: 0.2px;
+  // border-color: #9e9e9e;
+  border-radius: 8px;
+  padding: 6px;
+  -webkit-box-shadow: 6px 6px 5px 0px rgba(240,240,240,1);
+-moz-box-shadow: 6px 6px 5px 0px rgba(240,240,240,1);
+box-shadow: 6px 6px 5px 0px rgba(240,240,240,1);
+background-color: #f9f9f9;
+}
+
+h2#accordion-collapse-heading-1 {
+  background-color: white;
+  border-radius: 14px;
+
+  h2{
+    color:white
+  }
+}
+h2#accordion-collapse-heading-2 {
+  background-color: white;
+  border-radius: 14px;
+
+  h2{
+    color:white
+  }
+}
+

@@ -1,190 +1,183 @@
 <div *ngIf="userItem">
     <div class="max-w-2xl mx-auto bg-indigo-600 shadow-lg rounded-lg" (click)="viewDocDetails(userItem)"
-        style="cursor: pointer;">
-        <div class="px-6 py-5">
-            <div class="flex items-start">
-                <!-- Icon -->
-                <img class="fill-current flex-shrink-0 mr-5"
-                    src="{{userItem.image ? userItem.image : 'https://t4.ftcdn.net/jpg/05/42/36/11/360_F_542361185_VFRJWpR2FH5OiAEVveWO7oZnfSccZfD3.jpg'}}" />
-                <!-- <svg class="fill-current flex-shrink-0 mr-5" width="30" height="30" viewBox="0 0 30 30">
+       style="cursor: pointer;">
+       <div class="px-6 py-5">
+          <div class="flex items-start">
+             <!-- Icon -->
+             <img class="fill-current flex-shrink-0 mr-5"
+                src="{{userItem.image ? userItem.image : 'https://t4.ftcdn.net/jpg/05/42/36/11/360_F_542361185_VFRJWpR2FH5OiAEVveWO7oZnfSccZfD3.jpg'}}" />
+             <!-- <svg class="fill-current flex-shrink-0 mr-5" width="30" height="30" viewBox="0 0 30 30">
                 <path class="text-indigo-300" d="m16 14.883 14-7L14.447.106a1 1 0 0 0-.895 0L0 6.883l16 8Z" />
                 <path class="text-indigo-200" d="M16 14.619v15l13.447-6.724A.998.998 0 0 0 30 22V7.619l-14 7Z" />
                 <path class="text-indigo-500" d="m16 14.619-16-8V21c0 .379.214.725.553.895L16 29.619v-15Z" />
-            </svg> -->
-                <!-- Card content -->
-                <div class="flex-grow truncate">
-                    <!-- Card header -->
-                    <div class="w-full sm:flex justify-between items-center mb-3">
-                        <!-- Title -->
-                        <h2 class="text-2xl leading-snug font-extrabold text-gray-50 truncate mb-1 sm:mb-0">
-                            {{userItem.name}}</h2>
-                        <!-- Like and comment buttons -->
-                        <div class="flex-shrink-0 flex items-center space-x-3 sm:ml-2">
-                            <button
-                                class="flex items-center text-left text-sm font-medium text-indigo-100 hover:text-white group focus:outline-none focus-visible:border-b focus-visible:border-indigo-100">
-                                <svg class="w-4 h-4 flex-shrink-0 mr-2 fill-current text-gray-300 group-hover:text-gray-200"
-                                    viewBox="0 0 16 16">
-                                    <path
-                                        d="M14.682 2.318A4.485 4.485 0 0 0 11.5 1 4.377 4.377 0 0 0 8 2.707 4.383 4.383 0 0 0 4.5 1a4.5 4.5 0 0 0-3.182 7.682L8 15l6.682-6.318a4.5 4.5 0 0 0 0-6.364Zm-1.4 4.933L8 12.247l-5.285-5A2.5 2.5 0 0 1 4.5 3c1.437 0 2.312.681 3.5 2.625C9.187 3.681 10.062 3 11.5 3a2.5 2.5 0 0 1 1.785 4.251h-.003Z" />
-                                </svg>
-                                <span>3 <span class="sr-only">likes</span></span>
-                            </button>
-                            <button
-                                class="flex items-center text-left text-sm font-medium text-indigo-100 hover:text-white group focus:outline-none focus-visible:border-b focus-visible:border-indigo-100">
-
-                                <svg class="w-4 h-4 flex-shrink-0 mr-2 fill-current text-gray-300 group-hover:text-gray-200"
-                                    width="64px" height="64px" viewBox="0 0 24.00 24.00" fill="none"
-                                    xmlns="http://www.w3.org/2000/svg">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"
-                                        stroke="#CCCCCC" stroke-width="0.24000000000000005"></g>
-                                    <g id="SVGRepo_iconCarrier">
-                                        <path
-                                            d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"
-                                            stroke="#f0f0f0" stroke-width="0.264" stroke-linecap="round"></path>
-                                        <rect x="6" y="12" width="3" height="3" rx="0.5" fill="#f0f0f0"></rect>
-                                        <rect x="10.5" y="12" width="3" height="3" rx="0.5" fill="#f0f0f0"></rect>
-                                        <rect x="15" y="12" width="3" height="3" rx="0.5" fill="#f0f0f0"></rect>
-                                    </g>
-                                </svg>
-                                <span>{{userItem.regDate | date }} <span class="sr-only">comments</span></span>
-                            </button>
-                        </div>
-                    </div>
-                    <!-- Card body -->
-                    <div class="flex items-end justify-between whitespace-normal">
-                        <!-- Paragraph -->
-                        <div class="max-w-md text-indigo-100">
-                            <p class="mb-2">{{userItem.type}}</p>
-                            <span
-                                class="flex items-center h-6 px-3 text-xs font-semibold text-green-500 bg-green-100 rounded-full">{{'R
-                                '+userItem.maxFee}}</span>
-                            <p class="mb-2">{{'type '+userItem.type}}</p>
-                        </div>
-                        <!-- More link -->
-                        <a (click)="chatWithDoctor(userItem);$event.stopPropagation()"
-                            class="flex-shrink-0 flex items-center justify-center text-indigo-600 w-10 h-10 rounded-full bg-gradient-to-b from-indigo-50 to-indigo-100 hover:from-white hover:to-indigo-50 focus:outline-none focus-visible:from-white focus-visible:to-white transition duration-150 ml-2"
-                            style="background-color: transparent;">
-                            <span class="block font-bold"><span class="sr-only">Read more</span> <svg width="24px"
-                                    height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                                    stroke="#5fb7f3">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                    <g id="SVGRepo_iconCarrier">
-                                        <path
-                                            d="M8 12H8.01M12 12H12.01M16 12H16.01M21.0039 12C21.0039 16.9706 16.9745 21 12.0039 21C9.9675 21 3.00463 21 3.00463 21C3.00463 21 4.56382 17.2561 3.93982 16.0008C3.34076 14.7956 3.00391 13.4372 3.00391 12C3.00391 7.02944 7.03334 3 12.0039 3C16.9745 3 21.0039 7.02944 21.0039 12Z"
-                                            stroke="#5fb7f3" stroke-width="2" stroke-linecap="round"
-                                            stroke-linejoin="round"></path>
-                                    </g>
-                                </svg>
-                            </span>
-                        </a>
-                    </div>
+                </svg> -->
+             <!-- Card content -->
+             <div class="flex-grow truncate">
+                <!-- Card header -->
+                <div class="w-full sm:flex justify-between items-center mb-3">
+                   <!-- Title -->
+                   <h2 class="text-2xl leading-snug font-extrabold text-gray-50 truncate mb-1 sm:mb-0">
+                      {{userItem.name}}
+                   </h2>
+                   <!-- Like and comment buttons -->
+                   <div class="flex-shrink-0 flex items-center space-x-3 sm:ml-2">
+                      <button
+                         class="flex items-center text-left text-sm font-medium text-indigo-100 hover:text-white group focus:outline-none focus-visible:border-b focus-visible:border-indigo-100">
+                         <svg class="w-4 h-4 flex-shrink-0 mr-2 fill-current text-gray-300 group-hover:text-gray-200"
+                            viewBox="0 0 16 16">
+                            <path
+                               d="M14.682 2.318A4.485 4.485 0 0 0 11.5 1 4.377 4.377 0 0 0 8 2.707 4.383 4.383 0 0 0 4.5 1a4.5 4.5 0 0 0-3.182 7.682L8 15l6.682-6.318a4.5 4.5 0 0 0 0-6.364Zm-1.4 4.933L8 12.247l-5.285-5A2.5 2.5 0 0 1 4.5 3c1.437 0 2.312.681 3.5 2.625C9.187 3.681 10.062 3 11.5 3a2.5 2.5 0 0 1 1.785 4.251h-.003Z" />
+                         </svg>
+                         <span>3 <span class="sr-only">likes</span></span>
+                      </button>
+                      <button
+                         class="flex items-center text-left text-sm font-medium text-indigo-100 hover:text-white group focus:outline-none focus-visible:border-b focus-visible:border-indigo-100">
+                         <svg class="w-4 h-4 flex-shrink-0 mr-2 fill-current text-gray-300 group-hover:text-gray-200"
+                            width="64px" height="64px" viewBox="0 0 24.00 24.00" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"
+                               stroke="#CCCCCC" stroke-width="0.24000000000000005"></g>
+                            <g id="SVGRepo_iconCarrier">
+                               <path
+                                  d="M20 10V7C20 5.89543 19.1046 5 18 5H6C4.89543 5 4 5.89543 4 7V10M20 10V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V10M20 10H4M8 3V7M16 3V7"
+                                  stroke="#f0f0f0" stroke-width="0.264" stroke-linecap="round"></path>
+                               <rect x="6" y="12" width="3" height="3" rx="0.5" fill="#f0f0f0"></rect>
+                               <rect x="10.5" y="12" width="3" height="3" rx="0.5" fill="#f0f0f0"></rect>
+                               <rect x="15" y="12" width="3" height="3" rx="0.5" fill="#f0f0f0"></rect>
+                            </g>
+                         </svg>
+                         <span>{{userItem.regDate | date:'dd-MM-yyyy' }} <span class="sr-only">comments</span></span>
+                      </button>
+                   </div>
                 </div>
-            </div>
-        </div>
+                <!-- Card body -->
+                <div class="flex items-end justify-between whitespace-normal">
+                   <!-- Paragraph -->
+                   <div class="max-w-md text-indigo-100">
+                      <p class="mb-2">{{userItem.type}}</p>
+                      <span
+                         class="flex items-center h-6 px-3 text-xs font-semibold text-green-500 bg-green-100 rounded-full">{{'R
+                      '+userItem.maxFee}}</span>
+                      <p class="mb-2">{{'type '+userItem.type}}</p>
+                   </div>
+                   <!-- More link -->
+                   <a (click)="chatWithDoctor(userItem);$event.stopPropagation()"
+                      class="flex-shrink-0 flex items-center justify-center text-indigo-600 w-10 h-10 rounded-full bg-gradient-to-b from-indigo-50 to-indigo-100 hover:from-white hover:to-indigo-50 focus:outline-none focus-visible:from-white focus-visible:to-white transition duration-150 ml-2"
+                      style="background-color: transparent;">
+                      <span class="block font-bold">
+                         <span class="sr-only">Read more</span> 
+                         <svg width="24px"
+                            height="24px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                            stroke="#5fb7f3">
+                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                            <g id="SVGRepo_iconCarrier">
+                               <path
+                                  d="M8 12H8.01M12 12H12.01M16 12H16.01M21.0039 12C21.0039 16.9706 16.9745 21 12.0039 21C9.9675 21 3.00463 21 3.00463 21C3.00463 21 4.56382 17.2561 3.93982 16.0008C3.34076 14.7956 3.00391 13.4372 3.00391 12C3.00391 7.02944 7.03334 3 12.0039 3C16.9745 3 21.0039 7.02944 21.0039 12Z"
+                                  stroke="#5fb7f3" stroke-width="2" stroke-linecap="round"
+                                  stroke-linejoin="round"></path>
+                            </g>
+                         </svg>
+                      </span>
+                   </a>
+                </div>
+             </div>
+          </div>
+       </div>
     </div>
-</div>
-
-
-<table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 padd-it"
+ </div>
+ <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 padd-it"
     style="border-radius:16px">
     <thead style="background-color:#1da1f2;border-radius: 12px;"
-        class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-        <tr>
-            <th scope="col" class="px-16 py-3">
-                <span class="sr-only">Image</span>
-            </th>
-            <th style="color:white" scope="col" class="px-6 py-3">
-                Company Name
-            </th>
-            <th style="color:white" scope="col" class="px-6 py-3">
-                Contact details
-            </th>
-            <th style="color:white" scope="col" class="px-6 py-3">
-                Price
-            </th>
-            <th style="color:white" scope="col" class="px-6 py-3">
-                Action
-            </th>
-        </tr>
+       class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400 table-head">
+       <tr>
+          <th scope="col" class="px-16 py-3">
+             <span class="sr-only">Image</span>
+          </th>
+          <th style="color:white" scope="col" class="px-6 py-3">
+             Company Name
+          </th>
+          <th style="color:white" scope="col" class="px-6 py-3">
+             Contact details
+          </th>
+          <th style="color:white" scope="col" class="px-6 py-3">
+             Price
+          </th>
+          <th style="color:white" scope="col" class="px-6 py-3">
+             Action
+          </th>
+       </tr>
     </thead>
     <tbody *ngFor="let item of TruckList">
-        <tr (click)="viewDocDetails(item)"
-            class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-            <td class="p-4">
-                <div scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                    <img style="height:60px;width:60px" class="w-10 h-10 rounded-full"
-                        src="{{item.image ? item.image : 'https://t4.ftcdn.net/jpg/05/42/36/11/360_F_542361185_VFRJWpR2FH5OiAEVveWO7oZnfSccZfD3.jpg'}}"
-                        alt="Jese image">
-                </div>
-                <!-- <img style="height:120px" src="{{item.image ? item.image : 'https://t4.ftcdn.net/jpg/05/42/36/11/360_F_542361185_VFRJWpR2FH5OiAEVveWO7oZnfSccZfD3.jpg'}}"  alt="Apple Watch"> -->
-            </td>
-            <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                {{item.name}}
-            </td>
-            <td class="px-6 py-4">
-                <div class="flex items-center">
-                    {{item.phone ? item.phone : item.cellnumber}}
-                    <!-- <button class="inline-flex items-center justify-center p-1 me-3 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
-                        <span class="sr-only">Quantity button</span>
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
-                        </svg>
-                    </button>
-                    <div>
-                        <input type="number" id="first_product" class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1" required>
-                    </div>
-                    <button class="inline-flex items-center justify-center h-6 w-6 p-1 ms-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
-                        <span class="sr-only">Quantity button</span>
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
-                        </svg>
-                    </button> -->
-                </div>
-            </td>
-            <td *ngIf="item.maxFee" class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                {{'R'+item.maxFee}}
-            </td>
-            <td *ngIf="!item.maxFee" class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
-                {{"No Fee"}}
-            </td>
-            <td class="px-6 py-4" style="display: flex;flex-direction: row;align-items: center;justify-content: center;">
-                <a style="cursor:pointer;background-color: #ebebeb;padding: 6px;border-radius: 7px;align-items: center;width:auto;display: flex;" (click)="$event.stopPropagation()"
-                    class="font-medium text-green-600 dark:text-green-500 hover:underline">
-                    <svg height="24px" width="24px" version="1.1" id="_x32_"
-                        xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                        viewBox="0 0 512.00 512.00" xml:space="preserve" fill="#000000" stroke="#000000"
-                        stroke-width="0.00512">
-                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                        <g id="SVGRepo_iconCarrier">
-                            <style type="text/css">
-                                .st0 {
-                                    fill: #2ca1f2;
-                                }
-                            </style>
-                            <g>
-                                <path class="st0"
-                                    d="M130.344,129.778c-27.425,17.786-32.812,73.384-22.459,118.698c8.064,35.288,25.208,82.623,54.117,127.198 c27.196,41.933,65.138,79.532,94.069,101.286c37.151,27.934,90.112,45.688,117.537,27.902c13.868-8.994,34.47-33.567,35.41-37.976 c0,0-12.082-18.629-14.733-22.716l-40.516-62.47c-3.011-4.642-21.892-0.399-31.484,5.034 c-12.938,7.331-24.854,27.001-24.854,27.001c-8.872,5.125-16.302,0.019-31.828-7.126c-19.081-8.779-40.535-36.058-57.609-60.765 c-15.595-25.666-31.753-56.38-31.988-77.382c-0.192-17.09-1.824-25.957,6.473-31.967c0,0,22.82-2.858,34.79-11.681 c8.872-6.542,20.447-22.051,17.436-26.693l-40.515-62.47c-2.651-4.088-14.733-22.716-14.733-22.716 C175.05,111.994,144.211,120.784,130.344,129.778z">
-                                </path>
-                                <path class="st0"
-                                    d="M360.036,176.391c16.488-67.201-22.687-135.921-88.913-155.97L276.715,0 c77.488,23.14,123.308,103.517,103.742,181.983L360.036,176.391z">
-                                </path>
-                                <path class="st0"
-                                    d="M315.781,164.273c9.845-42.802-14.93-86.262-56.776-99.596l5.594-20.428 c53.106,16.435,84.524,71.548,71.61,125.618L315.781,164.273z">
-                                </path>
-                                <path class="st0"
-                                    d="M271.466,152.138c3.288-18.373-7.111-36.616-24.596-43.147l5.605-20.468 c28.724,9.694,45.751,39.564,39.459,69.22L271.466,152.138z">
-                                </path>
-                            </g>
-                        </g>
-                    </svg>Call</a>
-                    <span>{{"   "}}</span>
-                <a style="cursor:pointer;margin-left:12px;background-color: #ebebeb;padding: 6px;border-radius: 7px;align-items: center;width:auto;display: flex;" (click)="$event.stopPropagation()"
-                    class="font-medium text-green-600 dark:text-green-500 hover:underline"
-                    >Book Appointment</a>
-            </td>
-        </tr>
+       <tr (click)="viewDocDetails(item)"
+          class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+          <td class="p-4">
+             <div scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
+                <img class="w-10 h-10 rounded-full truck-image"
+                   src="{{item.image ? item.image : 'https://t4.ftcdn.net/jpg/05/42/36/11/360_F_542361185_VFRJWpR2FH5OiAEVveWO7oZnfSccZfD3.jpg'}}"
+                   alt="Jese image">
+             </div>
+             <!-- <img style="height:120px" src="{{item.image ? item.image : 'https://t4.ftcdn.net/jpg/05/42/36/11/360_F_542361185_VFRJWpR2FH5OiAEVveWO7oZnfSccZfD3.jpg'}}"  alt="Apple Watch"> -->
+          </td>
+          <td class="px-6 py-4 font-semibold text-gray-900 dark:text-white truck-name">
+             {{item.name}}
+          </td>
+          <td class="px-6 py-4">
+             <div class="flex items-center">
+                {{item.phone ? item.phone : item.cellnumber}}
+                <!-- <button class="inline-flex items-center justify-center p-1 me-3 text-sm font-medium h-6 w-6 text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
+                   <span class="sr-only">Quantity button</span>
+                   <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
+                   </svg>
+                   </button>
+                   <div>
+                   <input type="number" id="first_product" class="bg-gray-50 w-14 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block px-2.5 py-1 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="1" required>
+                   </div>
+                   <button class="inline-flex items-center justify-center h-6 w-6 p-1 ms-3 text-sm font-medium text-gray-500 bg-white border border-gray-300 rounded-full focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700" type="button">
+                   <span class="sr-only">Quantity button</span>
+                   <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                       <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+                   </svg>
+                   </button> -->
+             </div>
+          </td>
+          <td *ngIf="item.maxFee" class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+             {{'R'+item.maxFee}}
+          </td>
+          <td *ngIf="!item.maxFee" class="px-6 py-4 font-semibold text-gray-900 dark:text-white">
+             {{"No Fee"}}
+          </td>
+          <td class="px-6 py-4 buttons-wrapper" >
+             <button (click)="$event.stopPropagation();callTruck(item.phone ? item.phone : item.cellnumber)" type="button" class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 me-2 mb-2">
+                <svg class="w-4 h-4 me-2 -ms-1 text-[#626890]" viewBox="-1.68 -1.68 27.36 27.36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                   <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                   <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                   <g id="SVGRepo_iconCarrier">
+                      <path d="M17 12.5C17.2761 12.5 17.5 12.2761 17.5 12C17.5 11.7239 17.2761 11.5 17 11.5C16.7239 11.5 16.5 11.7239 16.5 12C16.5 12.2761 16.7239 12.5 17 12.5Z" fill="#939393" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      <path d="M12 12.5C12.2761 12.5 12.5 12.2761 12.5 12C12.5 11.7239 12.2761 11.5 12 11.5C11.7239 11.5 11.5 11.7239 11.5 12C11.5 12.2761 11.7239 12.5 12 12.5Z" fill="#939393" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      <path d="M7 12.5C7.27614 12.5 7.5 12.2761 7.5 12C7.5 11.7239 7.27614 11.5 7 11.5C6.72386 11.5 6.5 11.7239 6.5 12C6.5 12.2761 6.72386 12.5 7 12.5Z" fill="#939393" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.8214 2.48697 15.5291 3.33782 17L2.5 21.5L7 20.6622C8.47087 21.513 10.1786 22 12 22Z" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                   </g>
+                </svg>
+                Call truck
+             </button>
+             <span>{{"   "}}</span>
+             <button (click)="$event.stopPropagation();bookTruckAppointment(item)" type="button" class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 me-2 mb-2">
+                <svg class="w-4 h-4 me-2 -ms-1 text-[#626890]" viewBox="-1.68 -1.68 27.36 27.36" fill="none" xmlns="http://www.w3.org/2000/svg">
+                   <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                   <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                   <g id="SVGRepo_iconCarrier">
+                      <path d="M17 12.5C17.2761 12.5 17.5 12.2761 17.5 12C17.5 11.7239 17.2761 11.5 17 11.5C16.7239 11.5 16.5 11.7239 16.5 12C16.5 12.2761 16.7239 12.5 17 12.5Z" fill="#939393" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      <path d="M12 12.5C12.2761 12.5 12.5 12.2761 12.5 12C12.5 11.7239 12.2761 11.5 12 11.5C11.7239 11.5 11.5 11.7239 11.5 12C11.5 12.2761 11.7239 12.5 12 12.5Z" fill="#939393" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      <path d="M7 12.5C7.27614 12.5 7.5 12.2761 7.5 12C7.5 11.7239 7.27614 11.5 7 11.5C6.72386 11.5 6.5 11.7239 6.5 12C6.5 12.2761 6.72386 12.5 7 12.5Z" fill="#939393" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                      <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.8214 2.48697 15.5291 3.33782 17L2.5 21.5L7 20.6622C8.47087 21.513 10.1786 22 12 22Z" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+                   </g>
+                </svg>
+                Book appointment
+             </button>
+          </td>
+       </tr>
     </tbody>
-</table>
+ </table>

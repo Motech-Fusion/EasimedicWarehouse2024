@@ -1,7 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IDoctorsInterface, IUsersInterface } from '../Interfaces/IUsersInterface';
 import { Router } from '@angular/router';
-import { ITowTrucks } from '../Services/fire-store-collections-service.service';
+import { FireStoreCollectionsServiceService, ITowTrucks, ITruckAppointment } from '../Services/fire-store-collections-service.service';
+import { UserState } from '../State/user.reducer';
+import { Store } from '@ngrx/store';
+import { selectDocId } from '../State/user.selectors';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-tow-truck-user-item',
@@ -9,21 +13,36 @@ import { ITowTrucks } from '../Services/fire-store-collections-service.service';
   styleUrls: ['./tow-truck-user-item.component.scss']
 })
 export class TowTruckUserItemComponent {
+
   @Input() userItem!:ITowTrucks;
   @Input() TruckList!:ITowTrucks[];
   @Output() ViewHustle = new EventEmitter<IUsersInterface>();
   @Output() chatEmitter = new EventEmitter<ITowTrucks>();
+  currentUser!: IUsersInterface;
+  currentUserId!: string | null;
+  showNotification: boolean = false;
+  @Output() showTruckAppointmentNotification = new EventEmitter<boolean>();
+  @Output() bookTruckAppointmentEmitter = new EventEmitter<ITowTrucks>();
   
-constructor(private router:Router){
+constructor(private router:Router,private firestoreService:FireStoreCollectionsServiceService,private store: Store<UserState>,){
   
 }
   ngOnInit(): void {
-    console.log("here we are",this.userItem)
+    console.log("here we are",this.userItem);
+    this.store.select(selectDocId).subscribe((id) => {
+      this.currentUserId = id;
+    });
+    this.firestoreService.getAllUsers().subscribe((users) => {
+      this.currentUser = users.filter((x) => x.docId == this.currentUserId)[0];
+
+      return users.filter((x) => x.docId == this.currentUserId);
+    });
   }
   
   chatWithDoctor(doc: ITowTrucks) {
   this.chatEmitter.emit(doc)
   }
+
   getParagraphs(text: string, charLimit: number): string[] {
     const paragraphs: string[] = [];
     let currentParagraph = '';
@@ -140,5 +159,13 @@ constructor(private router:Router){
   //     docId:post.docId,
   //   }})
   // }
+
+  bookTruckAppointment(item: ITowTrucks) {
+    this.bookTruckAppointmentEmitter.emit(item)
+    }
+
+    callTruck(phone: string) {
+      window.open("tel:" + phone);
+    }
   }
   

@@ -1,5 +1,5 @@
 <div class="main-container" style="height:100vh">
-    <app-app-header></app-app-header>
+    <app-app-header [goBack]="true"></app-app-header>
 
     <div class="get-started">
         <main>
@@ -21,7 +21,7 @@
                             #imageInput type="file" accept="image/*" multiple style="display: none"
                             (change)="onImageSelected($event)">
                         <svg *ngIf="editUser" (click)="triggerImageInput()" class="h-8 w-8 text-white"
-                            viewBox="0 0 24 24" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"
+                            viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"
                             stroke-linejoin="round">
                             <path
                                 d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
@@ -59,14 +59,18 @@
                         <!-- post, following, followers list for medium screens -->
                         <ul class="hidden md:flex space-x-8 mb-4">
                             <li style="color:grey">
-                                <span class="font-semibold text-white" style="color: #d9d9d9;">{{myPosts?.length}}</span>
+                                <span class="font-semibold text-white" style="color: grey;">{{myPosts?.length}}</span>
                                 posts
                         </ul>
 
                         <!-- user meta form medium screens -->
                         <div class="hidden md:block">
-                            <span class="text-white" *ngIf="!editUser">{{currentUser?.bio}}</span>
-                            <p class="text-white" style="color: #d9d9d9;">Joined on {{currentUser?.created}}</p>
+                            <div style="display: flex;
+                        flex-direction: column;">
+                            <span *ngIf="!editUser" class="text-white">Date of birth : {{currentUser?.dob}}</span>
+                            <span *ngIf="!editUser" class="text-white">Joined on : {{currentUser?.created}}</span>
+                            <span *ngIf="!editUser" class="text-white">{{currentUser?.bio}}</span>
+                        </div>
                             <div *ngIf="!editUser && currentUser?.easiMedicFor == 'Service Provider'">
                                 <h2 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text" style="margin-top:16px;color:white">
                                     Operating Work Hours</h2>
@@ -99,12 +103,20 @@
                     <!-- user meta form small screens -->
                     <div class="md:hidden text-sm my-2">
                         <!-- <h1 class="font-semibold">Mr Travlerrr...</h1> -->
-                        <span *ngIf="!editUser" class="text-white">{{currentUser?.bio}}</span>
+                        <div style="display: flex;
+                        flex-direction: column;">
+                        <span *ngIf="!editUser" class="text-white">Date of birth : {{currentUser?.dob}}</span>
+                            <span *ngIf="!editUser" class="text-white">Joined on : {{currentUser?.created}}</span>
+                            <span *ngIf="!editUser" class="text-white">{{currentUser?.bio}}</span>
+                        </div>
 
-                        <input
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        <!-- <input
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-description"
                             [formControl]="UserBioFormControl" style="margin:6px" *ngIf="editUser"
-                            placeholder="Enter your bio here" />
+                            placeholder="Enter your bio here" /> -->
+                            <textarea *ngIf="editUser" [formControl]="UserBioFormControl" id="message" rows="4"
+                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-description"
+                            placeholder="Write your bio here..."></textarea>
 
                     </div>
                     <div *ngIf="!editUser && currentUser?.easiMedicFor == 'Service Provider'" class="md:hidden text-sm my-2">
@@ -127,8 +139,8 @@
                     <!-- user following for mobile only -->
                     <ul class="flex md:hidden justify-around space-x-8 border-t 
                   text-center p-2 text-gray-600 leading-snug text-sm">
-                        <li style="color:grey">
-                            <span class="font-semibold text-white">{{myPosts.length}}</span>
+                        <li style="color:grey;font-size:27px">
+                            <span class="font-semibold text-white" style="color:black">{{myPosts.length}}</span>
                             posts
                         </li>
 
@@ -394,7 +406,7 @@
                         <!-- user following for mobile only -->
                         <ul class="flex md:hidden justify-around space-x-8 border-t 
                       text-center p-2 text-gray-600 leading-snug text-sm">
-                            <li style="color:grey">
+                            <li style="color:grey;font-size:27px">
                                 <span class="font-semibold text-white" style="color:black">{{myPosts.length}}</span>
                                 posts
                             </li>

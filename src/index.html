@@ -3,7 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <meta name="viewport" content="initial-scale=.80; maximum-scale=.80; minimum-scale=.80;" />
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"> -->
   <link rel="manifest" href="/manifest.json">
   <title>EasiMedicWarehouse</title>
   <base href="/">
@@ -295,6 +296,21 @@
   </div>
   <!--language translator-->
   <app-root></app-root>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var inputFields = document.querySelectorAll('input[type="url"]');
+      inputFields.forEach(function(input) {
+        input.addEventListener('focus', function() {
+          // Disable zoom when URL input fields are focused
+          document.documentElement.style.overflow = 'hidden';
+        });
+        input.addEventListener('blur', function() {
+          // Enable zoom when URL input fields lose focus
+          document.documentElement.style.overflow = 'auto';
+        });
+      });
+    });
+  </script>
   <!--translation scripts-->
   <script type="text/javascript">
     function googleTranslateElementInit() {

@@ -70,10 +70,32 @@ a.inline-flex.items-center.justify-center.p-4.border-b-2.border-transparent.roun
 
 @media (min-width: 200px) and (max-width:450px) {
 
+  .tab-wrapper {
+    border-radius: 17px;
+  }
+
   ul.flex.flex-wrap.-mb-px.text-sm.font-medium.text-center.text-gray-500.dark\:text-gray-400 {
-    font-size: 9px;
+    font-size: 13px;
     display: grid;
+    min-width: 200px;
+    padding: 12px;
     grid-column: 12px;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .h-8 {
+    height: 2.2rem;
+
+  }
+
+  .w-8 {
+    width: 2.5rem;
+  }
+
+  a.inline-flex.items-center.justify-center.p-4.border-b-2.border-transparent.rounded-t-lg.hover\:text-gray-600.hover\:border-gray-300.dark\:hover\:text-gray-300.group {
+    font-weight: 900;
+    font-size: 9px;
+    flex-direction: column;
+    /* padding: 19px; */
   }
 }

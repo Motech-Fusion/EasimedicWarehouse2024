@@ -3,6 +3,7 @@ import { AngularFireMessaging } from '@angular/fire/compat/messaging';
 import { FormControl } from '@angular/forms';
 import { NavigationExtras, Route, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import * as moment from 'moment';
 import { BehaviorSubject, Observable, catchError, filter, map, switchMap, tap } from 'rxjs';
 import { CustomFile } from 'src/app/authentication/choose-image/choose-image.component';
 import { IHashTags } from 'src/app/shared/Interfaces/IHashTags';
@@ -15,6 +16,7 @@ import {
   IAppointment,
   IMedicalProduct,
   ITowTrucks,
+  ITruckAppointment,
   UserStories,
 } from 'src/app/shared/Services/fire-store-collections-service.service';
 import { UserState } from 'src/app/shared/State/user.reducer';
@@ -54,6 +56,7 @@ export class DashboardComponent implements OnInit {
   NewsArticles: any[] = [];
   OriginalNewsArticles: any[] = [];
   showRecommendations: boolean = false;
+  showBookTowTruckModal: boolean = false;
   hide: boolean = false;
   InterestedIn: any;
   availability: any;
@@ -109,7 +112,12 @@ export class DashboardComponent implements OnInit {
   selectedImages: any[] = [];
   security!: IDoctorsInterface[];
   emergency!: IDoctorsInterface[];
-  
+  showAppointmentNotification: boolean = false;
+  towTrucksAppointments: ITruckAppointment[] = [];
+  towTruckbooking!: ITowTrucks;
+  showExpandable1: boolean = false;
+  showExpandable2: boolean = false;
+
   constructor(
     private fireStoreCollectionsService: FireStoreCollectionsServiceService,
     private router: Router,
@@ -165,7 +173,8 @@ export class DashboardComponent implements OnInit {
 
     this.store.select(selectDocId).subscribe((id) => {
       this.currentUserId = id;
-      this.fetchAppointments()
+      this.fetchAppointments();
+      this.getTruckAppointments();
       this.requestPermissionAndToken();
       console.log("Current user id:", this.currentUserId);
     });
@@ -174,10 +183,12 @@ export class DashboardComponent implements OnInit {
     //   // console.log('users here', users);
     //   return (users.filter(x=> x.docId == this.currentUserId));
     // });
-    this.fireStoreCollectionsService.getAllTrendingHashtags().subscribe((hashtags) => {
-      console.warn("hastags right heereee", hashtags);
-      this.hashtags = hashtags;
-    });
+    this.fireStoreCollectionsService
+      .getAllTrendingHashtags()
+      .subscribe((hashtags) => {
+        console.warn("hastags right heereee", hashtags);
+        this.hashtags = hashtags;
+      });
 
     this.getAllPosts();
 
@@ -228,15 +239,49 @@ export class DashboardComponent implements OnInit {
   }
 
   fetchAppointments() {
-    this.fireStoreCollectionsService.getAllAppointments().subscribe(appointments=>{
-      let filteredAppointment = [];
-      if(this.currentUser?.easiMedicFor == 'Service Provider'){
-        filteredAppointment = appointments.filter(app => app.doctor == this.currentUserId);
-      }else{
-        filteredAppointment = appointments.filter(app => app.patient == this.currentUserId);
-      }
-      this.userAppointments = filteredAppointment;
-    })
+    this.fireStoreCollectionsService
+      .getAllAppointments()
+      .subscribe((appointments) => {
+        let filteredAppointment = [];
+        if (this.currentUser?.easiMedicFor == "Service Provider") {
+          filteredAppointment = appointments.filter(
+            (app) => app.doctor == this.currentUserId
+          );
+        } else {
+          filteredAppointment = appointments.filter(
+            (app) => app.patient == this.currentUserId
+          );
+        }
+        this.userAppointments = filteredAppointment;
+      });
+  }
+  getTruckAppointments() {
+    this.fireStoreCollectionsService
+      .getAllTruckAppointments()
+      .subscribe((appointments) => {
+        let filteredAppointment = [];
+        if (
+          this.currentUser?.easiMedicFor == "Service Provider" &&
+          this.currentUser?.providerType !== "TowTrucks"
+        ) {
+          filteredAppointment = appointments.filter(
+            (app) => app.customerId == this.currentUserId
+          );
+        } else if (
+          this.currentUser?.easiMedicFor == "Service Provider" &&
+          this.currentUser?.providerType == "TowTrucks"
+        ) {
+          filteredAppointment = appointments.filter(
+            (app) => app.TruckerId == this.currentUserId
+          );
+        } else {
+          filteredAppointment = appointments.filter(
+            (app) => app.customerId == this.currentUserId
+          );
+        }
+        this.towTrucksAppointments = filteredAppointment;
+        console.log(filteredAppointment, "id user here " + this.currentUserId);
+      });
   }
 
   fetcUsersMessageUserList(users: IDoctorsInterface[]) {
@@ -495,8 +540,8 @@ export class DashboardComponent implements OnInit {
     this.router.navigate(["/", "browse-friends"]);
   }
 
-  browseMyMedicalProducts(provider:boolean) {
-    this.router.navigate(["/", "browse-friends"],{
+  browseMyMedicalProducts(provider: boolean) {
+    this.router.navigate(["/", "browse-friends"], {
       queryParams: {
         showProviderMeds: provider,
       },
@@ -533,6 +578,13 @@ export class DashboardComponent implements OnInit {
       this.showRecommendations = false;
       this.hide = false;
     }
+  }
+
+  toggleVisibilityExpandable1() {
+      this.showExpandable1 = !this.showExpandable1;
+  }
+  toggleVisibilityExpandable2() {
+      this.showExpandable2 = !this.showExpandable2;
   }
 
   toggleAdsVisibility(visibility: string) {
@@ -758,27 +810,26 @@ export class DashboardComponent implements OnInit {
   AddMedicalProduct() {
     //here we will open a popup directly
     this.showProductModal = true;
-    this.fetchMedicalProductDetails()
+    this.fetchMedicalProductDetails();
   }
 
   fetchMedicalProductDetails() {
-  this.MedicalProductNameFormControl.valueChanges.subscribe(x=>{
-    this.medicalProductName = x
-  })
-  this.MedicalProductPriceFormControl.valueChanges.subscribe(x=>{
-    this.medicalProductPrice = x
-  })
-  this.MedicalProductDescriptionFormControl.valueChanges.subscribe(x=>{
-    this.medicalProductDescription = x
-  })
-
+    this.MedicalProductNameFormControl.valueChanges.subscribe((x) => {
+      this.medicalProductName = x;
+    });
+    this.MedicalProductPriceFormControl.valueChanges.subscribe((x) => {
+      this.medicalProductPrice = x;
+    });
+    this.MedicalProductDescriptionFormControl.valueChanges.subscribe((x) => {
+      this.medicalProductDescription = x;
+    });
   }
 
   hideModal() {
     this.showProductModal = false;
   }
 
-  uploadMedicalProduct(){
+  uploadMedicalProduct() {
     const medicalProductDetails: IMedicalProduct = {
       name: this.medicalProductName,
       category: "this.medicalProductCategory",
@@ -786,7 +837,9 @@ export class DashboardComponent implements OnInit {
       doctor: this.currentUser?.docId as string,
       image: this.selectedImageString,
       price: this.medicalProductPrice,
-      doctorName:this.currentUser?.name ? this.currentUser?.name : this.currentUser?.fullname
+      doctorName: this.currentUser?.name
+        ? this.currentUser?.name
+        : this.currentUser?.fullname,
     };
     this.fireStoreCollectionsService
       .uploadMedicalProduct(medicalProductDetails)
@@ -839,4 +892,45 @@ export class DashboardComponent implements OnInit {
       this.selectedImages = fileArray;
     }
   }
+
+  showTruckAppointMessage() {
+    this.alertService.success("Appointment has successfully been booked ");
+  }
+
+  callUser(phone: string) {
+    window.open("tel:" + phone);
+  }
+
+  bookTruckAppointmentShow(item: ITowTrucks) {
+    this.showBookTowTruckModal = true;
+    this.towTruckbooking = item;
+}
+
+  confirmBookTruckAppointmentShow() {
+    console.log("let us see"+this.towTruckbooking.docId)  
+      this.showAppointmentNotification = false;
+      const appointment = <ITruckAppointment>{
+        Truckerimage: this.towTruckbooking.image,
+        customerImage:this.currentUser?.image,
+        customerName:this.currentUser?.fullname ? this.currentUser?.fullname : this.currentUser?.name,
+        customerPhone:this.currentUser?.phone,
+        TruckName:this.towTruckbooking.name + ' ' + this.towTruckbooking.surname,
+        TruckPhone:this.towTruckbooking.phone ? this.towTruckbooking.phone : this.towTruckbooking.cellnumber,
+        TruckerId:this.towTruckbooking.docId,
+        customerId:this.currentUser?.docId,
+        status:"Pending",
+        created:moment().format('DD-MM-YYYY HH:mm:ss')
+        }
+     this.fireStoreCollectionsService.uploadTruckAppointment(appointment).subscribe(x=>{
+       setTimeout(() => {
+         this.showAppointmentNotification = false;
+         this.showBookTowTruckModal = false;
+         this.alertService.success("Your TowTruck Appointment has successfully been booked ");
+      }, 2000);
+     })
+}
+
+dismiss(){
+  this.showBookTowTruckModal = false;
+}
 }

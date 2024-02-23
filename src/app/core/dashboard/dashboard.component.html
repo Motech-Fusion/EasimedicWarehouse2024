@@ -1,4 +1,8 @@
 <div class="main-container">
+    <div *ngIf="showAppointmentNotification">
+        <app-notification-show [successNotification]="true" [errorNotification]="false"
+          [message]="'Appointment successfully booked.'"></app-notification-show>
+      </div>
     <app-app-header [notificationCount]="userAppointments.length" [currentUserId]="currentUserId"
         [image]="currentUser!.image"></app-app-header>
     <ng-container>
@@ -91,8 +95,8 @@
     <div style="height:120px;width:100%;margin-top:10px" class="search-container-center">
         <!-- put phone image here -->
         <img src="../../../assets/EasiMedicPhone.png" width="100" style="height: 100%;
-    width: 100%;
-    object-fit: cover;" />
+        width: 100%;
+        object-fit: cover;" />
     </div>
     <div class="play-buttons">
         <div>
@@ -111,253 +115,66 @@
                 <span class="market-button-title">Google Play</span>
             </a>
         </div>
-
     </div>
     <!-- <app-post-item></app-post-item>
     <app-recommendations></app-recommendations> -->
     <!-- <app-modal></app-modal> -->
     <div class="search-container-center container-with-nice-border" style="margin-top:40px">
-        <div class="get-started">
-            <h1 *ngIf="!hideAds"
-                class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
-                style="color:#333d43">
-                Welcome to <span class="text-blue-600 dark:text-blue-500">Easi</span> Medic</h1>
-            <p *ngIf="!hideAds"
-                class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">Browse medical
-                professionals
-                and posts below to
-                get started
-            </p>
-            <h1 *ngIf="hideAds"
-                class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
-                style="color:#333d43">
-                Weather and <span class="text-blue-600 dark:text-blue-500">News</span> </h1>
-            <p *ngIf="hideAds" class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">
-                EasiMedicWarehouse is the best place to find all medical related news and weather forecasts at the tip
-                of your fingers.
-                <!-- <span
-                    class="text-blue-600 dark:text-blue-500" style="text-decoration: underline;"
-                    (click)="navigateToPromoteItem()">click here</span> -->
-            </p>
-
-            <div style="display: flex;flex-direction: row;">
-                <h5 class="text-xl font-bold dark:text-white" style="padding-bottom:12px;color:#333d43">News and
-                    Weather forecast
-                </h5>
-                <svg *ngIf="hideAds" (click)="toggleAdsVisibility('hide')"
-                    style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
-                    class="h-8 w-8 text-white" fill="none" viewBox="0 0 24 24" stroke="black">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
-                </svg>
-
-                <svg *ngIf="!hideAds" (click)="toggleAdsVisibility('show')"
-                    style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
-                    class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" stroke="#1da1f2" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                    <circle cx="12" cy="12" r="3" />
-                </svg>
-            </div>
-            <app-promoted-tabs [ads]="news" [tabsHeader]="adsHeaders" *ngIf="showAds"></app-promoted-tabs>
-            <!-- new menu -->
-            <ng-container>
-
-
-                <!-- Breadcrumb -->
-                <nav class="flex px-5 py-3 text-gray-700 border border-gray-200 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700 menu-nav"
-                    aria-label="Breadcrumb">
-                    <ol class="inline-flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse">
-                        <li *ngIf="currentUser?.providerType =='Doctors'" class="inline-flex items-center" style="cursor: pointer;">
-                            <a (click)="browseMyMedicalProducts(true)"
-                                class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-blue-600 dark:text-gray-400 dark:hover:text-white nav-text">
-                                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1"
-                                    viewBox="0 0 292.917 292.917" xml:space="preserve">
-                                    <g>
-                                        <g>
-                                            <g>
-                                                <g id="XMLID_25_">
-                                                    <g>
-                                                        <path style="fill:#2D213F;"
-                                                            d="M246.883,137.987v146.54c0,4.651-3.805,8.39-8.455,8.39H54.456c-4.651,0-8.423-3.74-8.423-8.39       v-146.54c0-22.667,13.399-43.741,34.602-55.091v-12.39H71.79c-4.683,0-8.455-3.772-8.455-8.39V8.39       c0-4.618,3.772-8.39,8.455-8.39h147.158c4.683,0,8.455,3.772,8.455,8.39v53.725c0,4.618-3.772,8.39-8.455,8.39h-6.699v12.391       C233.452,94.246,246.883,115.32,246.883,137.987z M229.973,276.136v-27.74H62.912v27.74H229.973z M229.973,231.615v-93.628       c0-2.016-0.163-4.033-0.423-5.984H63.368c-0.293,1.951-0.455,3.968-0.455,5.984v93.628L229.973,231.615L229.973,231.615z        M69.514,115.222h153.857c-5.106-8.228-13.008-15.025-22.96-19.415c-3.09-1.333-5.073-4.325-5.073-7.675V70.506H97.547v17.626       c0,3.35-1.984,6.342-5.041,7.675C82.522,100.165,74.652,106.994,69.514,115.222z M210.493,53.725V16.781h-17.074v36.944       H210.493z M176.508,53.725V16.781h-19.513v36.944H176.508z M140.085,53.725V16.781h-21.659v36.944H140.085z M101.547,53.725       V16.781H80.246v36.944H101.547z" />
-                                                        <rect x="62.912" y="248.396" style="fill:#EAEEEF;"
-                                                            width="167.061" height="27.74" />
-                                                        <path style="fill:#F47C6D;"
-                                                            d="M229.973,137.987v93.628H62.912v-93.628c0-2.016,0.163-4.033,0.455-5.984h166.183       C229.811,133.954,229.973,135.97,229.973,137.987z M180.997,192.557v-28.326h-21.366v-21.236H131.11v21.236H109.71v28.326       h21.399v21.236h28.521v-21.236H180.997z" />
-                                                        <path style="fill:#EAEEEF;"
-                                                            d="M223.372,115.222H69.514c5.138-8.228,13.008-15.057,22.992-19.415       c3.057-1.333,5.041-4.325,5.041-7.675V70.506h97.791v17.626c0,3.35,1.984,6.342,5.073,7.675       C210.363,100.197,218.266,106.994,223.372,115.222z" />
-                                                        <path style="fill:#EF685E;"
-                                                            d="M84.529,210.525v-37.064c0-14.618,3.704-28.849,10.569-41.458H63.368       c-0.293,1.951-0.455,3.968-0.455,5.984v93.628h26.401C86.239,225.202,84.529,218.041,84.529,210.525z" />
-                                                        <rect x="193.42" y="16.781" style="fill:#F47C6D;" width="17.074"
-                                                            height="36.944" />
-                                                        <polygon style="fill:#2D213F;"
-                                                            points="180.997,164.231 180.997,192.557 159.63,192.557 159.63,213.793 131.109,213.793        131.109,192.557 109.71,192.557 109.71,164.231 131.109,164.231 131.109,142.995 159.63,142.995 159.63,164.231      " />
-                                                        <rect x="156.995" y="16.781" style="fill:#F47C6D;"
-                                                            width="19.513" height="36.944" />
-                                                        <rect x="118.425" y="16.781" style="fill:#F47C6D;"
-                                                            width="21.659" height="36.944" />
-                                                        <rect x="80.246" y="16.781" style="fill:#F47C6D;" width="21.301"
-                                                            height="36.944" />
-                                                    </g>
-                                                </g>
-                                            </g>
-                                            <path style="fill:#C5CBCF;"
-                                                d="M229.973,274.754c-29.695-4.787-72.366-11.23-103.82-15.919    c-8.953-1.333-17.028-5.047-23.636-10.436H62.912v27.74h167.061v-1.385H229.973z" />
-                                            <path style="fill:#C5CBCF;"
-                                                d="M188.355,70.506h-68.902H99.849h-2.302v17.626c0,3.369-2.042,6.361-5.125,7.711    c-9.945,4.358-17.783,11.174-22.908,19.379h37.487c0.946-1.044,1.922-2.072,2.924-3.073l0.53-0.53    c5.763-5.763,9.002-13.581,9.002-21.731v-5.057c0-3.903,2.94-7.177,6.82-7.6L188.355,70.506z" />
-                                        </g>
-                                    </g>
-                                </svg>
-                                My products
-                            </a>
-                        </li>
-                        <li class="inline-flex items-center" style="cursor: pointer;">
-                            <div class="flex items-center">
-                                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg"
-                                    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1"
-                                    viewBox="0 0 292.917 292.917" xml:space="preserve">
-                                    <g>
-                                        <g>
-                                            <g>
-                                                <g id="XMLID_25_">
-                                                    <g>
-                                                        <path style="fill:#2D213F;"
-                                                            d="M246.883,137.987v146.54c0,4.651-3.805,8.39-8.455,8.39H54.456c-4.651,0-8.423-3.74-8.423-8.39       v-146.54c0-22.667,13.399-43.741,34.602-55.091v-12.39H71.79c-4.683,0-8.455-3.772-8.455-8.39V8.39       c0-4.618,3.772-8.39,8.455-8.39h147.158c4.683,0,8.455,3.772,8.455,8.39v53.725c0,4.618-3.772,8.39-8.455,8.39h-6.699v12.391       C233.452,94.246,246.883,115.32,246.883,137.987z M229.973,276.136v-27.74H62.912v27.74H229.973z M229.973,231.615v-93.628       c0-2.016-0.163-4.033-0.423-5.984H63.368c-0.293,1.951-0.455,3.968-0.455,5.984v93.628L229.973,231.615L229.973,231.615z        M69.514,115.222h153.857c-5.106-8.228-13.008-15.025-22.96-19.415c-3.09-1.333-5.073-4.325-5.073-7.675V70.506H97.547v17.626       c0,3.35-1.984,6.342-5.041,7.675C82.522,100.165,74.652,106.994,69.514,115.222z M210.493,53.725V16.781h-17.074v36.944       H210.493z M176.508,53.725V16.781h-19.513v36.944H176.508z M140.085,53.725V16.781h-21.659v36.944H140.085z M101.547,53.725       V16.781H80.246v36.944H101.547z" />
-                                                        <rect x="62.912" y="248.396" style="fill:#EAEEEF;"
-                                                            width="167.061" height="27.74" />
-                                                        <path style="fill:#F47C6D;"
-                                                            d="M229.973,137.987v93.628H62.912v-93.628c0-2.016,0.163-4.033,0.455-5.984h166.183       C229.811,133.954,229.973,135.97,229.973,137.987z M180.997,192.557v-28.326h-21.366v-21.236H131.11v21.236H109.71v28.326       h21.399v21.236h28.521v-21.236H180.997z" />
-                                                        <path style="fill:#EAEEEF;"
-                                                            d="M223.372,115.222H69.514c5.138-8.228,13.008-15.057,22.992-19.415       c3.057-1.333,5.041-4.325,5.041-7.675V70.506h97.791v17.626c0,3.35,1.984,6.342,5.073,7.675       C210.363,100.197,218.266,106.994,223.372,115.222z" />
-                                                        <path style="fill:#EF685E;"
-                                                            d="M84.529,210.525v-37.064c0-14.618,3.704-28.849,10.569-41.458H63.368       c-0.293,1.951-0.455,3.968-0.455,5.984v93.628h26.401C86.239,225.202,84.529,218.041,84.529,210.525z" />
-                                                        <rect x="193.42" y="16.781" style="fill:#F47C6D;" width="17.074"
-                                                            height="36.944" />
-                                                        <polygon style="fill:#2D213F;"
-                                                            points="180.997,164.231 180.997,192.557 159.63,192.557 159.63,213.793 131.109,213.793        131.109,192.557 109.71,192.557 109.71,164.231 131.109,164.231 131.109,142.995 159.63,142.995 159.63,164.231      " />
-                                                        <rect x="156.995" y="16.781" style="fill:#F47C6D;"
-                                                            width="19.513" height="36.944" />
-                                                        <rect x="118.425" y="16.781" style="fill:#F47C6D;"
-                                                            width="21.659" height="36.944" />
-                                                        <rect x="80.246" y="16.781" style="fill:#F47C6D;" width="21.301"
-                                                            height="36.944" />
-                                                    </g>
-                                                </g>
-                                            </g>
-                                            <path style="fill:#C5CBCF;"
-                                                d="M229.973,274.754c-29.695-4.787-72.366-11.23-103.82-15.919    c-8.953-1.333-17.028-5.047-23.636-10.436H62.912v27.74h167.061v-1.385H229.973z" />
-                                            <path style="fill:#C5CBCF;"
-                                                d="M188.355,70.506h-68.902H99.849h-2.302v17.626c0,3.369-2.042,6.361-5.125,7.711    c-9.945,4.358-17.783,11.174-22.908,19.379h37.487c0.946-1.044,1.922-2.072,2.924-3.073l0.53-0.53    c5.763-5.763,9.002-13.581,9.002-21.731v-5.057c0-3.903,2.94-7.177,6.82-7.6L188.355,70.506z" />
-                                        </g>
-                                    </g>
-                                </svg>
-                                <a (click)="browseFriends()"
-                                    class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white nav-text">Medical
-                                    products</a>
-                            </div>
-                        </li>
-                        <li aria-current="page" class="inline-flex items-center">
-                            <div class="flex items-center">
-                                <svg class="w-3 h-3 mx-1 text-gray-400" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M21 7L13 15L9 11L3 17M21 7H15M21 7V13" stroke="#001A72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
-                                <span (click)="navigateTotrending()"
-                                class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white nav-text">Trending
-                                    posts <span
-                                        class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-white-800 bg-red-200 rounded-full melachat-text-color"
-                                        style="background-color: white;">{{hashtags?.length}}</span></span>
-                            </div>
-                        </li>
-                        <li aria-current="page" class="inline-flex items-center">
-                            <div class="flex items-center">
-                                <svg class="w-3 h-3 mx-1 text-gray-400" fill="#000000" viewBox="0 0 24.00 24.00" xmlns="http://www.w3.org/2000/svg" stroke="#000000" stroke-width="0.00024000000000000003"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.048"></g><g id="SVGRepo_iconCarrier"><path d="M4 21h9.62a3.995 3.995 0 0 0 3.037-1.397l5.102-5.952a1 1 0 0 0-.442-1.6l-1.968-.656a3.043 3.043 0 0 0-2.823.503l-3.185 2.547-.617-1.235A3.98 3.98 0 0 0 9.146 11H4c-1.103 0-2 .897-2 2v6c0 1.103.897 2 2 2zm0-8h5.146c.763 0 1.448.423 1.789 1.105l.447.895H7v2h6.014a.996.996 0 0 0 .442-.11l.003-.001.004-.002h.003l.002-.001h.004l.001-.001c.011.003.003-.001.003-.001.012 0 .002-.001.002-.001h.001l.002-.001.003-.001.002-.001.002-.001.003-.001.002-.001.002-.001.003-.002.002-.001.002-.001.003-.001.002-.001h.001l.002-.001h.001l.002-.001.002-.001c.011-.001.003-.001.003-.001l.002-.001a.915.915 0 0 0 .11-.078l4.146-3.317c.261-.208.623-.273.94-.167l.557.186-4.133 4.823a2.029 2.029 0 0 1-1.52.688H4v-6zm9.761-10.674C13.3 2.832 11 5.457 11 7.5c0 1.93 1.57 3.5 3.5 3.5S18 9.43 18 7.5c0-2.043-2.3-4.668-2.761-5.174-.379-.416-1.099-.416-1.478 0zM16 7.5c0 .827-.673 1.5-1.5 1.5S13 8.327 13 7.5c0-.708.738-1.934 1.5-2.934.762 1 1.5 2.226 1.5 2.934z"></path></g></svg>
-                                <span (click)="navigateToFriendRequests()"
-                                class="ms-1 text-sm font-medium text-gray-700 hover:text-blue-600 md:ms-2 dark:text-gray-400 dark:hover:text-white nav-text">Blood
-                                    donations <span
-                                        class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-white-800 bg-red-200 rounded-full melachat-text-color"
-                                        style="background-color: white;">
-                                        {{currentUserFriendRequests.length}}
-                                    </span></span>
-                            </div>
-                        </li>
-                    </ol>
-                </nav>
-
-            </ng-container>
-            <!-- new menu -->
-
-        </div>
-        <div class="get-started">
-            <div style="display: flex;flex-direction: row;">
-                <h5 class="text-xl font-bold dark:text-white" style="padding-bottom:12px;color:black">Nearby Doctors and
-                    Sangomas
-                </h5>
-                <svg *ngIf="hide" (click)="toggleVisibility('hide')"
-                    style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
-                    class="h-8 w-8 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="black">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                        d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21" />
-                </svg>
-
-                <svg *ngIf="!hide" (click)="toggleVisibility('show')"
-                    style="margin-left:12px;cursor:pointer;height:24px;width:24px;margin-top:4px"
-                    class="h-8 w-8 text-white" viewBox="0 0 24 24" fill="none" stroke="#1da1f2" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                    <circle cx="12" cy="12" r="3" />
-                </svg>
-            </div>
-
-            <div class="recommendations-row" *ngIf="doctors && showRecommendations">
-                <ng-container *ngFor="let item of doctors">
-                    <app-new-friend-card (viewUserEmitter)="userProfileNavigation($event)"
-                        (MessageUserEmitter)="MessageUser($event)"
-                        (moreDetailsEmitter)="MoreUserDetails($event);addNewFriendRequest($event.docId,$event.phone)"
-                        class="app-new-friend-card" [users]="item"
-                        (moreDetailsEmitter)="openModal($event)">{{item.name}}</app-new-friend-card>
-                </ng-container>
-            </div>
-            <div class="get-started" *ngIf="!recommedations">
-                <div class="recommendations-row" *ngIf="!recommedations">
-                    <div role="status" class="space-y-2.5 animate-pulse max-w-lg" style="width:100%">
-                        <div class="flex items-center w-full">
-                            <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
-                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
-                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
-                        </div>
-                        <div class="flex items-center w-full max-w-[480px]">
-                            <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
-                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
-                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
-                        </div>
-                        <div class="flex items-center w-full max-w-[400px]">
-                            <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
-                            <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
-                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
-                        </div>
-                        <div class="flex items-center w-full max-w-[480px]">
-                            <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
-                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
-                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
-                        </div>
-                        <div class="flex items-center w-full max-w-[440px]">
-                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-32"></div>
-                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
-                            <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
-                        </div>
-                        <div class="flex items-center w-full max-w-[360px]">
-                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
-                            <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
-                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
-                        </div>
-                        <span class="sr-only">Loading...</span>
+             <!-- expandable -->
+             <div id="accordion-collapse" data-accordion="collapse" class="get-started">
+                <h2 id="accordion-collapse-heading-1">
+                    <button type="button"
+                        class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
+                        data-accordion-target="#accordion-collapse-body-1" aria-expanded="false"
+                        aria-controls="accordion-collapse-body-1">
+                        <h1 class="text-xl font-bold dark:text-white" style="padding-bottom:12px;color:black">News and Weather forecast</h1>
+                        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5 5 1 1 5" />
+                        </svg>
+                    </button>
+                </h2>
+                <div id="accordion-collapse-body-1" class="hidden" aria-labelledby="accordion-collapse-heading-1">
+                    <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
+                        <app-promoted-tabs [ads]="news" [tabsHeader]="adsHeaders"></app-promoted-tabs>
                     </div>
-
                 </div>
             </div>
-        </div>
+            <!-- expandable -->
+             <!-- expandable 2 -->
+             <div id="accordion-collapse2" data-accordion="collapse" class="get-started second-expandable">
+                <h2 id="accordion-collapse-heading-2">
+                    <button type="button"
+                        class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-b-0 border-gray-200 rounded-t-xl focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3"
+                        data-accordion-target="#accordion-collapse-body-2" aria-expanded="false"
+                        aria-controls="accordion-collapse-body-2">
+                        <h1 class="text-xl font-bold dark:text-white" style="padding-bottom:12px;color:black">Nearby Doctors & Sangomas</h1>
+                        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true"
+                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5 5 1 1 5" />
+                        </svg>
+                    </button>
+                </h2>
+                <div id="accordion-collapse-body-2" class="hidden" aria-labelledby="accordion-collapse-heading-2">
+                    <div>
+                        <div class="recommendations-row" *ngIf="doctors">
+                            <ng-container *ngFor="let item of doctors">
+                                <app-new-friend-card (viewUserEmitter)="userProfileNavigation($event)"
+                                    (MessageUserEmitter)="MessageUser($event)"
+                                    (moreDetailsEmitter)="MoreUserDetails($event);addNewFriendRequest($event.docId,$event.phone)"
+                                    class="app-new-friend-card" [users]="item"
+                                    (moreDetailsEmitter)="openModal($event)">{{item.name}}</app-new-friend-card>
+                            </ng-container>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- expandable 2 -->
         <app-search [placeholder]="searchPlaceholder" (searchEmitter)="search($event)"></app-search>
     </div>
-    <div class="container-center justify-center items-center">
+    <div class="container-center justify-center items-center tabs-container">
         <div>
             <app-tabs [showAppointment]="currentUser?.easiMedicFor == 'Service Provider' ? true:false"
                 [backgroundColor]="currentUser?.easiMedicFor == 'Service Provider' ? '#333d43':'#f9f9f9'"
@@ -519,7 +336,7 @@
             <!-- <ng-container *ngIf="towTrucks.length"> -->
             <!-- <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid doctor-user"> -->
             <ng-container>
-                <app-tow-truck-user-item [TruckList]="towTrucks"></app-tow-truck-user-item>
+                <app-tow-truck-user-item (bookTruckAppointmentEmitter)="bookTruckAppointmentShow($event)" (showTruckAppointmentNotification)="showTruckAppointMessage()" [TruckList]="towTrucks"></app-tow-truck-user-item>
             </ng-container>
             <!-- </div> -->
 
@@ -583,10 +400,46 @@
                 </ng-container>
                 <ng-container *ngIf="currentUser?.easiMedicFor == 'Service Provider'">
                     <!-- appointment list below -->
-                    <div class="appointment-container">
-                        <app-appointment-list [currentUser]="currentUser" [appointments]="userAppointments">
+                    <div class="appointment-container" *ngIf="towTrucksAppointments.length">
+                        <app-appointment-list [towTrucksAppointments]="towTrucksAppointments" [currentUser]="currentUser" [appointments]="userAppointments">
 
                         </app-appointment-list>
+                    </div>
+                    <div class="get-started" *ngIf="!towTrucksAppointments.length">
+                        <div role="status" class="space-y-2.5 animate-pulse max-w-lg" style="width:100%">
+                            <div class="flex items-center w-full">
+                                <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
+                                <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                                <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                            </div>
+                            <div class="flex items-center w-full max-w-[480px]">
+                                <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                                <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                                <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                            </div>
+                            <div class="flex items-center w-full max-w-[400px]">
+                                <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                                <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                                <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                            </div>
+                            <div class="flex items-center w-full max-w-[480px]">
+                                <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                                <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                                <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                            </div>
+                            <div class="flex items-center w-full max-w-[440px]">
+                                <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-32"></div>
+                                <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                                <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                            </div>
+                            <div class="flex items-center w-full max-w-[360px]">
+                                <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                                <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                                <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                            </div>
+                            <span class="sr-only">Loading...</span>
+                        </div>
+            
                     </div>
                     <!-- appointment list below -->
                 </ng-container>
@@ -597,13 +450,89 @@
                 <ng-container *ngIf="security.length">
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid doctor-user">
                         <ng-container *ngFor="let secu of security">
-                            <app-doctor-user-item [senderUserId]="currentUserId" (chatEmitter)="navigateToChat($event)"
-                                [doctorsList]="doctors" [userItem]="secu"></app-doctor-user-item>
+                            <!-- <app-doctor-user-item [senderUserId]="currentUserId" (chatEmitter)="navigateToChat($event)"
+                                [doctorsList]="doctors" [userItem]="secu"></app-doctor-user-item> -->
+                                <ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
+                                    <li class="pb-3 sm:pb-4">
+                                        <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                                            <div class="flex-shrink-0">
+                                                <img class="w-8 h-8 rounded-full" src="{{secu.image}}" alt="Neil image">
+                                            </div>
+                                            <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                <button (click)="navigateToChat(secu)" type="button" class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 me-2 mb-2">
+                                                    <svg class="w-4 h-4 me-2 -ms-1 text-[#626890]" viewBox="-1.68 -1.68 27.36 27.36" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 12.5C17.2761 12.5 17.5 12.2761 17.5 12C17.5 11.7239 17.2761 11.5 17 11.5C16.7239 11.5 16.5 11.7239 16.5 12C16.5 12.2761 16.7239 12.5 17 12.5Z" fill="#939393" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12 12.5C12.2761 12.5 12.5 12.2761 12.5 12C12.5 11.7239 12.2761 11.5 12 11.5C11.7239 11.5 11.5 11.7239 11.5 12C11.5 12.2761 11.7239 12.5 12 12.5Z" fill="#939393" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7 12.5C7.27614 12.5 7.5 12.2761 7.5 12C7.5 11.7239 7.27614 11.5 7 11.5C6.72386 11.5 6.5 11.7239 6.5 12C6.5 12.2761 6.72386 12.5 7 12.5Z" fill="#939393" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.8214 2.48697 15.5291 3.33782 17L2.5 21.5L7 20.6622C8.47087 21.513 10.1786 22 12 22Z" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>       
+                                                     Send Message
+                                                    </button>
+                                                    <button (click)="callUser(secu.stationNumber)" type="button" class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 me-2 mb-2 call-button">
+                                                        <svg class="w-4 h-4 me-2 -ms-1 text-[#626890]" viewBox="-6.72 -6.72 37.44 37.44" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 3C16.5315 3.17014 17.9097 3.91107 19 5C20.0903 6.08893 20.8279 7.46869 21 9M14.5 6.5C15.2372 6.64382 15.9689 6.96892 16.5 7.5C17.0311 8.03108 17.3562 8.76284 17.5 9.5M8.20049 15.799C1.3025 8.90022 2.28338 5.74115 3.01055 4.72316C3.10396 4.55862 5.40647 1.11188 7.87459 3.13407C14.0008 8.17945 6.5 8 11.3894 12.6113C16.2788 17.2226 15.8214 9.99995 20.8659 16.1249C22.8882 18.594 19.4413 20.8964 19.2778 20.9888C18.2598 21.717 15.0995 22.6978 8.20049 15.799Z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                        Call
+                                                        </button>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h1 class="title-head-item">Security details</h1>
+                                            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                               {{secu.name}}
+                                            </p>
+                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                Joined on : {{secu?.created}}
+                                            </p>
+                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                Location : {{secu.location?.city}}
+                                            </p>
+                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                Province : {{secu.location?.province}}
+                                            </p>
+                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                Details : {{secu?.bio ? secu?.bio : secu?.description}}
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
                             <!-- Card -->
 
                         </ng-container>
                     </div>
                 </ng-container>
+                <div class="get-started" *ngIf="!security.length">
+                    <div role="status" class="space-y-2.5 animate-pulse max-w-lg" style="width:100%">
+                        <div class="flex items-center w-full">
+                            <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        </div>
+                        <div class="flex items-center w-full max-w-[480px]">
+                            <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                        </div>
+                        <div class="flex items-center w-full max-w-[400px]">
+                            <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        </div>
+                        <div class="flex items-center w-full max-w-[480px]">
+                            <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                        </div>
+                        <div class="flex items-center w-full max-w-[440px]">
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-32"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                            <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                        </div>
+                        <div class="flex items-center w-full max-w-[360px]">
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        </div>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+        
+                </div>
             </div>
         </div>
 
@@ -612,13 +541,89 @@
                 <ng-container *ngIf="emergency.length">
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid doctor-user">
                         <ng-container *ngFor="let emerg of emergency">
-                            <app-doctor-user-item [senderUserId]="currentUserId" (chatEmitter)="navigateToChat($event)"
-                                [doctorsList]="doctors" [userItem]="emerg"></app-doctor-user-item>
+                            <!-- <app-doctor-user-item [senderUserId]="currentUserId" (chatEmitter)="navigateToChat($event)"
+                                [doctorsList]="doctors" [userItem]="emerg"></app-doctor-user-item> -->
+                                <ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
+                                    <li class="pb-3 sm:pb-4">
+                                        <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                                            <div class="flex-shrink-0">
+                                                <img class="w-8 h-8 rounded-full" src="{{emerg.image}}" alt="Neil image">
+                                            </div>
+                                            <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                <button (click)="navigateToChat(emerg)" type="button" class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 me-2 mb-2">
+                                                    <svg class="w-4 h-4 me-2 -ms-1 text-[#626890]" viewBox="-1.68 -1.68 27.36 27.36" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 12.5C17.2761 12.5 17.5 12.2761 17.5 12C17.5 11.7239 17.2761 11.5 17 11.5C16.7239 11.5 16.5 11.7239 16.5 12C16.5 12.2761 16.7239 12.5 17 12.5Z" fill="#939393" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12 12.5C12.2761 12.5 12.5 12.2761 12.5 12C12.5 11.7239 12.2761 11.5 12 11.5C11.7239 11.5 11.5 11.7239 11.5 12C11.5 12.2761 11.7239 12.5 12 12.5Z" fill="#939393" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7 12.5C7.27614 12.5 7.5 12.2761 7.5 12C7.5 11.7239 7.27614 11.5 7 11.5C6.72386 11.5 6.5 11.7239 6.5 12C6.5 12.2761 6.72386 12.5 7 12.5Z" fill="#939393" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.8214 2.48697 15.5291 3.33782 17L2.5 21.5L7 20.6622C8.47087 21.513 10.1786 22 12 22Z" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>       
+                                                     Send Message
+                                                    </button>
+                                                    <button (click)="callUser(emerg.phone)" type="button" class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 me-2 mb-2 call-button-emergency">
+                                                        <svg class="w-4 h-4 me-2 -ms-1 text-[#626890]" viewBox="-6.72 -6.72 37.44 37.44" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 3C16.5315 3.17014 17.9097 3.91107 19 5C20.0903 6.08893 20.8279 7.46869 21 9M14.5 6.5C15.2372 6.64382 15.9689 6.96892 16.5 7.5C17.0311 8.03108 17.3562 8.76284 17.5 9.5M8.20049 15.799C1.3025 8.90022 2.28338 5.74115 3.01055 4.72316C3.10396 4.55862 5.40647 1.11188 7.87459 3.13407C14.0008 8.17945 6.5 8 11.3894 12.6113C16.2788 17.2226 15.8214 9.99995 20.8659 16.1249C22.8882 18.594 19.4413 20.8964 19.2778 20.9888C18.2598 21.717 15.0995 22.6978 8.20049 15.799Z" stroke="#9e9e9e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                        Call
+                                                        </button>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h1 class="title-head-item">Emergency details</h1>
+                                            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                               {{emerg.name}}
+                                            </p>
+                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                Joined on : {{emerg?.created}}
+                                            </p>
+                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                Location : {{emerg.location?.city}}
+                                            </p>
+                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                Province : {{emerg.location?.province}}
+                                            </p>
+                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400">
+                                                Details : {{emerg?.bio ? emerg?.bio : emerg?.description}}
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
                             <!-- Card -->
 
                         </ng-container>
                     </div>
                 </ng-container>
+                <div class="get-started" *ngIf="!emergency.length">
+                    <div role="status" class="space-y-2.5 animate-pulse max-w-lg" style="width:100%">
+                        <div class="flex items-center w-full">
+                            <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        </div>
+                        <div class="flex items-center w-full max-w-[480px]">
+                            <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                        </div>
+                        <div class="flex items-center w-full max-w-[400px]">
+                            <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        </div>
+                        <div class="flex items-center w-full max-w-[480px]">
+                            <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                        </div>
+                        <div class="flex items-center w-full max-w-[440px]">
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-32"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                            <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                        </div>
+                        <div class="flex items-center w-full max-w-[360px]">
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                            <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                            <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                        </div>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+        
+                </div>
             </div>
         </div>
     </div>
@@ -718,4 +723,53 @@
         </div>
     </div>
     <!-- modal below -->
+
+    <!-- tow truck modal -->
+    <div *ngIf="showBookTowTruckModal" id="tow-truck-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div class="relative p-4 w-full max-w-md max-h-full">
+            <!-- Modal content -->
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <!-- Modal header -->
+                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white" style="color:whitesmoke">
+                        Book tow truck
+                    </h3>
+                    <button (click)="dismiss()" type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="authentication-modal">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                </div>
+                <!-- Modal body -->
+                <div class="p-4 md:p-5">
+                    <form class="space-y-4" action="#">
+                        <div class="relative mb-6">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                <svg  class="w-4 h-4"  viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M12.2848 18.9935C12.1567 19.0875 12.0373 19.1728 11.9282 19.2493C11.8118 19.1721 11.6827 19.0833 11.5427 18.9832C10.8826 18.5109 10.0265 17.8176 9.18338 16.9529C7.45402 15.1792 6 12.9151 6 10.5C6 7.18629 8.68629 4.5 12 4.5C15.3137 4.5 18 7.18629 18 10.5C18 12.8892 16.4819 15.1468 14.6893 16.9393C13.8196 17.8091 12.9444 18.5099 12.2848 18.9935ZM19.5 10.5C19.5 16.5 12 21 12 21C11.625 21 4.5 16.5 4.5 10.5C4.5 6.35786 7.85786 3 12 3C16.1421 3 19.5 6.35786 19.5 10.5ZM13.5 10.5C13.5 11.3284 12.8284 12 12 12C11.1716 12 10.5 11.3284 10.5 10.5C10.5 9.67157 11.1716 9 12 9C12.8284 9 13.5 9.67157 13.5 10.5ZM15 10.5C15 12.1569 13.6569 13.5 12 13.5C10.3431 13.5 9 12.1569 9 10.5C9 8.84315 10.3431 7.5 12 7.5C13.6569 7.5 15 8.84315 15 10.5Z" fill="#080341"></path> </g></svg>
+                            </div>
+                            <input type="text" id="input-group-1"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="From ">
+                        </div>
+                        <div class="relative mb-6">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                                <svg  class="w-4 h-4" viewBox="-0.96 -0.96 25.92 25.92" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path fill-rule="evenodd" clip-rule="evenodd" d="M19.925 1.78443C21.5328 1.18151 23.1029 2.75156 22.5 4.35933L16.0722 21.5C15.3574 23.4061 12.5838 23.1501 12.23 21.1453L10.8664 13.418L3.1391 12.0544C1.13427 11.7006 0.878261 8.92697 2.78443 8.21216L19.925 1.78443ZM20.6273 3.65708L3.48668 10.0848L11.2139 11.4485C12.0417 11.5945 12.6898 12.2426 12.8359 13.0704L14.1996 20.7977L20.6273 3.65708Z" fill="#080341"></path> </g></svg>
+                            </div>
+                            <input type="text" id="input-group-1"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                placeholder="To">
+                        </div>
+                        <div class="text-sm font-medium text-gray-500 dark:text-gray-300">
+                           Total price : <a class="text-blue-700 hover:underline dark:text-blue-500">per km</a>
+                        </div>
+                        <button (click)="confirmBookTruckAppointmentShow()" type="submit"
+                            class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                            Book appointment</button>
+                    </form>
+                </div>
+                </div>
+        </div>
+    </div> 
+    <!-- tow truck modal -->
 </div>

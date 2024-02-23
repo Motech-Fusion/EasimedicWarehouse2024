@@ -50,12 +50,14 @@ export interface IUsersInterface {
     regDate:string,
     latitude: string; // Replace with the appropriate type for latitude
     location: {
+      city:string,
       timestamp: number;
       coords: {
         // Replace with the appropriate types for latitude and longitude
         latitude: string;
         longitude: string;
       };
+      province?:string
     };
     open: string[];
     origin: {
@@ -70,5 +72,7 @@ export interface IUsersInterface {
     type: string;
     experience: string;
     operatingHours?:any
-    
+    stationNumber?:any,
+    feePerKm?:string,
+    description?:string,
   }

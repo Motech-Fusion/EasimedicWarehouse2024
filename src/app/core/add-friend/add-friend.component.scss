@@ -93,3 +93,33 @@ div#crud-modal {
 
     background-color: #424242ab;
 }
+
+@media (min-width: 200px) and (max-width:450px) {
+    .table-head{
+        display: none;
+    }
+        .truck-image{
+            height: 160px;
+            /* width: 85%; */
+            border-radius: 0px;
+            aspect-ratio: 3/2;
+            object-fit: cover;
+            /* mix-blend-mode: color-burn; */
+            width: 100%;
+        }
+        .truck-name {
+            font-size: 22px;
+            font-weight: 800;
+        }
+    
+        tr {
+            display: grid;
+        }
+    
+        .buttons-wrapper {
+            display: flex;
+            flex-direction: row;
+            align-items: flex-start;
+            justify-content: flex-start;
+        }
+    }

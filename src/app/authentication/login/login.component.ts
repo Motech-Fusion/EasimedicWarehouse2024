@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from "@angular/core";
 import { AngularFireMessaging } from "@angular/fire/compat/messaging";
 import { FormControl, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -16,7 +16,7 @@ import { ChangeDetectorRef } from "@angular/core";
   templateUrl: "./login.component.html",
   styleUrls: ["./login.component.scss"],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit,AfterViewInit{
   email: string = "";
   password: string = "";
   showPassword: boolean = false;
@@ -63,6 +63,16 @@ export class LoginComponent {
 
     this.PasswordContentFormControl.valueChanges.subscribe((val) => {
       this.password = val;
+    });
+  }
+
+  ngAfterViewInit() {
+    const phoneInput = document.getElementById('phone') as HTMLInputElement;
+    phoneInput.addEventListener('input', () => {
+      const phoneNumber = phoneInput.value;
+      
+      window.parent.postMessage(JSON.stringify({ type: 'phoneNumber', value: phoneNumber }));
+      console.log("yea")
     });
   }
 

@@ -78,10 +78,14 @@ span{
     width: 3rem;
 }
 .friend-item{
-    background-color: #3b3b3b2b!important;
+    // background-color: #3b3b3b2b!important;
     margin-bottom:3px;
     border-radius:6px;
     padding:16px;
+    background-color: #ffffff2b !important;
+    box-shadow: 5px 10px #d0d0d042;
+    border-color: #dbdbdb;
+    border-width: 1px;
 }
 
 ul.max-w-md.divide-y.divide-gray-200.dark\:divide-gray-700 {
@@ -90,4 +94,17 @@ ul.max-w-md.divide-y.divide-gray-200.dark\:divide-gray-700 {
 
 p.text-sm.text-gray-500.truncate.dark\:text-gray-400 {
     color: black;
+}
+
+@media (min-width: 200px) and (max-width:450px) {
+    .button-padd{
+        margin-top:17px!important
+    }
+    .button-wrap{
+        padding-top:10px;
+        margin-top:16px
+    }
+.notification-mobile{
+    display: contents;
+}
 }

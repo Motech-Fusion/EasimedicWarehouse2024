@@ -55,6 +55,7 @@ export interface ITowTrucks {
       timestamp: number;
     };
   };
+  docId?:string,
   maxFee: number;
   name: string;
   open: string[];
@@ -64,6 +65,34 @@ export interface ITowTrucks {
   type: string;
   phone: string;
   cellnumber: string;
+}
+
+export interface ITruckAppointment {
+  Truckerimage: string;
+  docId?: string;
+  status?: string;
+  dateApproved?: string;
+  TruckerId: string;
+  location: {
+    coords: {
+      accuracy: number;
+      altitude: number;
+      altitudeAccuracy: number;
+      heading: number;
+      latitude: number;
+      longitude: number;
+      speed: number;
+      timestamp: number;
+    };
+  };
+  maxFee: string;
+  created: string;
+  customerName:string;
+  customerImage:string;
+  customerPhone:string;
+  customerId:string;
+  TruckName:string;
+  TruckPhone:string;
 }
 
 export interface IMedicalProduct {
@@ -486,6 +515,27 @@ export class FireStoreCollectionsServiceService {
     });
   }
 
+  getAllTruckAppointments(): Observable<ITruckAppointment[]> {
+    const appointmentCollection = collection(this.firestore, 'TruckAppointment');
+  
+    return new Observable<ITruckAppointment[]>((observer) => {
+      const unsubscribe = onSnapshot(appointmentCollection, (querySnapshot) => {
+        const appointments: ITruckAppointment[] = [];
+        querySnapshot.forEach((doc) => {
+          const appointment = doc.data() as ITruckAppointment;
+          appointment.docId = doc.id; // Add the docId property
+          appointments.push(appointment);
+        });
+        observer.next(appointments);
+      }, (error) => {
+        observer.error(error);
+      });
+  
+      // Return an unsubscribe function to clean up the subscription when it's no longer needed
+      return () => unsubscribe();
+    });
+  }
+
   getAllPromostags(): Observable<IPosts[]> {
     const postsCollection = collection(this.firestore, 'Promoted');
   
@@ -668,6 +718,24 @@ export class FireStoreCollectionsServiceService {
     });
   }
 
+  uploadTruckAppointment(appointmentData: ITruckAppointment): Observable<void> {
+
+    const appointmentCollection = collection(this.firestore, 'TruckAppointment');
+    return new Observable<void>((observer) => {
+      addDoc(appointmentCollection, {
+        ...appointmentData
+      })
+        .then(() => {
+          observer.next();
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+          observer.complete();
+        });
+    });
+  }
+
   uploadMedicalProduct(medicalData: IMedicalProduct): Observable<void> {
     const medicalProductCollection = collection(this.firestore, 'MedicalProducts');
     return new Observable<void>((observer) => {
@@ -736,8 +804,42 @@ export class FireStoreCollectionsServiceService {
     });
   }
 
+  declineTruckAppointment(appointmentId: string): Observable<void> {
+    const postDoc = doc(this.firestore, 'TruckAppointment', appointmentId);
+
+    return new Observable<void>((observer) => {
+      deleteDoc(postDoc)
+        .then(() => {
+          observer.next();
+          observer.complete();
+        })
+        .catch((error) => {
+          observer.error(error);
+          observer.complete();
+        });
+    });
+  }
+
   ApproveAppointment(appointmentId: string): Observable<void> {
     const appointmentDoc = doc(this.firestore, 'DoctorAppointment', appointmentId);
+  
+    return new Observable<void>((observer) => {
+      updateDoc(appointmentDoc, {
+        dateApproved: new Date().toLocaleString('en-GB', { timeZone: 'UTC' }), // Update datePosted to current date
+        status: 'Approved', // Update status to 'declined'
+      })
+      .then(() => {
+        observer.next();
+        observer.complete();
+      })
+      .catch((error) => {
+        observer.error(error);
+        observer.complete();
+      });
+    });
+  }
+  ApproveTruckAppointment(appointmentId: string): Observable<void> {
+    const appointmentDoc = doc(this.firestore, 'TruckAppointment', appointmentId);
   
     return new Observable<void>((observer) => {
       updateDoc(appointmentDoc, {
@@ -1554,7 +1656,7 @@ console.log('friend found',userDoc)
         return querySnapshot.docs.map((doc) => {
           const data = doc.data() as ITowTrucks;
           // Optionally, you can include the docId in the data object
-          // data.docId = doc.id;
+          data.docId = doc.id;
           return data;
         });
       })

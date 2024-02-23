@@ -46,7 +46,55 @@
                         <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
                     </ol>
                 </ng-container>
-                <ng-container *ngIf="!appointments.length">
+                <!-- towtrucks -->
+                <ng-container *ngIf="towTrucksAppointments.length">
+                    <ol class="vads-u-border-top--1px vads-u-margin-bottom--4 check-in--appointment-list appointment-list"
+                        data-testid="appointment-list" *ngFor="let appointment of towTrucksAppointments">
+                        <li class="vads-u-border-bottom--1px check-in--appointment-item" data-testid="appointment-list-item">
+                            <div class="check-in--appointment-summary vads-u-margin-bottom--2 vads-u-margin-top--2">
+                                <!-- <div data-testid="appointment-time"
+                                    class="vads-u-font-size--h2 vads-u-font-family--serif vads-u-font-weight--bold">
+                                    Approved on : {{appointment?.dateApproved | date}} at {{appointment?.dateApproved | date: 'HH:mm:ss'}}
+                                </div> -->
+                                <div data-testid="appointment-type-and-provider" class="vads-u-font-weight--bold">
+                                    {{'TowTruck appointment'}} with
+                                    <h1 style="font-weight: 800;font-size: 32px;">{{appointment?.TruckName}}</h1></div>
+                                    <div data-testid="appointment-time"
+                                        class="vads-u-font-size--h2 vads-u-font-family--serif vads-u-font-weight--bold">
+                                        Booked on {{appointment?.created }} at {{appointment?.created | date: 'HH:mm:ss'}}</div>
+                                    <div data-testid="appointment-time"
+                                    class="vads-u-font-size--h2 vads-u-font-family--serif vads-u-font-weight--bold">Customer :
+                                    {{appointment?.customerName}}</div>
+                                <div data-testid="appointment-type-and-provider" class="vads-u-font-weight--bold">Appointment status
+                                    :
+                                    <span *ngIf="appointment?.status == 'Pending'" style="color:red">{{appointment?.status}}</span>
+                                    <span *ngIf="appointment?.status == 'Approved'" style="color:#07a54b;font-weight:800">{{appointment?.status}}</span>
+                                </div>
+                                <!-- <div class="vads-u-display--flex vads-u-align-items--baseline">
+                                    <div data-testid="appointment-kind-and-location" class="vads-u-display--inline">In person at
+                                        {{appointment?.location}}<br> <span style="color:grey">{{appointment?.description}}</span>
+                                    </div>
+                                </div> -->
+                                <div class="row" style="margin-top:8px">
+                                    <button *ngIf="appointment?.status !== 'Approved' && currentUser?.providerType =='TowTrucks'" (click)="ApproveTruckAppointment(appointment.docId)" style="background-color:#2ca1f2" type="submit"
+                                        class="melachat-background-color inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+                                        Approve
+                                    </button>
+                                    <button *ngIf="currentUser?.providerType =='TowTrucks'" (click)="declineTruckAppointment(appointment.docId)" style="background-color:red" [style.marginLeft]="'6px'" type="submit"
+                                        class="melachat-background-color inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+                                        {{appointment?.status == 'Approved' ? 'Delete Appointment':'Decline'}}
+                                    </button>
+                                    <button *ngIf="currentUser?.providerType !=='TowTrucks'" (click)="declineTruckAppointment(appointment.docId)" style="background-color:red" [style.marginLeft]="'6px'" type="submit"
+                                        class="melachat-background-color inline-flex items-center px-5 py-2.5 text-sm font-medium text-center text-white bg-blue-700 rounded-lg focus:ring-4 focus:ring-blue-200 dark:focus:ring-blue-900 hover:bg-blue-800">
+                                        {{appointment?.status == 'Approved' ? 'Delete Appointment':'Cancel Appointment'}}
+                                    </button>
+                                </div>
+                            </div>
+                        </li>
+                        <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+                    </ol>
+                </ng-container>
+                <ng-container *ngIf="!appointments.length && !towTrucksAppointments.length">
                     <h1 tabindex="-1" data-testid="header" class="text-header">Your have no appointments at this time</h1>
                 </ng-container>
     </div>

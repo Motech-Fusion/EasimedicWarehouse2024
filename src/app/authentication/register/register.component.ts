@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, NgZone, OnInit, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import {
   Firestore,
@@ -20,6 +20,8 @@ import * as moment from "moment";
 import { Router } from "@angular/router";
 import * as CryptoJS from "crypto-js";
 import { AngularFireMessaging } from "@angular/fire/compat/messaging";
+import { CustomFile } from "../choose-image/choose-image.component";
+import { FireStoreCollectionsServiceService } from "src/app/shared/Services/fire-store-collections-service.service";
 
 export interface IPractitioner {
   address: string;
@@ -57,6 +59,7 @@ export interface IPractitioner {
   styleUrls: ["./register.component.scss"],
 })
 export class RegisterComponent implements OnInit {
+  @ViewChild("imageInput") imageInput!: ElementRef;
   selectedOption: string | null = null;
   PhoneContentFormControl: FormControl = new FormControl();
   UsernameFormControl: FormControl = new FormControl();
@@ -67,6 +70,8 @@ export class RegisterComponent implements OnInit {
   BioFormControl: FormControl = new FormControl();
   PasswordFormControl: FormControl = new FormControl();
   ConfirmPasswordFormControl: FormControl = new FormControl();
+  FeePerKmFormControl: FormControl = new FormControl();
+  LocationFormControl: FormControl = new FormControl();
   options:any = [
   ];
   bio: string = "";
@@ -79,8 +84,12 @@ export class RegisterComponent implements OnInit {
   selectedUserType: string | null = null;
   ServiceProviderTypeFormControl: FormControl = new FormControl();
   ServiceProviderCategoryContentFormControl: FormControl = new FormControl();
+  StationNameFormControl: FormControl = new FormControl();
+  ProvinceCategoryContentFormControl: FormControl = new FormControl();
   providerType: string = "";
   providerCategory: string = "";
+  stationNumber: string = "";
+  feePerKm: string = "";
   showRegisterNotification: boolean = false;
   daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
   workHours:any = {};
@@ -91,9 +100,25 @@ export class RegisterComponent implements OnInit {
     // Add more items as needed
   ];
   selected: any;
+  locationInfo = {
+    geo: null,
+    country: null,
+    state: null,
+    city: null,
+    postalCode: null,
+    street: null,
+    streetNumber: null
+  };
+  @ViewChild('addressInput') addressInput!: ElementRef; // Reference to the input element
+  userLocation: string = "";
+  province: string = "";
+  dob: string=''; 
+  selectedImage: string = '';
+  selectedImageString: string = "";
+  selectedImages!: CustomFile[];
 
 
-  constructor(private firestore: Firestore, public router: Router) {
+  constructor(private firestore: Firestore, public router: Router,private ngZone: NgZone,private firestoreCollectionService:FireStoreCollectionsServiceService) {
     this.daysOfWeek.forEach(day => {
       this.workHours[day] = { start: '', end: '' };
     });
@@ -132,6 +157,9 @@ export class RegisterComponent implements OnInit {
     this.PasswordFormControl.valueChanges.subscribe((value) => {
       this.password = value;
     });
+    this.LocationFormControl.valueChanges.subscribe((value) => {
+      this.userLocation = value;
+    });
     this.ConfirmPasswordFormControl.valueChanges.subscribe((value) => {
       this.confirmPassword = value;
     });
@@ -140,6 +168,15 @@ export class RegisterComponent implements OnInit {
     });
     this.ServiceProviderCategoryContentFormControl.valueChanges.subscribe((value) => {
       this.providerCategory = value;
+    });
+    this.StationNameFormControl.valueChanges.subscribe((value) => {
+      this.stationNumber = value;
+    });
+    this.FeePerKmFormControl.valueChanges.subscribe((value) => {
+      this.feePerKm = value;
+    });
+    this.ProvinceCategoryContentFormControl.valueChanges.subscribe((value) => {
+      this.province = value;
     });
   }
 
@@ -185,15 +222,24 @@ export class RegisterComponent implements OnInit {
         phone: phone,
         password: { ciphertext, key },
         notificationToken: token,
-        image:
+        image: this.selectedImageString ? this.selectedImageString :
           "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
         bio: "",
         friends: [],
         blocked: [],
-        location: {},
         requests: [],
         language: "English",
-        dob: dob,
+        dob: this.dob,
+        location:{
+          geo: [40.7128, -74.0060], // latitude and longitude
+          country: "South Frica",
+          state: "Gauteng",
+          city: this.userLocation,
+          postalCode: "2000",
+          street: "Church str",
+          streetNumber: "292",
+          province:this.province
+        },
         created: moment().format("DD-MM-YYYY"),
         availability: "online",
         InterestedIn: "",
@@ -202,78 +248,6 @@ export class RegisterComponent implements OnInit {
         email: this.emailAddress,
       }).then(async (x) => {
         x.id;
-        // if (this.providerType == "Doctors") {
-        //   await setDoc(doc(doctorsCollection, x.id), {
-        //     username: username,
-        //     name: name,
-        //     phone: phone,
-        //     fullname: name,
-        //     password: { ciphertext, key },
-        //     notificationToken: token,
-        //     image:
-        //       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-        //     bio: "",
-        //     friends: [],
-        //     blocked: [],
-        //     location: {},
-        //     requests: [],
-        //     language: "English",
-        //     dob: dob,
-        //     userId: x.id,
-        //     created: moment().format("DD-MM-YYYY"),
-        //     availability: "online",
-        //     InterestedIn: "",
-        //     suspended: false,
-        //     easiMedicFor: this.selectedUserType,
-        //   });
-        // } else if (this.providerType == "Sangoma") {
-        //   await setDoc(doc(sangomaCollection, x.id), {
-        //     username: username,
-        //     name: name,
-        //     fullname: name,
-        //     phone: phone,
-        //     userId: x.id,
-        //     password: { ciphertext, key },
-        //     notificationToken: token,
-        //     image:
-        //       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-        //     bio: "",
-        //     friends: [],
-        //     blocked: [],
-        //     location: {},
-        //     requests: [],
-        //     language: "English",
-        //     dob: dob,
-        //     created: moment().format("DD-MM-YYYY"),
-        //     availability: "online",
-        //     InterestedIn: "",
-        //     suspended: false,
-        //     easiMedicFor: this.selectedUserType,
-        //   });
-        // } else if (this.providerType == "TowTrucks") {
-        //   await setDoc(doc(towTrucksCollection, x.id), {
-        //     username: username,
-        //     name: name,
-        //     fullname: name,
-        //     phone: phone,
-        //     password: { ciphertext, key },
-        //     notificationToken: token,
-        //     image:
-        //       "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
-        //     bio: "",
-        //     friends: [],
-        //     blocked: [],
-        //     location: {},
-        //     requests: [],
-        //     language: "English",
-        //     dob: dob,
-        //     created: moment().format("DD-MM-YYYY"),
-        //     availability: "online",
-        //     InterestedIn: "",
-        //     suspended: false,
-        //     easiMedicFor: this.selectedUserType,
-        //   });
-        // }
       });
 
       // Additional logic if needed
@@ -326,8 +300,8 @@ export class RegisterComponent implements OnInit {
         phone: phone,
         password: { ciphertext, key },
         notificationToken: token,
-        image:
-          "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+        image: this.selectedImageString ? this.selectedImageString :
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
         address: "",
         approved: "",
         closed: [],
@@ -337,7 +311,17 @@ export class RegisterComponent implements OnInit {
         fullname: this.fullNames,
         qualification:this.providerCategory,
         latitude: "",
-        location: {},
+        dob:this.dob,
+        location:{
+          geo: [40.7128, -74.0060], // latitude and longitude
+          country: "South Frica",
+          state: "Gauteng",
+          city: this.userLocation,
+          postalCode: "2000",
+          street: "Church str",
+          streetNumber: "292",
+          province:this.province
+        },
         friends: [],
         blocked: [],
         requests: [],
@@ -345,6 +329,7 @@ export class RegisterComponent implements OnInit {
         open: [],
         plan: "Basic",
         regDate: moment().format("DD-MM-YYYY"),
+        created: moment().format("DD-MM-YYYY"),
         street: "",
         type: type,
         bio:this.bio,
@@ -354,7 +339,9 @@ export class RegisterComponent implements OnInit {
         easiMedicFor:this.selectedUserType,
         operatingHours:this.workHours,
         email: this.emailAddress,
-        providerType:this.providerType
+        providerType:this.providerType,
+        stationNumber:this.stationNumber,
+        feePerKm:this.feePerKm,
       }).then(async (x) => {
         x.id;
         if (this.providerType == "Doctors") {
@@ -365,16 +352,16 @@ export class RegisterComponent implements OnInit {
             fullname: name,
             password: { ciphertext, key },
             notificationToken: token,
-            image:
-              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+            image: this.selectedImageString ? this.selectedImageString :
+            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
               description: this.bio,
               experience: 0,
             friends: [],
             blocked: [],
-            location: {},
             requests: [],
             language: "English",
-            dob: dob,
+            dob:this.dob,
+            bio:this.bio,
             userId: x.id,
             created: moment().format("DD-MM-YYYY"),
             availability: "online",
@@ -384,6 +371,16 @@ export class RegisterComponent implements OnInit {
             operatingHours:this.workHours,
             qualification:this.providerCategory,
             email: this.emailAddress,
+            location:{
+              geo: [40.7128, -74.0060], // latitude and longitude
+              country: "South Frica",
+              state: "Gauteng",
+              city: this.userLocation,
+              postalCode: "2000",
+              street: "Church str",
+              streetNumber: "292",
+              province:this.province
+            },
           });
         } else if (this.providerType == "Sangoma") {
           await setDoc(doc(sangomaCollection, x.id), {
@@ -393,17 +390,27 @@ export class RegisterComponent implements OnInit {
             phone: phone,
             userId: x.id,
             password: { ciphertext, key },
+            bio:this.bio,
             notificationToken: token,
-            image:
-              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+            image: this.selectedImageString ? this.selectedImageString :
+            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
               description: this.bio,
               experience: 0,
             friends: [],
             blocked: [],
-            location: {},
+            location:{
+              geo: [40.7128, -74.0060], // latitude and longitude
+              country: "South Frica",
+              state: "Gauteng",
+              city: this.userLocation,
+              postalCode: "2000",
+              street: "Church str",
+              streetNumber: "292",
+              province:this.province
+            },
             requests: [],
             language: "English",
-            dob: dob,
+            dob:this.dob,
             created: moment().format("DD-MM-YYYY"),
             availability: "online",
             InterestedIn: "",
@@ -420,16 +427,26 @@ export class RegisterComponent implements OnInit {
             phone: phone,
             password: { ciphertext, key },
             notificationToken: token,
-            image:
-              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+            bio:this.bio,
+            image: this.selectedImageString ? this.selectedImageString :
+            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
               description: this.bio,
               experience: 0,
             friends: [],
             blocked: [],
-            location: {},
+            location:{
+              geo: [40.7128, -74.0060], // latitude and longitude
+              country: "South Frica",
+              state: "Gauteng",
+              city: this.userLocation,
+              postalCode: "2000",
+              street: "Church str",
+              streetNumber: "292",
+              province:this.province
+            },
             requests: [],
             language: "English",
-            dob: dob,
+            dob:this.dob,
             created: moment().format("DD-MM-YYYY"),
             availability: "online",
             InterestedIn: "",
@@ -437,6 +454,7 @@ export class RegisterComponent implements OnInit {
             easiMedicFor: this.selectedUserType,
             qualification:this.providerCategory,
             email: this.emailAddress,
+            feePerKm: this.feePerKm,
           });
         }
          else if (this.providerType == "Security") {
@@ -447,16 +465,26 @@ export class RegisterComponent implements OnInit {
             phone: phone,
             password: { ciphertext, key },
             notificationToken: token,
-            image:
-              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+            bio:this.bio,
+            image: this.selectedImageString ? this.selectedImageString :
+            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
               description: this.bio,
               experience: 0,
             friends: [],
             blocked: [],
-            location: {},
+            location:{
+              geo: [40.7128, -74.0060], // latitude and longitude
+              country: "South Frica",
+              state: "Gauteng",
+              city: this.userLocation,
+              postalCode: "2000",
+              street: "Church str",
+              streetNumber: "292",
+              province:this.province
+            },
             requests: [],
             language: "English",
-            dob: dob,
+            dob:this.dob,
             created: moment().format("DD-MM-YYYY"),
             availability: "online",
             InterestedIn: "",
@@ -464,6 +492,7 @@ export class RegisterComponent implements OnInit {
             easiMedicFor: this.selectedUserType,
             qualification:this.providerCategory,
             email: this.emailAddress,
+            stationNumber:this.stationNumber
           });
         }
          else if (this.providerType == "Emergency") {
@@ -474,16 +503,26 @@ export class RegisterComponent implements OnInit {
             phone: phone,
             password: { ciphertext, key },
             notificationToken: token,
-            image:
-              "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+            bio:this.bio,
+            image: this.selectedImageString ? this.selectedImageString :
+            "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
               description: this.bio,
               experience: 0,
             friends: [],
             blocked: [],
-            location: {},
+            location:{
+              geo: [40.7128, -74.0060], // latitude and longitude
+              country: "South Frica",
+              state: "Gauteng",
+              city: this.userLocation,
+              postalCode: "2000",
+              street: "Church str",
+              streetNumber: "292",
+              province:this.province
+            },
             requests: [],
             language: "English",
-            dob: dob,
+            dob:this.dob,
             created: moment().format("DD-MM-YYYY"),
             availability: "online",
             InterestedIn: "",
@@ -491,6 +530,7 @@ export class RegisterComponent implements OnInit {
             easiMedicFor: this.selectedUserType,
             qualification:this.providerCategory,
             email: this.emailAddress,
+            stationNumber:this.stationNumber
           });
         }
       });
@@ -562,4 +602,88 @@ export class RegisterComponent implements OnInit {
     this.selected = item;
     this.providerCategory = item.title;
   }
+
+  triggerImageInput(): void {
+    // Access the native element using this.imageInput.nativeElement
+    this.imageInput.nativeElement.click();
+  }
+
+  onImageSelected(event: Event): void {
+    const inputElement = event.target as HTMLInputElement;
+    if (inputElement.files) {
+      const selectedImages: FileList = inputElement.files;
+      // You can now handle the selected images, for example, upload them to a server
+
+      // Read the contents of each image and create a data URL
+      const fileArray: CustomFile[] = Array.from(selectedImages);
+      fileArray.forEach((file) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          // Add the data URL to the CustomFile object
+          const base64String = (e.target?.result as string).split(",")[1];
+
+          // Add the base64 string to the CustomFile object
+          file.url = base64String;
+          this.selectedImage = base64String;
+
+          // Upload the base64 string to Firebase Storage
+          var firebaseUrl = this.firestoreCollectionService
+            .uploadPicture(base64String)
+            .then((firebaseUrl) => {
+              console.warn("download url here : ", firebaseUrl);
+              this.selectedImageString = firebaseUrl;
+              // this.uploadUserImage(firebaseUrl);
+            })
+            .catch((error) => {
+              console.error(error);
+            });
+          console.warn(firebaseUrl);
+        };
+        reader.readAsDataURL(file);
+      });
+
+      // Set the updated array to selectedImages
+      this.selectedImages = fileArray;
+    }
+  }
+
+  // initAutocomplete() {
+  //   this.ngZone.runOutsideAngular(() => {
+  //     const autocomplete = new google.maps.places.Autocomplete(
+  //       this.addressInput.nativeElement,
+  //       { types: ['geocode'] }
+  //     );
+
+  //     google.maps.event.addListener(autocomplete, 'place_changed', () => {
+  //       this.ngZone.run(() => {
+  //         const place = autocomplete.getPlace();
+  //         const address = place.address_components;
+  //         const lat = place.geometry.location.lat();
+  //         const lng = place.geometry.location.lng();
+
+  //         this.locationInfo = {
+  //           geo: [lat, lng],
+  //           country: this.getAddressComponent(address, 'country'),
+  //           state: this.getAddressComponent(address, 'administrative_area_level_1'),
+  //           city: this.getAddressComponent(address, 'locality'),
+  //           postalCode: this.getAddressComponent(address, 'postal_code'),
+  //           street: this.getAddressComponent(address, 'route'),
+  //           streetNumber: this.getAddressComponent(address, 'street_number')
+  //         };
+
+  //         // Preview JSON output (you can do this in the template)
+  //         // document.getElementById('js-preview-json').innerText = JSON.stringify(
+  //         //   this.locationInfo,
+  //         //   null,
+  //         //   4
+  //         // );
+  //       });
+  //     });
+  //   });
+  // }
+
+  // getAddressComponent(address: google.maps.GeocoderAddressComponent[], type: string): string {
+  //   const component = address.find(comp => comp.types.includes(type));
+  //   return component ? component.long_name : null;
+  // }
 }

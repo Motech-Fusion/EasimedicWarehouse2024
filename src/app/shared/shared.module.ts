@@ -39,6 +39,7 @@ import { PeriodTrackerComponent } from './period-tracker/period-tracker.componen
 import { PriceListItemComponent } from './price-list-item/price-list-item.component';
 import { AppointmentListComponent } from './appointment-list/appointment-list.component';
 import { NotificationShowComponent } from './notification-show/notification-show.component';
+import { StarRatingComponent } from './star-rating/star-rating.component';
 
 @NgModule({
   declarations: [
@@ -72,7 +73,8 @@ import { NotificationShowComponent } from './notification-show/notification-show
     PeriodTrackerComponent,
     PriceListItemComponent,
     AppointmentListComponent,
-    NotificationShowComponent
+    NotificationShowComponent,
+    StarRatingComponent
   ],
   imports: [
     CommonModule,
@@ -118,7 +120,8 @@ import { NotificationShowComponent } from './notification-show/notification-show
     PeriodTrackerComponent,
     PriceListItemComponent,
     AppointmentListComponent,
-    NotificationShowComponent
+    NotificationShowComponent,
+    StarRatingComponent
   ],
   providers: [AlertService],
 })

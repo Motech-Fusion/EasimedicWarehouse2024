@@ -1,6 +1,6 @@
 <p>friend-profile works!</p>
 <div class="main-container" style="height:100vh">
-    <app-app-header></app-app-header>
+    <app-app-header [goBack]="true"></app-app-header>
     <div class="show-dialog" *ngIf="showAppointmentDialog">
      
         <app-appointment-dialog (bookAppointmentModalEmitter)="bookAppointment($event)" (closeModalEmitter)="closeAppointmentModal()" [name]="currentUser.fullname" [phone]="currentUser.phone"></app-appointment-dialog>
@@ -63,7 +63,8 @@
                                 placeholder="Enter your bio here" />
                                 <p class="text-white" style="color:grey">Experience :  <span style="color:#000">{{currentUser?.experience}}</span> years experience</p>
                                 <p class="text-white" style="color:grey" >Qualification :  <span style="color:#000">{{currentUser?.qualification}}</span></p>
-                            <p class="text-white" style="color:grey">Joined on :  <span style="color:#000">{{currentUser?.created | date}}</span></p>
+                            <p class="text-white" style="color:grey">Date of birth:  <span style="color:#000">{{currentUser?.dob | date:'dd-MM-yyyy'}}</span></p>
+                            <p class="text-white" style="color:grey">Joined on :  <span style="color:#000">{{currentUser?.created | date:'dd-MM-yyyy'}}</span></p>
                             <p class="text-white" style="color:grey">About me : <span style="color:#000">{{currentUser?.bio}}</span></p>
                             <h2 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text" style="margin-top:16px">
                                 Operating Work Hours</h2>
@@ -85,7 +86,12 @@
                     <!-- user meta form small screens -->
                     <div class="md:hidden text-sm my-2">
                         <!-- <h1 class="font-semibold">Mr Travlerrr...</h1> -->
+                        <div style="display: flex;
+                        flex-direction: column;">
+                        <span *ngIf="!editUser" class="text-white" style="color:#000">Date of birth : {{currentUser?.dob}}</span>
+                        <span *ngIf="!editUser" class="text-white" style="color:#000">Joined on : {{currentUser?.created}}</span>
                         <span *ngIf="!editUser" class="text-white" style="color:#000">{{currentUser?.bio}}</span>
+                        </div>
                         <div *ngIf="!editUser && currentUser?.easiMedicFor == 'Service Provider'">
                             <h2 class="text-xl font-medium text-gray-900 dark:text-white sign-up-text" style="margin-top:16px">
                                 Operating Work Hours</h2>
@@ -200,7 +206,8 @@
                                                  <p class="text-sm font-medium text-gray-900 truncate dark:text-white" style="color:#000">
                                                    {{item.fullname}}
                                                  </p>
-                                                 <p class="text-white font-medium text-gray-900 truncate " style="color:grey">Joined on :  <span style="color:#000">{{currentUser?.created | date}}</span></p>
+                                                 <p class="text-white font-medium text-gray-900 truncate " style="color:grey">Date of birth :  <span style="color:#000">{{currentUser?.dob | date:'dd-MM-yyyy'}}</span></p>
+                                                 <p class="text-white font-medium text-gray-900 truncate " style="color:grey">Joined on :  <span style="color:#000">{{currentUser?.created | date:'dd-MM-yyyy'}}</span></p>
                                                  <p class="text-white font-medium text-gray-900 truncate " style="color:grey">About me :  <span style="color:#000">{{currentUser?.bio}}</span></p>
                                                  <p class="text-white font-medium text-gray-900 truncate " style="color:grey">Experience :  <span style="color:#000">{{currentUser?.experience}}</span> years experience</p>
                                                  <p class="text-white font-medium text-gray-900 truncate " style="color:grey">Qualification :  <span style="color:#000">{{currentUser?.qualification}}</span></p>
