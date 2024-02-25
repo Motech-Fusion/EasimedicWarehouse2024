@@ -1,0 +1,110 @@
+<div class="main-container">
+    <app-app-header  [goBack]="true"></app-app-header>
+    <div class="search-container-center" style="margin-top:90px;">
+       
+        <div class="get-started2">
+            <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white"
+                style="color:rgb(30, 30, 30)">
+                {{title}}.</h1>
+            <p class="text-lg font-normal text-gray-500 lg:text-xl dark:text-gray-400 browse-friends-p">{{description}}
+            </p>
+
+            <!-- <span class="bg-blue-100 text-blue-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-blue-400 border border-blue-400">Friend Requests</span> -->
+            <!-- <span
+                class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">Likes & comments</span>
+            <span
+                class="bg-gray-100 text-gray-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-gray-700 dark:text-gray-400 border border-gray-500">Mela chat coms</span> -->
+        </div>
+        <app-search [placeholder]="'Search posts..'" style="visibility: hidden;"></app-search>
+        <div class="get-started" *ngIf="doctors.length">
+            <!-- <ng-container *ngFor="let item of AllPosts"> -->
+                <ng-container *ngIf="doctors.length">
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 news-grid doctor-user">
+                        <ng-container *ngFor="let doc of doctors">
+                            <!-- <app-doctor-user-item [senderUserId]="currentUserId" (chatEmitter)="navigateToChat($event)"
+                                [doctorsList]="doctors" [userItem]="secu"></app-doctor-user-item> -->
+                                <ul class="max-w-md divide-y divide-gray-200 dark:divide-gray-700">
+                                    <li class="pb-3 sm:pb-4">
+                                        <div class="flex items-center space-x-4 rtl:space-x-reverse">
+                                            <div class="flex-shrink-0">
+                                                <img class="w-8 h-8 rounded-full" src="{{doc.image}}" alt="Neil image">
+                                            </div>
+                                            <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
+                                                <button (click)="navigateToChat(doc)" type="button" class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 me-2 mb-2">
+                                                    <svg class="w-4 h-4 me-2 -ms-1 text-[#626890]" viewBox="-1.68 -1.68 27.36 27.36" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M17 12.5C17.2761 12.5 17.5 12.2761 17.5 12C17.5 11.7239 17.2761 11.5 17 11.5C16.7239 11.5 16.5 11.7239 16.5 12C16.5 12.2761 16.7239 12.5 17 12.5Z" fill="#939393" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12 12.5C12.2761 12.5 12.5 12.2761 12.5 12C12.5 11.7239 12.2761 11.5 12 11.5C11.7239 11.5 11.5 11.7239 11.5 12C11.5 12.2761 11.7239 12.5 12 12.5Z" fill="#939393" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M7 12.5C7.27614 12.5 7.5 12.2761 7.5 12C7.5 11.7239 7.27614 11.5 7 11.5C6.72386 11.5 6.5 11.7239 6.5 12C6.5 12.2761 6.72386 12.5 7 12.5Z" fill="#939393" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 13.8214 2.48697 15.5291 3.33782 17L2.5 21.5L7 20.6622C8.47087 21.513 10.1786 22 12 22Z" stroke="#939393" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>       
+                                                     Send Message
+                                                    </button>
+                                                    <button style="background-color: #2ca1f2;color:#fff" (click)="callUser(doc.phone)" type="button" class="text-gray-900 bg-gray-100 hover:bg-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center dark:focus:ring-gray-500 me-2 mb-2 call-button">
+                                                        <svg class="w-4 h-4 me-2 -ms-1 text-[#626890]" viewBox="-6.72 -6.72 37.44 37.44" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M15 3C16.5315 3.17014 17.9097 3.91107 19 5C20.0903 6.08893 20.8279 7.46869 21 9M14.5 6.5C15.2372 6.64382 15.9689 6.96892 16.5 7.5C17.0311 8.03108 17.3562 8.76284 17.5 9.5M8.20049 15.799C1.3025 8.90022 2.28338 5.74115 3.01055 4.72316C3.10396 4.55862 5.40647 1.11188 7.87459 3.13407C14.0008 8.17945 6.5 8 11.3894 12.6113C16.2788 17.2226 15.8214 9.99995 20.8659 16.1249C22.8882 18.594 19.4413 20.8964 19.2778 20.9888C18.2598 21.717 15.0995 22.6978 8.20049 15.799Z" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+                                                        Call
+                                                        </button>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <h1 class="title-head-item">{{doc.name}}</h1>
+                                            <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700">
+                                        </div>
+                                        <div class="flex-1 min-w-0">
+                                            <p class="text-sm font-medium text-gray-900 truncate dark:text-white">
+                                               {{doc.qualification}}
+                                            </p>
+                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400 truncate">
+                                                Joined on : {{doc?.created}}
+                                            </p>
+                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400 truncate">
+                                                Location : {{doc.location?.city}}
+                                            </p>
+                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400 truncate">
+                                                Province : {{doc.location?.province}}
+                                            </p>
+                                            <p class="text-sm text-gray-500 truncate dark:text-gray-400 truncate">
+                                                Details : {{doc?.bio ? doc?.bio : doc?.description}}
+                                            </p>
+                                        </div>
+                                    </li>
+                                </ul>
+                            <!-- Card -->
+
+                        </ng-container>
+                    </div>
+                </ng-container>
+            <!-- </ng-container> -->
+        </div>
+        <div class="get-started2" *ngIf="!doctors.length">
+            <div role="status" class="space-y-2.5 animate-pulse max-w-lg" style="width:100%">
+                <div class="flex items-center w-full">
+                    <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-32"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                </div>
+                <div class="flex items-center w-full max-w-[480px]">
+                    <div class="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                </div>
+                <div class="flex items-center w-full max-w-[400px]">
+                    <div class="h-2.5 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                </div>
+                <div class="flex items-center w-full max-w-[480px]">
+                    <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                </div>
+                <div class="flex items-center w-full max-w-[440px]">
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-32"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-24"></div>
+                    <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-full"></div>
+                </div>
+                <div class="flex items-center w-full max-w-[360px]">
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                    <div class="h-2.5 ms-2 bg-gray-200 rounded-full dark:bg-gray-700 w-80"></div>
+                    <div class="h-2.5 ms-2 bg-gray-300 rounded-full dark:bg-gray-600 w-full"></div>
+                </div>
+                <span class="sr-only">No doctors found...</span>
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -117,6 +117,7 @@ export class DashboardComponent implements OnInit {
   towTruckbooking!: ITowTrucks;
   showExpandable1: boolean = false;
   showExpandable2: boolean = false;
+  messages: ChatMessage[] = [];
 
   constructor(
     private fireStoreCollectionsService: FireStoreCollectionsServiceService,
@@ -369,19 +370,10 @@ export class DashboardComponent implements OnInit {
     this.fireStoreCollectionsService
       .getAllMessages()
       .pipe(
-        map((data: ChatMessage[]) => {
-          console.log(currentUserFriend);
-          // Update your local variable or state
-          // this.AllMessages = data;
-          // Filter and return the messages
-          return this.filterMessages(
-            data,
-            this.currentUserId as string,
-            currentUserFriend.docId as string
-          );
-        })
       )
       .subscribe((messages) => {
+
+        this.messages = messages;
         console.log("hey there", messages);
 
         // Update UserFriends based on messages
@@ -933,4 +925,13 @@ export class DashboardComponent implements OnInit {
 dismiss(){
   this.showBookTowTruckModal = false;
 }
+
+navigateToProvider(_title: string,_description: string) {
+  this.router.navigate(["/", "provider-type"], {
+    queryParams: {
+      title: _title,
+      description: _description,
+    },
+  });
+  }
 }

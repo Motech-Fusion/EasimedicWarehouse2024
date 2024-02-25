@@ -19,6 +19,7 @@
                </p>
                <p *ngIf="friend.fullname" class="text-sm text-gray-500 truncate dark:text-gray-400">
                   &#64;{{friend.fullname}}
+                  <br> <span class="msg-last">{{getLastMessage(friend.docId)}}</span>
                </p>
             </div>
             <div class="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white"
@@ -33,7 +34,7 @@
             <span class="w-2 h-2 me-1 bg-red-700 rounded-full"></span>
             <!-- Unavailable -->
          </span>
-         <p class="msg-last">{{friend.messages}}</p>
+         <p class="msg-last">{{friend.created | date}}</p>
                <!-- <p *ngIf="friend.availability !== 'busy'">Yesterday</p> -->
                <!-- <span *ngIf="friend.unread.length > 0"
                   class="inline-flex items-center justify-center w-4 h-4 ml-2 text-xs font-semibold text-white-800 bg-red-200 rounded-full"

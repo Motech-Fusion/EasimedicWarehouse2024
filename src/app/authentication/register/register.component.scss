@@ -133,3 +133,13 @@ span.fee-per-km {
 -moz-box-shadow: 10px 10px 5px 0px rgba(240,240,240,1);
 box-shadow: 10px 10px 5px 0px rgba(240,240,240,1);
 }
+
+.invalid{
+  border-color:red;
+  border-width:0.6px
+}
+
+.errors{
+  margin-top:-12px;
+  margin-bottom:6px
+}

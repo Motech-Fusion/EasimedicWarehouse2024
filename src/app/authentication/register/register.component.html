@@ -20,28 +20,65 @@
                         #imageInput type="file" accept="image/*" multiple style="display: none"
                         (change)="onImageSelected($event)">
                 </div>
+                <div class="relative">
+                    <input [class.invalid]="UsernameFormControl.hasError('required')" [formControl]="UsernameFormControl" type="text"
+                        class="block border border-grey-light w-full p-3 rounded mb-4" name="username*"
+                        placeholder="Username" />
 
-                <input [formControl]="UsernameFormControl" type="text"
-                    class="block border border-grey-light w-full p-3 rounded mb-4" name="username*"
-                    placeholder="Username" />
+                        <div *ngIf="UsernameFormControl.hasError('required')" class="text-red-500 text-sm mt-1 errors">
+                            Username is required.
+                        </div>
+                </div>
+                <div class="relative">
+                    <input [class.invalid]="FullNamesFormControl.hasError('required')" [formControl]="FullNamesFormControl" type="text"
+                        class="block border border-grey-light w-full p-3 rounded mb-4" name="fullname*"
+                        placeholder="Full Names" />
+                        <div *ngIf="FullNamesFormControl.hasError('required')" class="text-red-500 text-sm mt-1 errors">
+                            Your full names are required.
+                        </div>
+                </div>
+                <div class="relative">
+                    <input [class.invalid]="SurnameFormControl.hasError('required')"  [formControl]="SurnameFormControl" type="text"
+                        class="block border border-grey-light w-full p-3 rounded mb-4" name="surname*"
+                        placeholder="Surname" />
 
-                <input [formControl]="FullNamesFormControl" type="text"
-                    class="block border border-grey-light w-full p-3 rounded mb-4" name="fullname*"
-                    placeholder="Full Names" />
-
-                <input [formControl]="SurnameFormControl" type="text"
-                    class="block border border-grey-light w-full p-3 rounded mb-4" name="surname*"
-                    placeholder="Surname" />
+                        <div *ngIf="SurnameFormControl.hasError('required')" class="text-red-500 text-sm mt-1 errors">
+                            Your surname/lastname is required.
+                        </div>
+                </div>
                 <div class="date-of-birth">
                         <label for="dob">Date of Birth:</label>
                         <input class="dob" type="date" id="dob" name="dob" [(ngModel)]="dob">
                 </div>
+                <div class="relative">
+                    <label for="phone"
+                        class="absolute inset-y-0 start-0 flex items-center pl-3 text-gray-500 dark:text-gray-400">+27</label>
+                    <input [class.invalid]="PhoneFormControl.hasError('required')" style="padding-left:42px"
+                        [formControl]="PhoneFormControl" type="text"
+                        class="block border border-grey-light w-full p-3 rounded mb-4" name="phone"
+                        placeholder="Phone" />
+                </div>
+                <div class="errors">
 
-                <input [formControl]="PhoneFormControl" type="text"
-                    class="block border border-grey-light w-full p-3 rounded mb-4" name="phone" placeholder="Phone*" />
+                    <div *ngIf="PhoneFormControl.hasError('required')" class="text-red-500 text-sm mt-1">
+                        Phone number is required
+                     </div>
 
-                <input [formControl]="EmailFormControl" type="email"
-                    class="block border border-grey-light w-full p-3 rounded mb-4" name="phone" placeholder="Email address*" />
+                     <div *ngIf="PhoneFormControl.hasError('maxlength')" class="text-red-500 text-sm mt-1">
+                         Mobile number entered should be 9 digits
+                     </div>
+                </div>
+                <!-- <input [formControl]="PhoneFormControl" type="text"
+                    class="block border border-grey-light w-full p-3 rounded mb-4" name="phone" placeholder="Phone*" /> -->
+
+                    <div class="relative">
+                        <input [class.invalid]="EmailFormControl.hasError('required')" [formControl]="EmailFormControl" type="email"
+                            class="block border border-grey-light w-full p-3 rounded mb-4" name="phone" placeholder="Email address*" />
+
+                            <div *ngIf="EmailFormControl.hasError('maxlength')" class="text-red-500 text-sm mt-1 errors">
+                               Please enter your valid email address
+                            </div>
+                    </div>
 
                 <input [formControl]="LocationFormControl" type="text"
                     class="block border border-grey-light w-full p-3 rounded mb-4" name="placess" placeholder="Enter your location" />

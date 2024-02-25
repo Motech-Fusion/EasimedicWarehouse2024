@@ -1,5 +1,5 @@
 import { Component, ElementRef, NgZone, OnInit, ViewChild } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, Validators } from "@angular/forms";
 import {
   Firestore,
   collectionData,
@@ -62,13 +62,29 @@ export class RegisterComponent implements OnInit {
   @ViewChild("imageInput") imageInput!: ElementRef;
   selectedOption: string | null = null;
   PhoneContentFormControl: FormControl = new FormControl();
-  UsernameFormControl: FormControl = new FormControl();
-  FullNamesFormControl: FormControl = new FormControl();
-  EmailFormControl: FormControl = new FormControl();
-  PhoneFormControl: FormControl = new FormControl();
-  SurnameFormControl: FormControl = new FormControl();
-  BioFormControl: FormControl = new FormControl();
-  PasswordFormControl: FormControl = new FormControl();
+  UsernameFormControl: FormControl = new FormControl('', [
+    Validators.required
+  ]);
+  FullNamesFormControl: FormControl = new FormControl('', [
+    Validators.required
+  ]);
+  EmailFormControl: FormControl = new FormControl('', [
+    Validators.required,
+  ]);
+  PhoneFormControl: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.maxLength(9),
+    Validators.pattern(/^\d{9}$/)
+  ]);
+  SurnameFormControl: FormControl = new FormControl('', [
+    Validators.required
+  ]);
+  BioFormControl: FormControl = new FormControl('', [
+    Validators.required,
+  ]);
+  PasswordFormControl: FormControl = new FormControl('', [
+    Validators.required,
+  ]);
   ConfirmPasswordFormControl: FormControl = new FormControl();
   FeePerKmFormControl: FormControl = new FormControl();
   LocationFormControl: FormControl = new FormControl();
@@ -122,6 +138,9 @@ export class RegisterComponent implements OnInit {
     this.daysOfWeek.forEach(day => {
       this.workHours[day] = { start: '', end: '' };
     });
+  }
+  ngOnInit(): void {
+
     this.options = [
       { id: "Doctors", label: "Medical Doctor" },
       { id: "Sangoma", label: "Sangoma" },
@@ -129,8 +148,7 @@ export class RegisterComponent implements OnInit {
       { id: "Security", label: "Security" },
       { id: "Emergency", label: "Emergency" },
     ];
-  }
-  ngOnInit(): void {
+    
     this.router.routerState.root.queryParams.subscribe((params: any) => {
       // console.warn(params.comments);
 

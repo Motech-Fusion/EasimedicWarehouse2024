@@ -25,7 +25,9 @@ export class LoginComponent implements OnInit,AfterViewInit{
     Validators.required,
     Validators.pattern(/^\d{9}$/), // Adjust the pattern based on your phone number format
   ]);
-  PasswordContentFormControl: FormControl = new FormControl();
+  PasswordContentFormControl: FormControl = new FormControl('', [
+    Validators.required,
+  ]);
   phoneNumber: string = "";
   selectedCountryCode: string = "27";
   isDropdownOpen: boolean = false;

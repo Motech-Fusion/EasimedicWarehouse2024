@@ -73,4 +73,9 @@ export class AppHeaderComponent implements OnInit {
     }
     return text;
   }
+
+  navigateBack() {
+    // Execute JavaScript code to go back in the WebView
+    window.history.back();
+  }
 }

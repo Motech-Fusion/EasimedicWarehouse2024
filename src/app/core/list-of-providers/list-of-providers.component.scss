@@ -1,0 +1,181 @@
+.main-container {
+    background-color: #efefef !important;
+    height: 100% !important;
+    min-height: 100vh;
+    width: 100% !important;
+    // background-image: url("../../../assets//easimedicbackground.png");
+}
+.get-started-input {
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+.news-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+
+.md\:grid-cols-4 {
+    background-color: white;
+    padding: 54px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin-right: 148px;
+    margin-left: 148px;
+    border-radius: 12px
+}
+
+.container-center {
+    width: 100% !important;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+}
+
+.search-container-center {
+    width: 100% !important;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+    // display: flex;
+}
+
+.tab-content {
+    padding: 12px;
+    width: 100%
+}
+
+.get-started {
+    padding: 22px;
+}
+
+@media screen and (min-width: 768px) {
+
+    /* Apply these styles on screens larger than or equal to 768px wide (tablets and desktops) */
+    .get-started {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .get-started-input {
+        padding-left: 148px;
+        padding-right: 148px;
+    }
+}
+
+.text-blue-600 {
+    color: #1da1f2 !important;
+}
+
+.recommendations-row {
+    display: flex;
+    //   flex-wrap: no-wrap;   
+    overflow-x: auto;
+
+}
+
+.app-new-friend-card {
+    /* Add any styling you want for each child component here */
+    margin-right: 10px;
+    /* Optional margin between child components */
+}
+
+::ng-deep .max-w-sm {
+    max-width: 16rem;
+    width: 16rem !important;
+    height: 100% !important //   min-width: 16rem!important;
+}
+
+span{
+    cursor:pointer
+}
+
+.browse-friends-p{
+    margin-bottom:18px!important
+}
+
+.h-8 {
+    height: 3rem;
+}
+.w-8 {
+    width: 3rem;
+}
+.friend-item{
+    background-color: #3b3b3b2b!important;
+    margin-bottom:3px;
+    border-radius:6px;
+    padding:16px;
+}
+
+.textarea #editor {
+    height: 80px;
+}
+
+li.pb-3.sm\:pb-4 {
+    border-radius: 6px;
+    border-color: #f0e8e8;
+    border-width: 0.1px;
+    padding: 12px;
+}
+
+.truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+h1.title-head-item {
+    padding-top: 15px;
+    font-size: larger;
+    font-weight: 900;
+}
+
+.get-started2 {
+    padding-left: 148px;
+    padding-right: 148px;
+}
+
+h1.mb-4.text-4xl.font-extrabold.leading-none.tracking-tight.text-gray-900.md\:text-5xl.lg\:text-6xl.dark\:text-white {
+    padding-top: 70px;
+    /* margin-top: 67px; */
+}
+
+@media (min-width: 200px) and (max-width:450px) {
+
+    .get-started2 {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    h1.title-head-item {
+        padding-top: 15px;
+        font-size: larger;
+        font-weight: 900;
+    }
+
+    li.pb-3.sm\:pb-4 {
+        border-radius: 6px;
+        border-color: #c9c9c9;
+        border-width: 0.1px;
+        padding: 12px;
+        margin-top: 5px;
+    }
+    .md\:grid-cols-4 {
+        background-color: white;
+        padding: 54px;
+        display: contents;
+        margin-right: 148px;
+        margin-left: 148px;
+        border-radius: 12px;
+    }
+    .news-grid {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .news-grid {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+    .get-started{
+        padding: 6px;
+    }
+  }

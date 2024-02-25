@@ -23,6 +23,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireMessagingModule } from '@angular/fire/compat/messaging';
 import { environment } from 'src/environments/environment.prod';
 import { PaymentScreenComponent } from './payment-screen/payment-screen.component';
+import { ListOfProvidersComponent } from './list-of-providers/list-of-providers.component';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent },
@@ -43,6 +44,7 @@ const routes: Routes = [
   { path: 'promote-item', component: PromoteItemMainComponent },
   { path: 'view-ads-details', component: ViewAdsDetailsComponent },
   { path: 'checkout', component: PaymentScreenComponent },
+  { path: 'provider-type', component: ListOfProvidersComponent },
 ];
 
 
@@ -65,7 +67,8 @@ const routes: Routes = [
     StoriesViewerWrapperComponent,
     PromoteItemMainComponent,
     ViewAdsDetailsComponent,
-    PaymentScreenComponent
+    PaymentScreenComponent,
+    ListOfProvidersComponent
   ],
   imports: [
     CommonModule,RouterModule.forChild(routes), SharedModule, FormsModule,ReactiveFormsModule, AngularFireModule.initializeApp(environment.firebase),
